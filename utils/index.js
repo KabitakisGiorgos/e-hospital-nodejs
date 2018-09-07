@@ -1,4 +1,6 @@
-module.exports.getUid = function(length) {
+const security=require('./security');
+
+function getUid(length) {
     let uid = '';
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charsLength = chars.length;
@@ -14,3 +16,8 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
   
+
+  module.exports={
+    security,
+    getUid
+  }

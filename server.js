@@ -6,6 +6,7 @@ const session = require('express-session');
 const passport = require('passport');
 const routes = require('./routes');
 const mongoose=require('mongoose');
+const utils=require('./utils');
 
 const myapp=express();
 myapp.set('view engine','ejs');
@@ -14,7 +15,7 @@ myapp.use(bodyParser.json({ extended: false }));
 myapp.use(bodyParser.urlencoded({ extended: false }));
 myapp.use(errorHandler());
 myapp.use(session({ secret: 'shhhhhhhhhhhhhhh', resave: false, saveUninitialized: false }));
-myapp.use(passport.initialize());
+myapp.use(passport.initialize()); 
 myapp.use(passport.session());
 
 mongoose.connect("mongodb://localhost:27017/provider",()=>{
@@ -23,8 +24,9 @@ mongoose.connect("mongodb://localhost:27017/provider",()=>{
 
 //passport strategies implemented
 require('./auth');//ok
-
 myapp.get('/',routes.site.index);//Ok 
+myapp.use(utils.security.testToken);
+
 myapp.get('/login', routes.site.loginForm);//ok 
 myapp.post('/login', routes.site.login);//ok    
 myapp.get('/logout', routes.site.logout);//ok 
