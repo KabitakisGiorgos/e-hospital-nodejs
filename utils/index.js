@@ -1,7 +1,9 @@
 const security = require('./security');
-const helper=require('./passwordhash');
+const passwordhash=require('./passwordhash');
+const helper=require('./helper');
 
 module.exports = {
   security,
+  passwordhash,
   helper
 }

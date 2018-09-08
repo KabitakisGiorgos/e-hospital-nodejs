@@ -5,9 +5,9 @@ const ClientPasswordStrategy = require('passport-oauth2-client-password').Strate
 const BearerStrategy = require('passport-http-bearer').Strategy;
 const mongoose = require('mongoose');
 var ObjectId = require('mongodb').ObjectID;
-var User = require("../models/user_model");
-var Client = require("../models/client_model");
-var Token = require("../models/token_model");
+var User = require('../models/user_model');
+var Client = require('../models/client_model');
+var Token = require('../models/token_model');
 var utils = require('../utils');
 
 
@@ -24,7 +24,7 @@ passport.use(new LocalStrategy(
       if (!user) {
         return done(null, false);
       }
-      var hashedpassword = utils.helper.saltHashPassword(password, user.salt);
+      var hashedpassword = utils.passwordhash.saltHashPassword(password, user.salt);
 
       if (user.password != hashedpassword.passwordHash) {
         return done(null, false);
@@ -66,10 +66,8 @@ passport.use(new BearerStrategy(
     }, (error, token) => {
       if (error) return done(error);
       if (!token) return done(null, false);
-      // var date1 = new Date(token.creationTime)
-      // var date2 = new Date()
-      // var timeDiff = Math.abs(date2.getTime() - date1.getTime());
-      if (token.userId) { //&& timeDiff < 50000) { Here might not need invalidation of this kind
+
+      if (token.userId) {
         User.findOne({
           '_id': token.userId
         }, (error, user) => {
@@ -79,12 +77,7 @@ passport.use(new BearerStrategy(
             scope: '*'
           });
         });
-      } else {
-        // token.delete((error) => {
-        //   if (error) return done(error);
-        //   done(null, false);
-        // })
-        // and here delete the token
+      } else {//Anonymous Token
         done(null, {}, {
           scope: '*'
         });

@@ -1,7 +1,7 @@
 var passport = require('passport');
-var userModel = require("../models/user_model");
-var clientModel = require("../models/client_model");
-var accesstokenModel = require("../models/token_model");;
+var userModel = require('../models/user_model');
+var clientModel = require('../models/client_model');
+var accesstokenModel = require('../models/token_model');;
 const oauth2orize = require('oauth2orize');
 var server = oauth2orize.createServer();
 var randtoken = require('rand-token');
@@ -30,7 +30,7 @@ server.exchange(oauth2orize.exchange.password((client, username, password, scope
         }, (error, user) => {
             if (error) return done(error);
             if (!user) return done(null, false);
-            var hashedpassword = utils.helper.saltHashPassword(password, user.salt);
+            var hashedpassword = utils.passwordhash.saltHashPassword(password, user.salt);
             if (hashedpassword.passwordHash !== user.password) return done(null, false);
 
             var object = {

@@ -1,6 +1,6 @@
 const passport = require('passport');
 var validator = require('validator');
-var userModel = require("../models/user_model");
+var userModel = require('../models/user_model');
 var utils = require('../utils');
 
 module.exports.info = [
@@ -21,7 +21,7 @@ module.exports.info = [
 
 module.exports.create = function (req, res, next) {
   if (req.body && validator.isEmail(req.body.email) && req.body.password && req.body.username) {
-    var hashedpassword=utils.helper.saltHashPassword(req.body.password,utils.helper.genRandomString(16));
+    var hashedpassword=utils.passwordhash.saltHashPassword(req.body.password,utils.passwordhash.genRandomString(16));
     var newuser = {
       username: req.body.username,
       password: hashedpassword.passwordHash,
