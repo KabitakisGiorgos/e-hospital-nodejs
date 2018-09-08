@@ -8,7 +8,7 @@ var randtoken = require('rand-token');
 
 //code Source:https://github.com/gerges-beshay/oauth2orize-examples
 
-var authrorize = [
+var authorize = [
     passport.authenticate('bearer', {
         session: false
     }),
@@ -30,7 +30,8 @@ server.exchange(oauth2orize.exchange.password((client, username, password, scope
         }, (error, user) => {
             if (error) return done(error);
             if (!user) return done(null, false);
-            if (password !== user.password) return done(null, false); //here we ll need the crypto and the salt
+            var hashedpassword = utils.helper.saltHashPassword(password, user.salt);
+            if (hashedpassword.passwordHash !== user.password) return done(null, false);
 
             var object = {
                 userId: user._id,
@@ -39,10 +40,14 @@ server.exchange(oauth2orize.exchange.password((client, username, password, scope
 
             generetaToken(object, (error, newtoken) => {
                 if (error) return done(error);
-                else {
+                else { //here we can put a check if the accesstoken already exists to invalidate it
                     accesstokenModel.create(newtoken, (error) => {
                         if (error) return done(error);
-                        return done(null, newtoken);
+                        return done(null, newtoken.token, {
+                            'userId': newtoken.userId,
+                            'clientId': newtoken.clientid,
+                            'creationTime': newtoken.creationTime,
+                        });
                     });
                 }
             });
@@ -59,6 +64,7 @@ function anonymoustoken(req, res, next) {
             accesstokenModel.create(newtoken, (error) => {
                 if (error) return done(error);
                 res.status(200);
+                newtoken.token_type = 'Bearer';
                 res.send(newtoken);
             });
         }
@@ -66,26 +72,16 @@ function anonymoustoken(req, res, next) {
 };
 
 function generetaToken(object, next) {
-    accesstokenModel.findOne(object, (err, token) => {
-        if (err) next(err);
-        else {
-            var token = randtoken.generate(128);
-            object.token = token;
-            object.creationTime = new Date();
-            next(null, object);
-        } //here we can invalidate theold and produce a new one but only one could be connected 
-        // else if(!token){
-        //     //generate it
-        // }else{
-        //     next(null,token)
-        // }
-    })
+    var token = randtoken.generate(128);
+    object.token = token;
+    object.creationTime = new Date();
+    next(null, object);
 }
 
 var token = [
     passport.authenticate(['basic', 'oauth2-client-password'], {
         session: false
-    }), //fix here the basic beeds fix about crypto and salt
+    }),
     server.token(),
     server.errorHandler(),
 ];
@@ -99,7 +95,7 @@ var anonymoustoken = [
 ];
 
 module.exports = {
-    authrorize,
+    authorize,
     token,
     anonymoustoken
 }

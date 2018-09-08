@@ -14,14 +14,14 @@ const server = oauth2orize.createServer();
 
 server.serializeClient((client, done) => done(null, client.clientId));
 
-server.deserializeClient((id, done) => {//ok
+server.deserializeClient((id, done) => {
     Client.findOne({'clientId':id}, (error, client) => {
     if (error) return done(error);
     return done(null, client);
   });
 });
 
-server.grant(oauth2orize.grant.code((client, redirectUri, user, ares, done) => {//this is working fine :) 
+server.grant(oauth2orize.grant.code((client, redirectUri, user, ares, done) => {
     const code = utils.getUid(16);
     var myob={code:code,clientId:client.clientId, redirectUri:redirectUri,userId:user._id};
     AuthCode.findOne({clientId:client.clientId, redirectUri:redirectUri,userId:user._id},(error,res)=>{
@@ -38,7 +38,7 @@ server.grant(oauth2orize.grant.code((client, redirectUri, user, ares, done) => {
 
 
 
-  server.exchange(oauth2orize.exchange.code((client, code, redirectUri, done) => {//this is working and the update of the token
+  server.exchange(oauth2orize.exchange.code((client, code, redirectUri, done) => {
     AuthCode.findOne({code:code,clientId:client.clientId,redirectUri:redirectUri}, (error, authCode) => {
         if (error) return done(error);
         if (!authCode) return done(null, false);
@@ -53,10 +53,9 @@ server.grant(oauth2orize.grant.code((client, redirectUri, user, ares, done) => {
                 });
             }else{
               var date1=new Date(token.creationTime)
-              var date2=new Date()
+              var date2=new Date()//here this expiration might not be needed
               var timeDiff = Math.abs(date2.getTime() - date1.getTime());
               
-              console.log(timeDiff);
                   if(timeDiff>50000){   
                     const newtoken = utils.getUid(256);
                     Token.update({token:newtoken,creationTime: new Date()}, (error) => {
@@ -64,14 +63,14 @@ server.grant(oauth2orize.grant.code((client, redirectUri, user, ares, done) => {
                     return done(null, newtoken);
                   });
                 }else{
-                  done(null,token);//already a token exists
+                  done(null,token);
                 }
             }
           });
     });
   }));
 
-  server.exchange(oauth2orize.exchange.password((client, username, password, scope, done) => {//this is working
+  server.exchange(oauth2orize.exchange.password((client, username, password, scope, done) => {
     // Validate the client
     Client.findOne({'clientId':client.clientId}, (error, localClient) => {
       if (error) return done(error);

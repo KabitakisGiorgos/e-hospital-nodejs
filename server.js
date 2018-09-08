@@ -36,8 +36,10 @@ mongoose.connect("mongodb://localhost:27017/test2", () => {
 //here another route login
 myapp.post('/oauth/token', utils.security.token);
 myapp.post('/oauth/token/anonymous', utils.security.anonymoustoken);
-myapp.use(utils.security.authrorize); //here checking for existent and valid token
+myapp.use(utils.security.authorize); //here checking for existent and valid token
 myapp.get('/', routes.site.index); //Check api Working
+
+myapp.post('/user',routes.user.create);//here this route migth need change in the new architect but putting it in this file for the sake of testing
 
 // myapp.get('/login', routes.site.loginForm); //ok 
 // myapp.post('/login', routes.site.login); //ok    
@@ -66,7 +68,7 @@ myapp.use(function (err, req, res, next) { //here a function for error handling 
     } else if (err) {
         res.status(401);
         res.send({
-            'msg': err
+            'msg': 'error'
         });
     }
     next();
