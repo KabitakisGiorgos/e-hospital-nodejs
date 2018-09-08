@@ -9,7 +9,7 @@ var User=require("../models/user_model");
 var Client=require("../models/client_model");
 var Token=require("../models/token_model");
 
-passport.use(new LocalStrategy(//fixed working
+passport.use(new LocalStrategy(//Fix password salt and crypto
     (username, password, done) => {
       
         User.findOne({username:username}, (error, user) => {
@@ -57,16 +57,16 @@ passport.use(new BasicStrategy(
         var date2=new Date()
         var timeDiff = Math.abs(date2.getTime() - date1.getTime());
         console.log(timeDiff);
-        if (token.userId&&timeDiff<50000) {
-            User.findOne({'_id':token.userId}, (error, user) => {
-            if (error) return done(error);
-            if (!user) return done(null, false);
+        // if (token.userId&&timeDiff<50000) {
+            // User.findOne({'_id':token.userId}, (error, user) => {
+            // if (error) return done(error);
+            // if (!user) return done(null, false);
 
-            done(null, user, { scope: '*' });
-          });
-        } else {
-          done(null,false);
-        }
+            done(null,{}, { scope: '*' });
+          // });
+        // } else {
+        //   done(null,false);
+        // }
       });
     }
   ));

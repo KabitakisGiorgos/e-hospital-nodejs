@@ -1,5 +1,6 @@
 const security=require('./security');
 
+
 function getUid(length) {
     let uid = '';
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -19,5 +20,5 @@ function getRandomInt(min, max) {
 
   module.exports={
     security,
-    getUid
+    getUid,
   }

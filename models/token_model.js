@@ -10,4 +10,4 @@ var tokenSchema=new Schema({
     creationTime:{type:Date}
 });
 
-module.exports=mongoose.model('accessTokens',tokenSchema);
+module.exports=mongoose.model('accesstokens',tokenSchema);
