@@ -1,6 +1,6 @@
 const passport = require('passport');
 
-module.exports.info = [
+exports.info = [
   passport.authenticate('bearer', { session: false }),
   (request, response) => {
     // request.authInfo is set using the `info` argument supplied by

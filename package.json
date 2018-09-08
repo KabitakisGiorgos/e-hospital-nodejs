@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "nodemon server.js",
+    "start:debug": "nodemon --inspect server.js"
   },
   "author": "",
   "license": "ISC",
@@ -30,5 +31,8 @@
     "passport-local": "^1.0.0",
     "passport-oauth2-client-password": "^0.1.2",
     "token-parser": "0.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
   }
 }

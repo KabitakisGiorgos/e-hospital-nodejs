@@ -1,30 +1,30 @@
-var parse = require('parse-bearer-token');
-var passport = require('passport');
+// let parse = require('parse-bearer-token');
+// let passport = require('passport');
 
-// function authrorize(req, res, next) {
-//     var token = parse(req);
-//     if (!token) {
-//         // res.error='Unauthorized';
-//         next('Unauthorized');
-//     }
-//     else {
+// // function authrorize(req, res, next) {
+// //     let token = parse(req);
+// //     if (!token) {
+// //         // res.error='Unauthorized';
+// //         next('Unauthorized');
+// //     }
+// //     else {
 
        
-//         ]
-//         test();
+// //         ]
+// //         test();
 
-//     }
+// //     }
+// // }
+// let authrorize = [
+//     passport.authenticate('bearer', { session: false }),
+//     // (req, res, next) => {
+//     //     // res.status(200);
+//     //     // res.send('test');// console.log(token);
+//     //     next('error');
+//     // }
+// ];
+
+// exports = {
+//     authrorize
 // }
-var authrorize = [
-    passport.authenticate('bearer', { session: false }),
-    (req, res, next) => {
-        // res.status(200);
-        // res.send('test');// console.log(token);
-        next('error');
-    }
-];
-
-module.exports = {
-    authrorize
-}
 

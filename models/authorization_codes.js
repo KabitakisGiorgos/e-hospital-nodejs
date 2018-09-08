@@ -1,11 +1,11 @@
-var mongoose=require('mongoose');
-var Schema=mongoose.Schema;
-var ObjectId = Schema.ObjectId;
+let mongoose = require("mongoose");
+let Schema = mongoose.Schema;
+let ObjectId = Schema.ObjectId;
 
-var authcodeSchema=new Schema({
-    code:String,
-    clientId:String,
-    redirectUri:String,
-    userId:ObjectId
+let authcodeSchema = new Schema({
+  code: String,
+  clientId: String,
+  redirectUri: String,
+  userId: ObjectId
 });
-module.exports=mongoose.model('authcodes',authcodeSchema);
+exports = mongoose.model("authcodes", authcodeSchema);

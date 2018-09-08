@@ -1,13 +1,13 @@
-var mongoose=require('mongoose');
-var Schema=mongoose.Schema;
-var ObjectId = Schema.ObjectId;
-var ttl = require('mongoose-ttl');
+let mongoose = require("mongoose");
+let Schema = mongoose.Schema;
+let ObjectId = Schema.ObjectId;
+let ttl = require("mongoose-ttl");
 
-var tokenSchema=new Schema({
-    token:String,
-    userId:ObjectId,
-    clientId:String,
-    creationTime:{type:Date}
+let tokenSchema = new Schema({
+  token: String,
+  userId: ObjectId,
+  clientId: String,
+  creationTime: { type: Date }
 });
 
-module.exports=mongoose.model('accesstokens',tokenSchema);
+exports = mongoose.model("accesstokens", tokenSchema);

@@ -8,7 +8,23 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}\\server.js"
-        }
+			"program": "${workspaceFolder}\\server.js",
+			"runtimeExecutable": "nodemon",
+			"args": ["${workspaceRoot}/server.js"],
+			"runtimeArgs": ["--nolazy"]
+        },
+		{
+			"type": "node",
+			"request": "attach",
+			"name": "Attach by Process ID",
+			"processId": "${command:PickProcess}"
+		},
+		{
+			"type": "node",
+			"request": "attach",
+			"name": "Attach",
+			"port": 9229,
+			"restart": true
+		}
     ]
 }

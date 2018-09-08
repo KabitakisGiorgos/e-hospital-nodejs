@@ -4,11 +4,11 @@ const login = require('connect-ensure-login');
 const utils = require('../utils');
 
 const mongoose=require('mongoose');
-var ObjectId = require('mongodb').ObjectID;
-var User=require("../models/user_model");
-var Client=require("../models/client_model");
-var Token=require("../models/token_model");
-var AuthCode=require('../models/authorization_codes');
+let ObjectId = require('mongodb').ObjectID;
+let User=require("../models/user_model");
+let Client=require("../models/client_model");
+let Token=require("../models/token_model");
+let AuthCode=require('../models/authorization_codes');
 
 const server = oauth2orize.createServer();
 
@@ -21,9 +21,9 @@ server.deserializeClient((id, done) => {//ok
   });
 });
 
-server.grant(oauth2orize.grant.code((client, redirectUri, user, ares, done) => {//this is working fine :) 
+server.grant(oauth2orize.grant.code((client, redirectUri, user, ares, done) => {//this is working fine :)
     const code = utils.getUid(16);
-    var myob={code:code,clientId:client.clientId, redirectUri:redirectUri,userId:user._id};
+    let myob={code:code,clientId:client.clientId, redirectUri:redirectUri,userId:user._id};
     AuthCode.findOne({clientId:client.clientId, redirectUri:redirectUri,userId:user._id},(error,res)=>{
         if(error) return done(error);
         if(!res) {
@@ -33,7 +33,7 @@ server.grant(oauth2orize.grant.code((client, redirectUri, user, ares, done) => {
               });
         }else return done(res);
     });
-    
+
   }));
 
 
@@ -42,7 +42,7 @@ server.grant(oauth2orize.grant.code((client, redirectUri, user, ares, done) => {
     AuthCode.findOne({code:code,clientId:client.clientId,redirectUri:redirectUri}, (error, authCode) => {
         if (error) return done(error);
         if (!authCode) return done(null, false);
-        
+
         Token.findOne({clientId:client.clientId,userId:authCode.userId},(error,token)=>{
             if(error) return done(error);
             if(!token){
@@ -52,12 +52,12 @@ server.grant(oauth2orize.grant.code((client, redirectUri, user, ares, done) => {
                     return done(null, newtoken);
                 });
             }else{
-              var date1=new Date(token.creationTime)
-              var date2=new Date()
-              var timeDiff = Math.abs(date2.getTime() - date1.getTime());
-              
+              let date1=new Date(token.creationTime)
+              let date2=new Date()
+              let timeDiff = Math.abs(date2.getTime() - date1.getTime());
+
               console.log(timeDiff);
-                  if(timeDiff>50000){   
+                  if(timeDiff>50000){
                     const newtoken = utils.getUid(256);
                     Token.update({token:newtoken,creationTime: new Date()}, (error) => {
                     if (error) return done(error);
@@ -92,12 +92,12 @@ server.grant(oauth2orize.grant.code((client, redirectUri, user, ares, done) => {
                     return done(null, newtoken);
                 });
             }else{
-              var date1=new Date(token.creationTime)
-              var date2=new Date()
-              var timeDiff = Math.abs(date2.getTime() - date1.getTime());
-              
+              let date1=new Date(token.creationTime)
+              let date2=new Date()
+              let timeDiff = Math.abs(date2.getTime() - date1.getTime());
+
               console.log(timeDiff);
-                  if(timeDiff>50000){   
+                  if(timeDiff>50000){
                     const newtoken = utils.getUid(256);
                     Token.update({token:newtoken,creationTime: new Date()}, (error) => {
                     if (error) return done(error);
@@ -112,8 +112,8 @@ server.grant(oauth2orize.grant.code((client, redirectUri, user, ares, done) => {
     });
   }));
 
-  module.exports.authorization = [
-    
+  exports.authorization = [
+
     login.ensureLoggedIn(),
     server.authorization((clientId, redirectUri, done) => {
       Client.findOne({clientId:clientId}, (error, client) => {
@@ -127,9 +127,9 @@ server.grant(oauth2orize.grant.code((client, redirectUri, user, ares, done) => {
       Token.findOne({userId:ObjectId(user._id),clientId:client.clientId}, (error, token) => {
         // Auto-approve
         if(token){
-          var date1=new Date(token.creationTime)
-          var date2=new Date()
-          var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+          let date1=new Date(token.creationTime)
+          let date2=new Date()
+          let timeDiff = Math.abs(date2.getTime() - date1.getTime());
           if (timeDiff<50000) return done(null, true);
         }else return done(null, false);
       });
@@ -144,8 +144,7 @@ server.grant(oauth2orize.grant.code((client, redirectUri, user, ares, done) => {
     server.decision(),
   ];
 
-  module.exports.token = [
+  exports.token = [
     server.token(),
     server.errorHandler(),
   ];
-  

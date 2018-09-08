@@ -1,10 +1,10 @@
-var mongoose=require('mongoose');
-var Schema=mongoose.Schema;
+let mongoose = require("mongoose");
+let Schema = mongoose.Schema;
 
-var clientsSchema=new Schema({
-    name:String,
-    clientSecret:String,
-    clientId:String,
-    isTrusted:Boolean
+let clientsSchema = new Schema({
+  name: String,
+  clientSecret: String,
+  clientId: String,
+  isTrusted: Boolean
 });
-module.exports=mongoose.model('clients',clientsSchema);
+exports = mongoose.model("clients", clientsSchema);
