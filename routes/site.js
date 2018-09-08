@@ -1,7 +1,7 @@
 const passport=require('passport');
 const login=require('connect-ensure-login');
 
-module.exports.index = (request, response) => response.send('My Ouath2 Provider');
+module.exports.index = (request, response) => response.send('Hospital Helper 1.0.0');
 
 module.exports.loginForm = (request, response) => response.render('login');
 
