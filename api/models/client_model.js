@@ -7,4 +7,5 @@ let clientsSchema = new Schema({
   clientId: String,
   isTrusted: Boolean
 });
-exports = mongoose.model("clients", clientsSchema);
+
+module.exports = mongoose.model("clients", clientsSchema);

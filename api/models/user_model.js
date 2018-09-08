@@ -6,4 +6,5 @@ let userSchema = new Schema({
   password: String,
   name: String
 });
-exports = mongoose.model("users", userSchema);
+
+module.exports = mongoose.model("users", userSchema);

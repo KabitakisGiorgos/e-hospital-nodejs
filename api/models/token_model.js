@@ -10,4 +10,4 @@ let tokenSchema = new Schema({
   creationTime: { type: Date }
 });
 
-exports = mongoose.model("accesstokens", tokenSchema);
+module.exports = mongoose.model("accesstokens", tokenSchema);

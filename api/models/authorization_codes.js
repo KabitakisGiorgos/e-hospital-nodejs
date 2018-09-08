@@ -8,4 +8,5 @@ let authcodeSchema = new Schema({
   redirectUri: String,
   userId: ObjectId
 });
-exports = mongoose.model("authcodes", authcodeSchema);
+
+module.exports = mongoose.model("authcodes", authcodeSchema);
