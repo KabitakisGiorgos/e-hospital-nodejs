@@ -17,24 +17,6 @@ var authrorize = [
     }
 ];
 
-function getUid(length) { //not permanent here i ll delete it 
-    let uid = '';
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charsLength = chars.length;
-
-    for (let i = 0; i < length; ++i) {
-        uid += chars[getRandomInt(0, charsLength - 1)];
-    }
-
-    return uid;
-};
-
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-
-
 server.exchange(oauth2orize.exchange.password((client, username, password, scope, done) => {
     clientModel.findOne({
         clientId: client.clientId
@@ -68,15 +50,30 @@ server.exchange(oauth2orize.exchange.password((client, username, password, scope
     });
 }));
 
-function generetaToken(object,next){
-    accesstokenModel.findOne(object,(err,token)=>{
-        if(err) next(err);
-        else{
+function anonymoustoken(req, res, next) {
+    generetaToken({
+        clientId: req.body.client_id
+    }, (err, newtoken) => {
+        if (err) next(err);
+        else {
+            accesstokenModel.create(newtoken, (error) => {
+                if (error) return done(error);
+                res.status(200);
+                res.send(newtoken);
+            });
+        }
+    });
+};
+
+function generetaToken(object, next) {
+    accesstokenModel.findOne(object, (err, token) => {
+        if (err) next(err);
+        else {
             var token = randtoken.generate(128);
-            object.token=token;
-            object.creationTime=new Date();
-            next(null,object);
-        }//here we can invalidate theold and produce a new one but only one could be connected 
+            object.token = token;
+            object.creationTime = new Date();
+            next(null, object);
+        } //here we can invalidate theold and produce a new one but only one could be connected 
         // else if(!token){
         //     //generate it
         // }else{
@@ -93,7 +90,16 @@ var token = [
     server.errorHandler(),
 ];
 
+var anonymoustoken = [
+    passport.authenticate('oauth2-client-password', {
+        session: false
+    }),
+    anonymoustoken,
+    server.errorHandler(),
+];
+
 module.exports = {
     authrorize,
-    token
+    token,
+    anonymoustoken
 }

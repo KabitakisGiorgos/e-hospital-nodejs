@@ -35,6 +35,7 @@ mongoose.connect("mongodb://localhost:27017/test2", () => {
 
 //here another route login
 myapp.post('/oauth/token', utils.security.token);
+myapp.post('/oauth/token/anonymous', utils.security.anonymoustoken);
 myapp.use(utils.security.authrorize); //here checking for existent and valid token
 myapp.get('/', routes.site.index); //Check api Working
 
