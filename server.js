@@ -5,7 +5,6 @@ const errorHandler = require("errorhandler");
 const session = require("express-session");
 const passport = require("passport");
 const mongoose = require("mongoose");
-
 const routes = require("./api/routes");
 const { oauth, error } = require("./api/middleware");
 require("./api/middleware/strategies"); //passport strategies implemented
