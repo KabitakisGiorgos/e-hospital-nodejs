@@ -1,26 +1,30 @@
-const express = require("express");
-const cookieParser = require("cookie-parser");
-const bodyParser = require("body-parser");
-const errorHandler = require("errorhandler");
-const session = require("express-session");
-const passport = require("passport");
-const mongoose = require("mongoose");
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const errorHandler = require('errorhandler');
+const session = require('express-session');
+const passport = require('passport');
+const mongoose = require('mongoose');
 
-// const utils = require("./utils");
-// const routes = require("./api/routes");
 
-// Initializes the passport configuration for the oauth
-require("./api/middleware/auth"); //ok
+const routes = require('./api/routes');
+const middleware = require('./api/middleware');
+require("./api/middleware/strategies"); //passport strategies implemented
 
 const myapp = express();
 myapp.set("view engine", "ejs");
 myapp.use(cookieParser());
-myapp.use(bodyParser.json({ extended: false }));
-myapp.use(bodyParser.urlencoded({ extended: false }));
+myapp.use(bodyParser.json({
+    extended: false
+}));
+myapp.use(bodyParser.urlencoded({
+    extended: false
+}));
+
 myapp.use(errorHandler());
 myapp.use(
   session({
-    secret: "o_parasiris_einai_malakas",
+    secret: "o_p arasiris_einai_malakas",
     resave: false,
     saveUninitialized: false
   })
@@ -34,25 +38,14 @@ mongoose.connect(
   () => console.log("connected to db")
 );
 
-// TODO: This perhaps needs to be done in another way
+myapp.post('/oauth/token', middleware.oauth.token);
+myapp.post('/oauth/token/anonymous', middleware.oauth.anonymoustoken);
+myapp.use(middleware.oauth.authorize); //here checking for existent and valid token
+
 myapp.get("/", (request, response) => response.send("My Ouath2 Provider")); //here check api
 
-//here another route login
-myapp.use([passport.authenticate("bearer", { session: false })]);
-
 myapp.use(require("./api/middleware/router"));
+myapp.use(middleware.error);
 
-// KAMPITAKI TODO: Complete this?
-myapp.use(function(err, req, res, next) {
-  //here a function for error handling seperate folder
-  // console.log('test');
-  // if (err === "Unauthorized") {
-  //   res.status(401);
-  // } else if (err) {
-  //   res.status(500);
-  // }
-  res.status(500);
-  res.send({ error: err });
-});
 
 myapp.listen(process.env.PORT || 4200);

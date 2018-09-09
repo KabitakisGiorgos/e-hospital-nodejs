@@ -1,6 +1,10 @@
 const passport = require("passport");
 const ensureLogin = require("connect-ensure-login");
+const validator = require('validator');
+
 const router = require("../../middleware/router");
+var utils = require('../../utils');
+let userModel = require("../../models/user");
 
 const login = passport.authenticate("local", {
   successReturnToOrRedirect: "/account",
@@ -30,12 +34,29 @@ const getUserInfo = [
 ];
 
 const createUser = [
-  (request, response) => {
-    // request.authInfo is set using the `info` argument supplied by
-    // `BearerStrategy`. It is typically used to indicate scope of the token,
-    // and used in access control checks. For illustrative purposes, this
-    // example simply returns the scope in the response.
-    response.json({ user_id: request.user.id, name: request.user.name });
+  function (req, res, next) {
+    if (req.body && validator.isEmail(req.body.email) && req.body.password && req.body.username) {
+      var hashedpassword=utils.passwordhash.saltHashPassword(req.body.password,utils.passwordhash.genRandomString(16));
+      var newuser = {
+        username: req.body.username,
+        password: hashedpassword.passwordHash,
+        name: req.body.name,
+        email: req.body.email,
+        salt:hashedpassword.salt
+      }
+
+      userModel.create(newuser, (error) => {
+        if (error) return next(error);
+        else {
+          res.status(201);
+          delete newuser.password;
+          delete newuser.salt;
+          res.send(newuser);
+        }
+      });
+    } else {
+      next('Invalid Arguments'); //This error needs handling
+    }
   }
 ];
 
@@ -45,4 +66,8 @@ router.get("/account", getAccount); //ok
 
 router.get("/api/userinfo", getUserInfo);
 
-router.post("/newuser", createUser);
+router.post("/user", createUser);
+// router.put("/user/:userId", updateUser);
+// router.delete("/user/:userId", deleteUser);
+// router.get("/user", getUser);
+// router.get("/users", getAllUsers);

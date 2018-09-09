@@ -1,0 +1,194 @@
+{
+	"info": {
+		"_postman_id": "df07b104-eb81-402f-bd98-11b502636841",
+		"name": "Hipeac",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Test Working Server",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:4200",
+					"host": [
+						"localhost"
+					],
+					"port": "4200"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User Token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "password",
+							"value": "12345",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "PtyxioNOT",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "12345",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "secret",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:4200/oauth/token",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Anonymous token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "password",
+							"value": "12345",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "username",
+							"value": "PtyxioNOT",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "client_id",
+							"value": "12345",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "secret",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:4200/oauth/token/anonymous",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"oauth",
+						"token",
+						"anonymous"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "csd3142@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "PtyxioNot",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Giorgos",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:4200/user",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
