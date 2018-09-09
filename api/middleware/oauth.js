@@ -3,10 +3,11 @@ const oauth2orize = require("oauth2orize");
 const server = oauth2orize.createServer();
 const randtoken = require("rand-token");
 
-const userModel = require("../models/user");
-const clientModel = require("../models/client");
-const accesstokenModel = require("../models/token");
-const utils = require("../utils");
+let { userModel, clientModel, tokenModel } = require("../models");
+// const userModel = require("../models/user");
+// const clientModel = require("../models/client");
+// const tokenModel = require("../models/token");
+const { passwordhash } = require("../utils");
 //code Source:https://github.com/gerges-beshay/oauth2orize-examples
 
 server.exchange(
@@ -28,7 +29,7 @@ server.exchange(
           (error, user) => {
             if (error) return done(error);
             if (!user) return done(null, false);
-            var hashedpassword = utils.passwordhash.saltHashPassword(
+            var hashedpassword = passwordhash.saltHashPassword(
               password,
               user.salt
             );
@@ -44,7 +45,7 @@ server.exchange(
               if (error) return done(error);
               else {
                 //here we can put a check if the accesstoken already exists to invalidate it but then we cant have multiple devices connected
-                accesstokenModel.create(newtoken, error => {
+                tokenModel.create(newtoken, error => {
                   if (error) return done(error);
                   return done(null, newtoken.token, {
                     userId: newtoken.userId,
@@ -90,7 +91,7 @@ const anonymoustoken = [
       (err, newtoken) => {
         if (err) next(err);
         else {
-          accesstokenModel.create(newtoken, error => {
+          tokenModel.create(newtoken, error => {
             if (error) return done(error);
             res.status(200);
             newtoken.token_type = "Bearer";

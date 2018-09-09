@@ -5,17 +5,19 @@ const login = require("connect-ensure-login");
 const passport = require("passport");
 
 let ObjectId = require("mongodb").ObjectID;
-let User = require("../models/user");
-let Client = require("../models/client");
-let Token = require("../models/token");
-let AuthCode = require("../models/authorization_codes");
+let { userModel, clientModel, tokenModel, authCodeModel } = require("../models");
+
+// let userModel = require("../models/user");
+// let clientModel = require("../models/client");
+// let tokenModel = require("../models/token");
+// let authCodeModel = require("../models/authorization_codes");
 
 const server = oauth2orize.createServer();
 
 server.serializeClient((client, done) => done(null, client.clientId));
 
 server.deserializeClient((id, done) => {
-  Client.findOne(
+  clientModel.findOne(
     {
       clientId: id
     },
@@ -36,7 +38,7 @@ server.grant(
       userId: user._id,
       creationTime: new Date()
     };
-    AuthCode.findOne(
+    authCodeModel.findOne(
       {
         clientId: client.clientId,
         redirectUri: redirectUri,
@@ -45,7 +47,7 @@ server.grant(
       (error, res) => {
         if (error) return done(error);
         if (!res) {
-          AuthCode.create(myob, error => {
+          authCodeModel.create(myob, error => {
             if (error) return done(error);
             return done(null, code);
           });
@@ -57,7 +59,7 @@ server.grant(
 
 server.exchange(
   oauth2orize.exchange.code((client, code, redirectUri, done) => {
-    AuthCode.findOne(
+    authCodeModel.findOne(
       {
         code: code,
         clientId: client.clientId,
@@ -67,7 +69,7 @@ server.exchange(
         if (error) return done(error);
         if (!authCode) return done(null, false);
 
-        Token.findOne(
+        tokenModel.findOne(
           {
             clientId: client.clientId,
             userId: authCode.userId
@@ -109,7 +111,7 @@ const authorize = [
   login.ensureLoggedIn(),
   server.authorization(
     (clientId, redirectUri, done) => {
-      Client.findOne(
+      clientModel.findOne(
         {
           clientId: clientId
         },
@@ -120,7 +122,7 @@ const authorize = [
       );
     },
     (client, user, done) => {
-      AuthCode.findOne(
+      authCodeModel.findOne(
         {
           clientId: client.clientId,
           userId: ObjectId(user._id)
@@ -129,7 +131,7 @@ const authorize = [
           if (error) return done(error);
           if (code) return done(null, true);
           else {
-            Token.findOne(
+            tokenModel.findOne(
               {
                 userId: ObjectId(user._id),
                 clientId: client.clientId

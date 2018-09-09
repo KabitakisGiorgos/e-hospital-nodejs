@@ -2,8 +2,8 @@ const passport = require("passport");
 const ensureLogin = require("connect-ensure-login");
 const validator = require("validator");
 
-var utils = require("../utils");
-let userModel = require("../models/user");
+var { passwordhash } = require("../utils");
+let { userModel } = require("../models");
 
 const login = passport.authenticate("local", {
   successReturnToOrRedirect: "/account",
@@ -40,9 +40,9 @@ const createUser = [
       req.body.password &&
       req.body.username
     ) {
-      var hashedpassword = utils.passwordhash.saltHashPassword(
+      var hashedpassword = passwordhash.saltHashPassword(
         req.body.password,
-        utils.passwordhash.genRandomString(16)
+        passwordhash.genRandomString(16)
       );
       var newuser = {
         username: req.body.username,

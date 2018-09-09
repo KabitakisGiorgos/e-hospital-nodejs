@@ -1,7 +1,17 @@
-const router = require("../middleware/router");
-let middleware = require("../middleware");
+const { router } = require("../utils");
+let { oauth2 } = require("../middleware");
 
-router.get("/dialog/authorize", middleware.oauth2.authorize); //ok
-router.post("/dialog/authorize/decision", middleware.oauth2.decision); //ok
+/** Possible structure for hooks implementation
+  * before/after are arrays in a `api/hooks/oauth.js` file that you can populate.
 
-router.post("/oauth/token", middleware.oauth2.token); //ok working
+  const authorize = [
+    hooks.oauth.before,
+    middleware.oauth2.authorize,
+    hooks.oauth.after,
+  ];
+
+ */
+router.get("/dialog/authorize", oauth2.authorize); //ok
+router.post("/dialog/authorize/decision", oauth2.decision); //ok
+
+router.post("/oauth/token", oauth2.token); //ok working

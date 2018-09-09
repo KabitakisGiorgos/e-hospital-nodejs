@@ -1,4 +1,8 @@
 var requireDir = require('require-dir');
-var dir = requireDir('./');
+var dir = requireDir('.', {
+  mapKey: function (value, baseName) {
+    return typeof value === 'string' ? `${value}Model` : `${baseName}Model`;
+  }
+});
 
-module.exports.routes = dir;
+module.exports = dir;
