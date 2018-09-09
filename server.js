@@ -39,7 +39,7 @@ myapp.post('/oauth/token/anonymous', utils.security.anonymoustoken);
 myapp.use(utils.security.authorize); //here checking for existent and valid token
 myapp.get('/', routes.site.index); //Check api Working
 
-myapp.post('/user',routes.user.create);//here this route migth need change in the new architect but putting it in this file for the sake of testing
+myapp.post('/user', routes.user.create); //here this route migth need change in the new architect but putting it in this file for the sake of testing
 
 // myapp.get('/login', routes.site.loginForm); //ok 
 // myapp.post('/login', routes.site.login); //ok    
@@ -48,15 +48,9 @@ myapp.post('/user',routes.user.create);//here this route migth need change in th
 
 // myapp.get('/dialog/authorize', routes.oauth2.authorization); //ok 
 // myapp.post('/dialog/authorize/decision', routes.oauth2.decision); //ok
-// myapp.post('/oauth/token', passport.authenticate('basic', {
-//     session: false
-// }), routes.oauth2.token, function (req, res) {}); //ok working
+// myapp.post('/oauth/token',routes.oauth2.token, function (req, res) {}); //ok working
 
 // myapp.get('/api/userinfo', routes.user.info);
-
-// myapp.post('/newuser', (request, response) => {
-
-// });
 
 myapp.use(utils.error)
 

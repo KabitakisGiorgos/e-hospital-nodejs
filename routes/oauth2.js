@@ -29,7 +29,8 @@ server.grant(oauth2orize.grant.code((client, redirectUri, user, ares, done) => {
     code: code,
     clientId: client.clientId,
     redirectUri: redirectUri,
-    userId: user._id
+    userId: user._id,
+    creationTime: new Date()
   };
   AuthCode.findOne({
     clientId: client.clientId,
@@ -42,9 +43,8 @@ server.grant(oauth2orize.grant.code((client, redirectUri, user, ares, done) => {
         if (error) return done(error);
         return done(null, code);
       });
-    } else return done(res);
+    } else return done(null, res.code);
   });
-
 }));
 
 
@@ -64,59 +64,28 @@ server.exchange(oauth2orize.exchange.code((client, code, redirectUri, done) => {
     }, (error, token) => {
       if (error) return done(error);
       if (!token) {
-        const newtoken = utils.helper.getUid(256);
-        Token.create({
-          token: newtoken,
-          userId: authCode.userId,
-          clientId: authCode.clientId,
-          creationTime: new Date()
-        }, (error) => {
+        var object = {
+          userId: user._id,
+          clientId: localClient.clientId,
+        }
+
+        utils.security.generetaToken(object, (error, newtoken) => {
           if (error) return done(error);
-          return done(null, newtoken);
+          else { //here we can put a check if the accesstoken already exists to invalidate it but then we cant have multiple devices connected
+            accesstokenModel.create(newtoken, (error) => {
+              if (error) return done(error);
+              return done(null, newtoken.token, {
+                'userId': newtoken.userId,
+                'clientId': newtoken.clientid,
+                'creationTime': newtoken.creationTime,
+                'clientId': newtoken.clientId
+              });
+            });
+          }
         });
       } else {
         done(null, token);
       }
-    });
-  });
-}));
-
-server.exchange(oauth2orize.exchange.password((client, username, password, scope, done) => {
-  // Validate the client
-  Client.findOne({
-    'clientId': client.clientId
-  }, (error, localClient) => {
-    if (error) return done(error);
-    if (!localClient) return done(null, false);
-    if (localClient.clientSecret !== client.clientSecret) return done(null, false);
-    // Validate the user
-    User.findOne({
-      username: username
-    }, (error, user) => {
-      if (error) return done(error);
-      if (!user) return done(null, false);
-      if (password !== user.password) return done(null, false);
-      // Everything validated, return the token
-      Token.findOne({
-        clientId: client.clientId,
-        userId: user._id
-      }, (error, token) => {
-        if (error) return done(error);
-        if (!token) {
-          const newtoken = utils.helper.getUid(256);
-          Token.create({
-            token: newtoken,
-            userId: user._id,
-            clientId: localClient.clientId,
-            creationTime: new Date()
-          }, (error) => {
-            if (error) return done(error);
-            return done(null, newtoken);
-          });
-        } else {
-          done(null, token); //already a token exists
-        }
-      });
     });
   });
 }));
@@ -132,16 +101,21 @@ module.exports.authorization = [
       return done(null, client, redirectUri);
     });
   }, (client, user, done) => {
-    // Check if grant request qualifies for immediate approval
-    // Auto-approve
-    if (client.isTrusted) return done(null, true);
-    Token.findOne({
-      userId: ObjectId(user._id),
-      clientId: client.clientId
-    }, (error, token) => {
-      // Auto-approve
-      if (token) return done(null, true);
-
+    AuthCode.findOne({
+      clientId: client.clientId,
+      userId: ObjectId(user._id)
+    }, (error, code) => {
+      if (error) return done(error);
+      if (code) return done(null, true);
+      else {
+        Token.findOne({
+          userId: ObjectId(user._id),
+          clientId: client.clientId
+        }, (error, token) => {
+          // Auto-approve
+          if (token) return done(null, true);
+        });
+      }
     });
   }),
   (request, response) => {

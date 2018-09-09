@@ -40,7 +40,7 @@ server.exchange(oauth2orize.exchange.password((client, username, password, scope
 
             generetaToken(object, (error, newtoken) => {
                 if (error) return done(error);
-                else { //here we can put a check if the accesstoken already exists to invalidate it
+                else { //here we can put a check if the accesstoken already exists to invalidate it but then we cant have multiple devices connected
                     accesstokenModel.create(newtoken, (error) => {
                         if (error) return done(error);
                         return done(null, newtoken.token, {
@@ -97,5 +97,6 @@ var anonymoustoken = [
 module.exports = {
     authorize,
     token,
-    anonymoustoken
+    anonymoustoken,
+    generetaToken
 }
