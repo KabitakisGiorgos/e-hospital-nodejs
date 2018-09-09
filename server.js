@@ -11,41 +11,45 @@ const routes = require('./api/routes');
 const middleware = require('./api/middleware');
 require("./api/middleware/strategies"); //passport strategies implemented
 
-const myapp = express();
-myapp.set("view engine", "ejs");
-myapp.use(cookieParser());
-myapp.use(bodyParser.json({
-    extended: false
-}));
-myapp.use(bodyParser.urlencoded({
-    extended: false
-}));
-
-myapp.use(errorHandler());
-myapp.use(
-  session({
-    secret: "o_p arasiris_einai_malakas",
-    resave: false,
-    saveUninitialized: false
-  })
-);
-myapp.use(passport.initialize());
-myapp.use(passport.session());
-
 mongoose.connect(
   "mongodb://localhost:27017/test2",
   { useNewUrlParser: true },
   () => console.log("connected to db")
 );
 
-myapp.post('/oauth/token', middleware.oauth.token);
-myapp.post('/oauth/token/anonymous', middleware.oauth.anonymoustoken);
-myapp.use(middleware.oauth.authorize); //here checking for existent and valid token
 
-myapp.get("/", (request, response) => response.send("My Ouath2 Provider")); //here check api
+const app = express();
 
-myapp.use(require("./api/middleware/router"));
-myapp.use(middleware.error);
+app.set("view engine", "ejs");
+app.use(cookieParser());
+app.use(bodyParser.json({
+    extended: false
+}));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+
+app.use(errorHandler());
+app.use(
+  session({
+    secret: "o_p arasiris_einai_malakas",
+    resave: false,
+    saveUninitialized: false
+  })
+);
+app.use(passport.initialize());
+// this is for oauth2 only
+app.use(passport.session());
 
 
-myapp.listen(process.env.PORT || 4200);
+app.post('/oauth/token', middleware.oauth.token);
+app.post('/oauth/token/anonymous', middleware.oauth.anonymoustoken);
+app.use(middleware.oauth.authorize); //here checking for existent and valid token
+
+app.get("/", (request, response) => response.send("My Ouath2 Provider")); //here check api
+
+app.use(require("./api/middleware/router"));
+app.use(middleware.error);
+
+
+app.listen(process.env.PORT || 4200);

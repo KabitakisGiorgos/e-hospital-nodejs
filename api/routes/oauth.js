@@ -1,5 +1,5 @@
-const router = require("../../middleware/router");
-let middleware = require("../../middleware");
+const router = require("../middleware/router");
+let middleware = require("../middleware");
 
 router.get("/dialog/authorize", middleware.oauth2.authorize); //ok
 router.post("/dialog/authorize/decision", middleware.oauth2.decision); //ok

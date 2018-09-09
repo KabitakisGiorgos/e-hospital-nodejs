@@ -1,10 +1,9 @@
 const passport = require("passport");
 const ensureLogin = require("connect-ensure-login");
-const validator = require('validator');
+const validator = require("validator");
 
-const router = require("../../middleware/router");
-var utils = require('../../utils');
-let userModel = require("../../models/user");
+var utils = require("../utils");
+let userModel = require("../models/user");
 
 const login = passport.authenticate("local", {
   successReturnToOrRedirect: "/account",
@@ -34,18 +33,26 @@ const getUserInfo = [
 ];
 
 const createUser = [
-  function (req, res, next) {
-    if (req.body && validator.isEmail(req.body.email) && req.body.password && req.body.username) {
-      var hashedpassword=utils.passwordhash.saltHashPassword(req.body.password,utils.passwordhash.genRandomString(16));
+  function(req, res, next) {
+    if (
+      req.body &&
+      validator.isEmail(req.body.email) &&
+      req.body.password &&
+      req.body.username
+    ) {
+      var hashedpassword = utils.passwordhash.saltHashPassword(
+        req.body.password,
+        utils.passwordhash.genRandomString(16)
+      );
       var newuser = {
         username: req.body.username,
         password: hashedpassword.passwordHash,
         name: req.body.name,
         email: req.body.email,
-        salt:hashedpassword.salt
-      }
+        salt: hashedpassword.salt
+      };
 
-      userModel.create(newuser, (error) => {
+      userModel.create(newuser, error => {
         if (error) return next(error);
         else {
           res.status(201);
@@ -55,19 +62,15 @@ const createUser = [
         }
       });
     } else {
-      next('Invalid Arguments'); //This error needs handling
+      next("Invalid Arguments"); //This error needs handling
     }
   }
 ];
 
-router.post("/login", login); //ok
-router.get("/logout", logout); //ok
-router.get("/account", getAccount); //ok
-
-router.get("/api/userinfo", getUserInfo);
-
-router.post("/user", createUser);
-// router.put("/user/:userId", updateUser);
-// router.delete("/user/:userId", deleteUser);
-// router.get("/user", getUser);
-// router.get("/users", getAllUsers);
+module.exports = {
+  login,
+  logout,
+  getAccount,
+  getUserInfo,
+  createUser
+};
