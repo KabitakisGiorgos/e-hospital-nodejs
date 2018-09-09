@@ -1,19 +1,36 @@
 var error = function (err, req, res, next) { //here a function for error handling seperate folder
-    // console.log('test');    
-    if (err === 'Unauthorized') {
-        res.status(401);
+    var knownerrors = [{
+            error: 'Unauthorized',
+            status: 401
+        },
+        {
+            error: 'Invalid Arguments',
+            status: 400
+        },
+        {
+            error: 'MongoError',
+            status: 500
+        }
+    ];
+
+    const result = knownerrors.find(error => error.error === err || error.error === err.name);
+    if (result) {
+        res.status(result.status);
         res.send({
-            'msg': err
-        });
+            error: result.error,
+            message: err.message ?err.message : null
+        })
     } else if (err) {
-        res.status(401);
+        //unknown error
+        res.status(500);
         res.send({
-            'msg': 'error'
+            error: "Unknown Error",
+            message: err.message ?err.message : null
         });
     }
     next();
 };
 
-module.exports=[
+module.exports = [
     error
 ]
