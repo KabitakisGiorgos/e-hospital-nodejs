@@ -2,8 +2,8 @@ const passport = require("passport");
 const ensureLogin = require("connect-ensure-login");
 const validator = require("validator");
 
-var { passwordhash } = require("../utils");
-let { userModel } = require("../models");
+var { passwordhash } = require("../../utils");
+let { userModel } = require("../../models");
 
 const login = passport.authenticate("local", {
   successReturnToOrRedirect: "/account",

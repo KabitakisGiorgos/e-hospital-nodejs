@@ -1,5 +1,5 @@
-const { router } = require("../utils");
-let { oauth2 } = require("../middleware");
+const { router } = require("../../utils");
+let { oauth2 } = require("../../middleware");
 
 /** Possible structure for hooks implementation
   * before/after are arrays in a `api/hooks/oauth.js` file that you can populate.

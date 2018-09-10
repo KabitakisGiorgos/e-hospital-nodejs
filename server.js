@@ -6,15 +6,21 @@ const session = require("express-session");
 const passport = require("passport");
 const mongoose = require("mongoose");
 
-const routes = require("./api/routes");
+require('dotenv').load();
+
+// Initialize the modules
+const modules = require("./api/modules");
+
+
 const { oauth, error } = require("./api/middleware");
 require("./api/middleware/strategies"); //passport strategies implemented
 
 mongoose.connect(
-  "mongodb://localhost:27017/test2",
+  `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_COLLECTION}`,
   { useNewUrlParser: true },
   () => console.log("connected to db")
 );
+
 
 const app = express();
 
