@@ -1,32 +1,32 @@
-const passport = require("passport");
-const ensureLogin = require("connect-ensure-login");
+// const passport = require("passport");
 const validator = require("validator");
+const _ = require("lodash");
 
 var { passwordhash } = require("../../utils");
 let { userModel } = require("../../models");
 
-const login = passport.authenticate("local", {
-  successReturnToOrRedirect: "/account",
-  failureRedirect: "/"
-});
+// const login = passport.authenticate("local", {
+//   successReturnToOrRedirect: "/account",
+//   failureRedirect: "/"
+// });
 
-const logout = (request, response) => {
-  request.logout();
-  response.redirect("/");
-};
+// const logout = (request, response) => {
+//   request.logout();
+//   response.redirect("/");
+// };
 
-const getAccount = (request, response) =>
-  response.render("account", { user: request.user });
+// const getAccount = (request, response) =>
+//   response.render("account", { user: request.user });
 
-const getUserInfo = (request, response) => {
-  // request.authInfo is set using the `info` argument supplied by
-  // `BearerStrategy`. It is typically used to indicate scope of the token,
-  // and used in access control checks. For illustrative purposes, this
-  // example simply returns the scope in the response.
-  response.json({ user_id: request.user.id, name: request.user.name });
-};
+// const getUserInfo = (request, response) => {
+//   // request.authInfo is set using the `info` argument supplied by
+//   // `BearerStrategy`. It is typically used to indicate scope of the token,
+//   // and used in access control checks. For illustrative purposes, this
+//   // example simply returns the scope in the response.
+//   response.json({ user_id: request.user.id, name: request.user.name });
+// };
 
-const createUser = (req, res, next) => {
+const create = (req, res, next) => {
   if (
     req.body &&
     validator.isEmail(req.body.email) &&
@@ -46,7 +46,7 @@ const createUser = (req, res, next) => {
     };
 
     userModel.create(newuser, error => {
-      if (error) return next(error);
+      if (error) next(error);
       else {
         res.status(201);
         delete newuser.password;
@@ -59,10 +59,61 @@ const createUser = (req, res, next) => {
   }
 };
 
+const update = (req, res, next) => {
+  if (
+    req.body
+  ) {
+    var updatedUser = {
+      // username: req.body.username,
+      // email: req.body.email,
+      name: req.body.name,
+    };
+
+    userModel.update(updatedUser, error => {
+      if (error) next(error);
+      else {
+        delete updatedUser.password;
+        delete updatedUser.salt;
+        res.send(updatedUser);
+      }
+    });
+  } else {
+    next("Invalid Arguments"); //This error needs handling
+  }
+};
+
+const retrieve = (req, res, next) => {
+  userModel.findById(req.params.userId, (error, user) => {
+    if (error) next(error);
+    else if (_.isEmpty(user)) next("Not Found");
+    else res.send(user);
+  });
+};
+
+const _delete = (req, res, next) => {
+  userModel.findById(req.params.userId, (error, user) => {
+    if (error) next(error);
+    else if (_.isEmpty(user)) next("Not Found");
+    else {
+      user.remove((err, removedUser) => {
+        if (err) next(err);
+        else res.send(removedUser);
+      })
+    }
+  });
+};
+
+/**
+ * TODO: for update, retrieve, delete we should check
+ * from the access_token if the user is the same as the requested one
+ */
 module.exports = {
-  login,
-  logout,
-  getAccount,
-  getUserInfo,
-  createUser
+  // login,
+  // logout,
+  // getAccount,
+  // getUserInfo,
+  create,
+  retrieve,
+  update,
+  _delete
 };
