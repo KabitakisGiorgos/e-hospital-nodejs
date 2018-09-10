@@ -1,41 +1,9 @@
-const passport = require('passport');
-const ensureLogin = require('connect-ensure-login');
-const validator = require('validator');
-const mongoose = require('mongoose');
+const validator = require("validator");
+const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 
-var {
-  passwordhash
-} = require("../../utils");
-let {
-  userModel
-} = require("../../models");
-
-const login = passport.authenticate('local', {
-  successReturnToOrRedirect: '/account',
-  failureRedirect: '/'
-});
-
-const logout = (request, response) => {
-  request.logout();
-  response.redirect("/");
-};
-
-const getAccount = (request, response) =>
-  response.render("account", {
-    user: request.user
-  });
-
-const getUserInfo = (request, response) => {
-  // request.authInfo is set using the `info` argument supplied by
-  // `BearerStrategy`. It is typically used to indicate scope of the token,
-  // and used in access control checks. For illustrative purposes, this
-  // example simply returns the scope in the response.
-  response.json({
-    user_id: request.user.id,
-    name: request.user.name
-  });
-};
+var { passwordhash } = require("../../utils");
+let { userModel } = require("../../models");
 
 const createUser = (req, res, next) => {
   if (
@@ -56,13 +24,13 @@ const createUser = (req, res, next) => {
       salt: hashedpassword.salt
     };
 
-    userModel.create(newuser, error => {
+    userModel.create(newuser, (error, user) => {
       if (error) return next(error);
       else {
         res.status(201);
         delete newuser.password;
         delete newuser.salt;
-        res.send(newuser);
+        res.send(user);
       }
     });
   } else {
@@ -72,30 +40,30 @@ const createUser = (req, res, next) => {
 
 const updateUser = (req, res, next) => {
   if (req.body) {
-    var payload = {}
+    var payload = {};
     if (req.body.username) payload.username = req.body.username;
     if (req.body.email) {
-      if (!validator.isEmail(req.body.email)) return next('Invalid Arguments');
+      if (!validator.isEmail(req.body.email)) return next("Invalid Arguments");
       payload.email = req.body.email;
     } //Here might more fields are going to be added
     if (req.body.name) payload.name = req.body.name;
     if (req.body.oldpassword && req.body.newpassword) {
       payload.oldpassword = req.body.oldpassword;
       payload.newpassword = req.body.newpassword;
-    };
-    userModel.findOne({
-      _id: ObjectId(req.params.userId)
-    }, (error, user) => {
-      if (error) return next('MongoError');
-      else if (!user) return next('Not Found');
+    }
+    userModel.findById(req.params.userId, (error, user) => {
+      if (error) return next("MongoError");
+      else if (!user) return next("Not Found");
       else {
         if (payload.newpassword && payload.oldpassword) {
           var hashedpassword = passwordhash.saltHashPassword(
             payload.oldpassword,
             user.salt
           );
-          if (hashedpassword.passwordHash !== user.password) return next('Unauthorized');
-          else { //checking for the old password if its correctly provided
+          if (hashedpassword.passwordHash !== user.password)
+            return next("Invalid Password");
+          else {
+            //checking for the old password if its correctly provided
             delete payload.oldpassword;
             var newHashedpassword = passwordhash.saltHashPassword(
               payload.newpassword,
@@ -105,93 +73,92 @@ const updateUser = (req, res, next) => {
             delete payload.newpassword;
           }
         }
-        userModel.updateOne({
-          _id: ObjectId(req.params.userId)
-        }, payload, (error, result) => {
-          if (error) return next('MongoError');
-          else {
-            if (!result.nModified) {
-              res.status(304);
-              res.send({});
-            } else {
-              res.status(200);
-              res.send({});
-            }
+        user.update(payload, (error, raw) => {
+          if (error) return next("MongoError");
+          else if (!raw.nModified) {
+            // res.status(304);
+            res.send(user);
+          } else {
+            // res.status(200);
+            userModel.findById(req.params.userId, (error, user) => {
+              if (error) return next("MongoError");
+              else if (!user) return next("Not Found");
+              res.send(user);
+            });
           }
-        })
+        });
       }
-    })
+    });
   } else {
-    next('Invalid Arguments');
+    next("Invalid Arguments");
   }
-}
+};
 
 const deleteUser = (req, res, next) => {
   if (req.params.userId) {
-    userModel.findOne({
-      _id: ObjectId(req.params.userId)
-    }, (error, user) => {
-      if (error) return next('MongoError');
-      else if (!user) return next('Not Found');
+    userModel.findById(req.params.userId, (error, user) => {
+      if (error) return next("MongoError");
+      else if (!user) return next("Not Found");
       else {
-        user.delete(() => {
-          if (error) return next('MongoError');
+        user.delete((err, deletedUser) => {
+          if (err) return next("MongoError");
           else {
             res.status(200);
-            res.send({});
+            res.send(deletedUser);
           }
-        })
+        });
       }
-    })
+    });
   } else {
-    next('Invalid Arguments');
+    next("Invalid Arguments");
   }
-}
+};
 
 const getUser = (req, res, next) => {
   if (req.params.userId) {
-    userModel.findOne({
-      _id: ObjectId(req.params.userId)
-    }, (error, user) => {
-      if (error) return next('Mongo Error');
-      else if (!user) return next('Not Found');
-      else {
-        var user = user.toObject();
-        delete user.salt;
-        delete user.password;
-        res.status(200);
-        res.send(user);
+    userModel.findOne(
+      {
+        _id: ObjectId(req.params.userId)
+      },
+      (error, user) => {
+        if (error) return next("Mongo Error");
+        else if (!user) return next("Not Found");
+        else {
+          var user = user.toObject();
+          delete user.salt;
+          delete user.password;
+          res.status(200);
+          res.send(user);
+        }
       }
-    })
+    );
   } else {
-    next('Invalid Arguments')
+    next("Invalid Arguments");
   }
-}
+};
 
 const getAllUsers = (req, res, next) => {
-  userModel.find().lean().exec((error, users) => {
-    if (error) return next('Mongo Error');
-    else if (users.length === 0) return next('Not Found');
-    else {
-      var usersV2 = [];
-      for (var i = 0; i < users.length; i++) {
-        //strip the salt and the password of the users
-        delete users[i].salt;
-        delete users[i].password;
-        usersV2.push(users[i]);
+  userModel
+    .find()
+    .lean()
+    .exec((error, users) => {
+      if (error) return next("Mongo Error");
+      else if (users.length === 0) return next("Not Found");
+      else {
+        var usersV2 = [];
+        for (var i = 0; i < users.length; i++) {
+          //strip the salt and the password of the users
+          delete users[i].salt;
+          delete users[i].password;
+          usersV2.push(users[i]);
+        }
+        res.status(200);
+        res.send(usersV2);
       }
-      res.status(200);
-      res.send(usersV2);
-    }
-  });
-}
-
+    });
+};
 
 module.exports = {
-  login,
-  logout,
-  getAccount,
-  getUserInfo,
   createUser,
   updateUser,
   deleteUser,

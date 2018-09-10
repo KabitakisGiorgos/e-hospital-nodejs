@@ -4,6 +4,10 @@ const knownerrors = [
     status: 401
   },
   {
+    error: 'Invalid Password',
+    status: 402
+  },
+  {
     error: 'Invalid Arguments',
     status: 400
   },
