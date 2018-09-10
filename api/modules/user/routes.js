@@ -1,6 +1,8 @@
 const ensureLogin = require("connect-ensure-login");
 
-const { router } = require("../../utils");
+const {
+  router
+} = require("../../utils");
 const userFunctions = require("./functions");
 
 
@@ -17,7 +19,7 @@ router.get("/api/userinfo", userFunctions.getUserInfo);
 
 router.post("/user", userFunctions.createUser);
 
-router.put("/user/:userId", updateUser);
-router.delete("/user/:userId", deleteUser);
-router.get("/user/:userId", getUser);
-router.get("/users", getAllUsers);
+router.put("/user/:userId", userFunctions.updateUser);
+router.delete("/user/:userId", userFunctions.deleteUser);
+router.get("/user/:userId", userFunctions.getUser);
+router.get("/users", userFunctions.getAllUsers);
