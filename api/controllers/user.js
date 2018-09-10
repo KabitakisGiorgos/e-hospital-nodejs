@@ -1,31 +1,31 @@
-const passport = require("passport");
-const ensureLogin = require("connect-ensure-login");
-const validator = require("validator");
+const passport = require('passport');
+const ensureLogin = require('connect-ensure-login');
+const validator = require('validator');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 
 var {
   passwordhash
-} = require("../utils");
+} = require('../utils');
 let {
   userModel
-} = require("../models");
+} = require('../models');
 
-const login = passport.authenticate("local", {
-  successReturnToOrRedirect: "/account",
-  failureRedirect: "/"
+const login = passport.authenticate('local', {
+  successReturnToOrRedirect: '/account',
+  failureRedirect: '/'
 });
 
 const logout = [
   (request, response) => {
     request.logout();
-    response.redirect("/");
+    response.redirect('/');
   }
 ];
 
 const getAccount = [
   ensureLogin.ensureLoggedIn(),
-  (request, response) => response.render("account", {
+  (request, response) => response.render('account', {
     user: request.user
   })
 ];
@@ -73,52 +73,56 @@ const createUser = [
         }
       });
     } else {
-      next("Invalid Arguments"); //This error needs handling
+      next('Invalid Arguments'); //This error needs handling
     }
   }
 ];
 
 const updateUser = [
   function (req, res, next) {
-    if(req.body){
-      var payload={}
-      if(req.body.username) payload.username=req.body.username;
-      if(req.body.email){
-        if(!validator.isEmail(req.body.email)) return next('Invalid Arguments');
-        payload.email=req.body.email;
+    if (req.body) {
+      var payload = {}
+      if (req.body.username) payload.username = req.body.username;
+      if (req.body.email) {
+        if (!validator.isEmail(req.body.email)) return next('Invalid Arguments');
+        payload.email = req.body.email;
       } //Here might more fields are going to be added
-      if(req.body.name) payload.name=req.body.name;
-      if(req.body.oldpassword&&req.body.newpassword){
-        payload.oldpassword=req.body.oldpassword;
-        payload.newpassword=req.body.newpassword;
+      if (req.body.name) payload.name = req.body.name;
+      if (req.body.oldpassword && req.body.newpassword) {
+        payload.oldpassword = req.body.oldpassword;
+        payload.newpassword = req.body.newpassword;
       };
-      userModel.findOne({_id:ObjectId(req.params.userId)},(error,user)=>{
-        if(error) return next('MongoError');
-        else if(!user) return next('Not Found');
-        else{
-          if(payload.newpassword&&payload.oldpassword){
+      userModel.findOne({
+        _id: ObjectId(req.params.userId)
+      }, (error, user) => {
+        if (error) return next('MongoError');
+        else if (!user) return next('Not Found');
+        else {
+          if (payload.newpassword && payload.oldpassword) {
             var hashedpassword = passwordhash.saltHashPassword(
               payload.oldpassword,
               user.salt
             );
             if (hashedpassword.passwordHash !== user.password) return next('Unauthorized');
-            else{//checking for the old password if its correctly provided
+            else { //checking for the old password if its correctly provided
               delete payload.oldpassword;
-              var newHashedpassword=passwordhash.saltHashPassword(
+              var newHashedpassword = passwordhash.saltHashPassword(
                 payload.newpassword,
                 user.salt
               ).passwordHash;
-              payload.password=newHashedpassword;
+              payload.password = newHashedpassword;
               delete payload.newpassword;
             }
           }
-          userModel.updateOne({_id:ObjectId(req.params.userId)},payload,(error,result)=>{
-            if(error) return next('MongoError');
-            else{
-              if(!result.nModified){
+          userModel.updateOne({
+            _id: ObjectId(req.params.userId)
+          }, payload, (error, result) => {
+            if (error) return next('MongoError');
+            else {
+              if (!result.nModified) {
                 res.status(304);
                 res.send({});
-              }else{
+              } else {
                 res.status(200);
                 res.send({});
               }
@@ -126,8 +130,8 @@ const updateUser = [
           })
         }
       })
-    }else{
-      next("Invalid Arguments");
+    } else {
+      next('Invalid Arguments');
     }
   }
 ];
@@ -151,19 +155,50 @@ const deleteUser = [
         }
       })
     } else {
-      next("Invalid Arguments");
+      next('Invalid Arguments');
     }
   }
 ];
 
 const getUser = [
   function (req, res, next) {
-    next();
+    if (req.params.userId) {
+      userModel.findOne({
+        _id: ObjectId(req.params.userId)
+      }, (error, user) => {
+        if (error) return next('Mongo Error');
+        else if (!user) return next('Not Found');
+        else {
+          var user = user.toObject();
+          delete user.salt;
+          delete user.password;
+          res.status(200);
+          res.send(user);
+        }
+      })
+    } else {
+      next('Invalid Arguments')
+    }
   }
 ];
+
 const getAllUsers = [
   function (req, res, next) {
-    next();
+    userModel.find().lean().exec((error, users) => {
+      if (error) return next('Mongo Error');
+      else if (users.length === 0) return next('Not Found');
+      else {
+        var usersV2 = [];
+        for (var i = 0; i < users.length; i++) {
+          //strip the salt and the password of the users
+          delete users[i].salt;
+          delete users[i].password;
+          usersV2.push(users[i]);
+        }
+        res.status(200);
+        res.send(usersV2);
+      }
+    });
   }
 ];
 

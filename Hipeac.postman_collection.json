@@ -6,6 +6,196 @@
 	},
 	"item": [
 		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "csd3142@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "PtyxioNot",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Giorgos",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4200/user",
+							"host": [
+								"localhost"
+							],
+							"port": "4200",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "localhost:4200/user/5b944ee1a2f25237948c44ac",
+							"host": [
+								"localhost"
+							],
+							"port": "4200",
+							"path": [
+								"user",
+								"5b944ee1a2f25237948c44ac"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "oldpassword",
+									"value": "ciaociao",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "newpassword",
+									"value": "123456",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "test@gmai",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "test23",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "test123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4200/user/5b966b664b79e523802ce9fa",
+							"host": [
+								"localhost"
+							],
+							"port": "4200",
+							"path": [
+								"user",
+								"5b966b664b79e523802ce9fa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "csd3142@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "PtyxioNot",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Giorgos",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4200/users",
+							"host": [
+								"localhost"
+							],
+							"port": "4200",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Test Working Server",
 			"request": {
 				"method": "GET",
@@ -41,7 +231,7 @@
 					"urlencoded": [
 						{
 							"key": "password",
-							"value": "12345",
+							"value": "ciaociao",
 							"type": "text"
 						},
 						{
@@ -133,58 +323,6 @@
 						"oauth",
 						"token",
 						"anonymous"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create User",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{accessToken}}"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "password",
-							"value": "123456",
-							"type": "text"
-						},
-						{
-							"key": "email",
-							"value": "csd3142@gmail.com",
-							"type": "text"
-						},
-						{
-							"key": "username",
-							"value": "PtyxioNot",
-							"type": "text"
-						},
-						{
-							"key": "name",
-							"value": "Giorgos",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "localhost:4200/user",
-					"host": [
-						"localhost"
-					],
-					"port": "4200",
-					"path": [
-						"user"
 					]
 				}
 			},

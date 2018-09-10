@@ -19,7 +19,7 @@ const knownerrors = [
 
 const error = function(err, req, res, next) {
   //here a function for error handling seperate folder
-
+  //Here in our errors we can put and made messages
   const result = knownerrors.find(
     error => error.error === err || error.error === err.name
   );
