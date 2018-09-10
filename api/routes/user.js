@@ -11,7 +11,7 @@ router.post("/user", userController.createUser);
 
 // TODO: Implement these
 
-// router.put("/user/:userId", updateUser);
-// router.delete("/user/:userId", deleteUser);
-// router.get("/user", getUser);
-// router.get("/users", getAllUsers);
+router.put("/user/:userId", userController.updateUser);
+router.delete("/user/:userId", userController.deleteUser);
+router.get("/user", userController.getUser);
+router.get("/users", userController.getAllUsers);

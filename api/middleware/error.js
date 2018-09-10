@@ -1,18 +1,18 @@
 const knownerrors = [
   {
-    error: "Unauthorized",
+    error: 'Unauthorized',
     status: 401
   },
   {
-    error: "Invalid Arguments",
+    error: 'Invalid Arguments',
     status: 400
   },
   {
-    error: "MongoError",
+    error: 'MongoError',
     status: 500
   },
   {
-    error: "Not Found",
+    error: 'Not Found',
     status: 404
   }
 ];
@@ -35,7 +35,7 @@ const error = function(err, req, res, next) {
     //unknown error
     res.status(500);
     res.send({
-      error: "Unknown Error",
+      error: 'Unknown Error',
       message: err.message ? err.message : null,
       // stack is for development
       stack: err.stack ? err.stack : null
