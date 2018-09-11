@@ -28,9 +28,10 @@ const createUser = (req, res, next) => {
       if (error) return next(error);
       else {
         res.status(201);
+        var newuser=user.toObject();
         delete newuser.password;
         delete newuser.salt;
-        res.send(user);
+        res.send(newuser);
       }
     });
   } else {
