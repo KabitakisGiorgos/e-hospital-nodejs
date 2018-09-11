@@ -51,7 +51,7 @@ const updateUser = (req, res, next) => {
       payload.newpassword = req.body.newpassword;
     }
     userModel.findById(req.params.userId, (error, user) => {
-      if (error) return next("MongoError");
+      if (error) return next(error);
       else if (!user) return next("Not Found");
       else {
         if (payload.newpassword && payload.oldpassword) {
@@ -73,14 +73,14 @@ const updateUser = (req, res, next) => {
           }
         }
         user.update(payload, (error, raw) => {
-          if (error) return next("MongoError");
+          if (error) return next(error);
           else if (!raw.nModified) {
             // res.status(304);
             res.send(user);
           } else {
             // res.status(200);
             userModel.findById(req.params.userId, (error, user) => {
-              if (error) return next("MongoError");
+              if (error) return next(error);
               else if (!user) return next("Not Found");
               res.send(user);
             });
@@ -96,11 +96,11 @@ const updateUser = (req, res, next) => {
 const deleteUser = (req, res, next) => {
   if (req.params.userId) {
     userModel.findById(req.params.userId, (error, user) => {
-      if (error) return next("MongoError");
+      if (error) return next(error);
       else if (!user) return next("Not Found");
       else {
-        user.delete((err, deletedUser) => {
-          if (err) return next("MongoError");
+        user.delete((error, deletedUser) => {
+          if (error) return next(error);
           else {
             res.status(200);
             res.send(deletedUser);
@@ -116,7 +116,7 @@ const deleteUser = (req, res, next) => {
 const getUser = (req, res, next) => {
   if (req.params.userId) {
     userModel.findById(req.params.userId, (error, user) => {
-      if (error) return next("Mongo Error");
+      if (error) return next(error);
       else if (!user) return next("Not Found");
       else {
         var user = user.toObject();
@@ -136,7 +136,7 @@ const getAllUsers = (req, res, next) => {
     .find()
     .lean()
     .exec((error, users) => {
-      if (error) return next("Mongo Error");
+      if (error) return next(error);
       else if (users.length === 0) return next("Not Found");
       else {
         var usersV2 = [];
