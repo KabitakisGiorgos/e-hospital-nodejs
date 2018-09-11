@@ -4,19 +4,23 @@ var Schema = mongoose.Schema;
 // TODO: This is incomplete.
 
 var hospitalSchema = new Schema({
-    AMKA: {
+    name: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
-    userId: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        // unique: true
-    },
-    exams: {
+    departments: {
         type: Array,
     },
+    address: {
+        type: String,
+    },
+    created: {
+        type: Date,
+        default: Date.now()
+    },
+    meta: {
+        type: Object,
+    }
 });
 
 var model = mongoose.model('hospitals', hospitalSchema);

@@ -15,13 +15,17 @@ var tokenSchema = new Schema({
         type: String,
         required: true
     },
-    creationTime: {
-        type: Date
+    created: {
+        type: Date,
+        default: Date.now()
+    },
+    meta: {
+        type: Object,
     }
 });
 
 tokenSchema.index({
-    creationTime: 1
+    created: 1
 }, {
     expireAfterSeconds: 86400
 });

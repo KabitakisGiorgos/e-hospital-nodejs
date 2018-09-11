@@ -36,7 +36,6 @@ server.grant(
       clientId: client.clientId,
       redirectUri: redirectUri,
       userId: user._id,
-      creationTime: new Date()
     };
     authCodeModel.findOne(
       {
@@ -91,7 +90,7 @@ server.exchange(
                     return done(null, newtoken.token, {
                       userId: newtoken.userId,
                       clientId: newtoken.clientid,
-                      creationTime: newtoken.creationTime,
+                      created: newtoken.created,
                       clientId: newtoken.clientId
                     });
                   });

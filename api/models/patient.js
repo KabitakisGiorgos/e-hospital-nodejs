@@ -17,6 +17,13 @@ var patientSchema = new Schema({
     exams: {
         type: Array,
     },
+    created: {
+        type: Date,
+        default: Date.now()
+    },
+    meta: {
+        type: Object,
+    }
 });
 
 var model = mongoose.model('patients', patientSchema);

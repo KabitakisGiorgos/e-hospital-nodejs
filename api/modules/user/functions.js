@@ -1,6 +1,4 @@
 const validator = require("validator");
-const mongoose = require("mongoose");
-const ObjectId = mongoose.Types.ObjectId;
 
 var { passwordhash } = require("../../utils");
 let { userModel } = require("../../models");
@@ -28,7 +26,7 @@ const createUser = (req, res, next) => {
       if (error) return next(error);
       else {
         res.status(201);
-        var newuser=user.toObject();
+        var newuser = user.toObject();
         delete newuser.password;
         delete newuser.salt;
         res.send(newuser);
@@ -117,22 +115,17 @@ const deleteUser = (req, res, next) => {
 
 const getUser = (req, res, next) => {
   if (req.params.userId) {
-    userModel.findOne(
-      {
-        _id: ObjectId(req.params.userId)
-      },
-      (error, user) => {
-        if (error) return next("Mongo Error");
-        else if (!user) return next("Not Found");
-        else {
-          var user = user.toObject();
-          delete user.salt;
-          delete user.password;
-          res.status(200);
-          res.send(user);
-        }
+    userModel.findById(req.params.userId, (error, user) => {
+      if (error) return next("Mongo Error");
+      else if (!user) return next("Not Found");
+      else {
+        var user = user.toObject();
+        delete user.salt;
+        delete user.password;
+        res.status(200);
+        res.send(user);
       }
-    );
+    });
   } else {
     next("Invalid Arguments");
   }

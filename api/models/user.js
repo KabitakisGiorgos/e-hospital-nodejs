@@ -2,14 +2,18 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
+    password: {
+        type: String,
+        required: true,
+    },
+    salt:{
+        type:String,
+        required:true
+    },
     username: {
         type: String,
         required: true,
         unique: true
-    },
-    password: {
-        type: String,
-        required: true,
     },
     name: {
         type: String,
@@ -20,10 +24,13 @@ var userSchema = new Schema({
         required: true,
         unique: true
     },
-    salt:{
-        type:String,
-        required:true
-    }
+    created: {
+      type: Date,
+      default: Date.now()
+    },
+    meta: {
+        type: Object,
+    },
 });
 
 var model = mongoose.model('users', userSchema);

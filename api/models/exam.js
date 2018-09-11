@@ -3,20 +3,16 @@ var Schema = mongoose.Schema;
 
 // TODO: This is incomplete.
 
-var doctorSchema = new Schema({
-    speciality: {
+var examSchema = new Schema({
+    type: {
         type: String,
         required: true,
     },
-    userId: {
+    patientId: {
         type: Schema.Types.ObjectId,
         required: true,
     },
-    diplomas: {
-        type: Array,
-        required: true,
-    },
-    departmentId: {
+    doctorId: {
         type: Schema.Types.ObjectId,
         required: true,
     },
@@ -29,7 +25,7 @@ var doctorSchema = new Schema({
     }
 });
 
-var model = mongoose.model('doctors', doctorSchema);
+var model = mongoose.model('exams', examSchema);
 model.on('index', () => {}); //For the unique property
 
 module.exports = model;

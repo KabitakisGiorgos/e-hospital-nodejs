@@ -50,7 +50,7 @@ server.exchange(
                   return done(null, newtoken.token, {
                     userId: newtoken.userId,
                     clientId: newtoken.clientid,
-                    creationTime: newtoken.creationTime
+                    created: newtoken.created
                   });
                 });
               }
@@ -107,7 +107,6 @@ const anonymoustoken = [
 const generateToken = (object, next) => {
   let token = randtoken.generate(128);
   object.token = token;
-  object.creationTime = new Date();
   next(null, object);
 };
 
