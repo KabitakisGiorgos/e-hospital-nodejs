@@ -14,6 +14,9 @@ const patientSchema = new Schema({
         required: true,
         // unique: true
     },
+    type: {
+        type: String,
+    },
     exams: {
         type: Array,
     },
