@@ -37,8 +37,7 @@ const update = (req, res, next) => {
         if (req.body.type) payload.type = req.body.type;
 
         if (req.body.departments) {
-          payload.departments = {};
-          _.merge(payload.departments, hospital.departments, req.body.departments);
+          payload.departments = _.concat(hospital.departments, req.body.departments);
         }
         if (req.body.meta) {
           payload.meta = {};
