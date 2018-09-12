@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "df07b104-eb81-402f-bd98-11b502636841",
-		"name": "Hipeac",
+		"_postman_id": "d0e0eacb-dc94-43bf-9538-cb8497612d42",
+		"name": "Hipeac copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -20,6 +20,137 @@
 							{
 								"key": "Content-Type",
 								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": "ciaociao",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "csd13142@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "PtyxioNot123",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Giorgos",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/user",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/user/5b96c1ff824dd83914d19981",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"5b96c1ff824dd83914d19981"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "oldpassword",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "newpassword",
+									"value": "ciaociao",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "test@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "test23",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "PtyxioNot",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/user/5b966b664b79e523802ce9fa",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"5b966b664b79e523802ce9fa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
 							}
 						],
 						"body": {
@@ -48,98 +179,13 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:4200/user",
+							"raw": "{{url}}/user/5b96c1ff824dd83914d19981",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "4200",
-							"path": [
-								"user"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete User",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{accessToken}}"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "localhost:4200/user/5b944ee1a2f25237948c44ac",
-							"host": [
-								"localhost"
-							],
-							"port": "4200",
 							"path": [
 								"user",
-								"5b944ee1a2f25237948c44ac"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update User",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{accessToken}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "oldpassword",
-									"value": "ciaociao",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "newpassword",
-									"value": "123456",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "email",
-									"value": "test@gmai",
-									"type": "text"
-								},
-								{
-									"key": "name",
-									"value": "test23",
-									"type": "text"
-								},
-								{
-									"key": "username",
-									"value": "test123",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "localhost:4200/user/5b966b664b79e523802ce9fa",
-							"host": [
-								"localhost"
-							],
-							"port": "4200",
-							"path": [
-								"user",
-								"5b966b664b79e523802ce9fa"
+								"5b96c1ff824dd83914d19981"
 							]
 						}
 					},
@@ -181,13 +227,242 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:4200/users",
+							"raw": "{{url}}/users",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "4200",
 							"path": [
 								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Hospital",
+			"item": [
+				{
+					"name": "Create Hospital",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Pagni",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Peristeriou kai Axirona 4",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "what?",
+									"type": "text"
+								},
+								{
+									"key": "meta[giorgo]",
+									"value": "parasyri",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/hospital",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"hospital"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Hospital",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/hospital/5b992a1e0f777037780a66a1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"hospital",
+								"5b992a1e0f777037780a66a1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Hospital",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Pagni2",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Peristeriou kai Axirona 42",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "what?2",
+									"type": "text"
+								},
+								{
+									"key": "meta[giorgo]",
+									"value": "parasyri2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/hospital/5b992b0acceddf32b0a58fa0",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"hospital",
+								"5b992b0acceddf32b0a58fa0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Hospital",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "csd3142@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "PtyxioNot",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Giorgos",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/hospital/5b992a1e0f777037780a66a1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"hospital",
+								"5b992a1e0f777037780a66a1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Hospitals",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "csd3142@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "PtyxioNot",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Giorgos",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/hospitals",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"hospitals"
 							]
 						}
 					},
@@ -205,13 +480,18 @@
 						"value": "Bearer {{accessToken}}"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "localhost:4200",
+					"raw": "{{url}}/",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "4200"
+					"path": [
+						""
+					]
 				}
 			},
 			"response": []
@@ -236,7 +516,7 @@
 						},
 						{
 							"key": "username",
-							"value": "PtyxioNOT",
+							"value": "PtyxioNot",
 							"type": "text"
 						},
 						{
@@ -257,11 +537,10 @@
 					]
 				},
 				"url": {
-					"raw": "localhost:4200/oauth/token",
+					"raw": "{{url}}/oauth/token",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "4200",
 					"path": [
 						"oauth",
 						"token"
@@ -314,11 +593,10 @@
 					]
 				},
 				"url": {
-					"raw": "localhost:4200/oauth/token/anonymous",
+					"raw": "{{url}}/oauth/token/anonymous",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "4200",
 					"path": [
 						"oauth",
 						"token",

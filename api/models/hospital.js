@@ -8,11 +8,16 @@ var hospitalSchema = new Schema({
         type: String,
         required: true
     },
-    departments: {
-        type: Array,
+    type: {
+        type: String,
+        required: true
     },
     address: {
         type: String,
+        required: true
+    },
+    departments: {
+        type: Array,
     },
     created: {
         type: Date,

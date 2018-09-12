@@ -23,7 +23,7 @@ const create = (req, res, next) => {
     };
 
     userModel.create(newuser, (error, user) => {
-      if (error) return next(error);
+      if (error) next(error);
       else {
         res.status(201);
         var newuser = user.toObject();
@@ -42,7 +42,7 @@ const update = (req, res, next) => {
     var payload = {};
     if (req.body.username) payload.username = req.body.username;
     if (req.body.email) {
-      if (!validator.isEmail(req.body.email)) return next("Invalid Arguments");
+      if (!validator.isEmail(req.body.email)) next("Invalid Arguments");
       payload.email = req.body.email;
     } //Here might more fields are going to be added
     if (req.body.name) payload.name = req.body.name;
@@ -51,8 +51,8 @@ const update = (req, res, next) => {
       payload.newpassword = req.body.newpassword;
     }
     userModel.findById(req.params.userId, (error, user) => {
-      if (error) return next(error);
-      else if (!user) return next("Not Found");
+      if (error) next(error);
+      else if (!user) next("Not Found");
       else {
         if (payload.newpassword && payload.oldpassword) {
           var hashedpassword = passwordhash.saltHashPassword(
@@ -60,7 +60,7 @@ const update = (req, res, next) => {
             user.salt
           );
           if (hashedpassword.passwordHash !== user.password)
-            return next("Invalid Password");
+            next("Invalid Password");
           else {
             //checking for the old password if its correctly provided
             delete payload.oldpassword;
@@ -73,16 +73,18 @@ const update = (req, res, next) => {
           }
         }
         user.update(payload, (error, raw) => {
-          if (error) return next(error);
+          if (error) next(error);
           else if (!raw.nModified) {
             // res.status(304);
             res.send(user);
           } else {
-            // res.status(200);
             userModel.findById(req.params.userId, (error, user) => {
-              if (error) return next(error);
-              else if (!user) return next("Not Found");
-              res.send(user);
+              if (error) next(error);
+              else if (!user) next("Not Found");
+              else {
+                res.status(200);
+                res.send(user);
+              }
             });
           }
         });
@@ -96,11 +98,11 @@ const update = (req, res, next) => {
 const _delete = (req, res, next) => {
   if (req.params.userId) {
     userModel.findById(req.params.userId, (error, user) => {
-      if (error) return next(error);
-      else if (!user) return next("Not Found");
+      if (error) next(error);
+      else if (!user) next("Not Found");
       else {
         user.delete((error, deletedUser) => {
-          if (error) return next(error);
+          if (error) next(error);
           else {
             res.status(200);
             res.send(deletedUser);
@@ -116,8 +118,8 @@ const _delete = (req, res, next) => {
 const retrieve = (req, res, next) => {
   if (req.params.userId) {
     userModel.findById(req.params.userId, (error, user) => {
-      if (error) return next(error);
-      else if (!user) return next("Not Found");
+      if (error) next(error);
+      else if (!user) next("Not Found");
       else {
         var user = user.toObject();
         delete user.salt;
@@ -136,8 +138,8 @@ const retrieveAll = (req, res, next) => {
     .find()
     .lean()
     .exec((error, users) => {
-      if (error) return next(error);
-      else if (users.length === 0) return next("Not Found");
+      if (error) next(error);
+      else if (users.length === 0) next("Not Found");
       else {
         var usersV2 = [];
         for (var i = 0; i < users.length; i++) {
