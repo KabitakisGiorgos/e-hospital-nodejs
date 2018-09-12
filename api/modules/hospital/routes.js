@@ -4,11 +4,11 @@ const hospitalFunctions = require("./functions");
 
 // TODO: Implement these
 
-// router.post("/hospital", hospitalFunctions.createUser);
-// router.put("/hospital/:hospitalId", hospitalFunctions.updateUser);
-// router.delete("/hospital/:hospitalId", hospitalFunctions.deleteUser);
-// router.get("/hospital", hospitalFunctions.getUser);
-// router.get("/hospitals", hospitalFunctions.getAllUsers);
+// router.post("/hospital", hospitalFunctions.create);
+// router.put("/hospital/:hospitalId", hospitalFunctions.update);
+// router.delete("/hospital/:hospitalId", hospitalFunctions.delete);
+// router.get("/hospital", hospitalFunctions.retrieve);
+// router.get("/hospitals", hospitalFunctions.retrieveAll);
 
 
 // Department specific functions

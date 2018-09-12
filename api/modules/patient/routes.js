@@ -4,8 +4,8 @@ const patientFunctions = require("./functions");
 
 // TODO: Implement these
 
-// router.post("/patient", patientFunctions.createUser);
-// router.put("/patient/:patientId", patientFunctions.updateUser);
-// router.delete("/patient/:patientId", patientFunctions.deleteUser);
-// router.get("/patient", patientFunctions.getUser);
-// router.get("/patients", patientFunctions.getAllUsers);
+// router.post("/patient", patientFunctions.create);
+// router.put("/patient/:patientId", patientFunctions.update);
+// router.delete("/patient/:patientId", patientFunctions.delete);
+// router.get("/patient", patientFunctions.retrieve);
+// router.get("/patients", patientFunctions.retrieveAll);

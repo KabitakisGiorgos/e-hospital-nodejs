@@ -3,7 +3,7 @@ const validator = require("validator");
 var { passwordhash } = require("../../utils");
 let { userModel } = require("../../models");
 
-const createUser = (req, res, next) => {
+const create = (req, res, next) => {
   if (
     req.body &&
     validator.isEmail(req.body.email) &&
@@ -37,7 +37,7 @@ const createUser = (req, res, next) => {
   }
 };
 
-const updateUser = (req, res, next) => {
+const update = (req, res, next) => {
   if (req.body) {
     var payload = {};
     if (req.body.username) payload.username = req.body.username;
@@ -93,7 +93,7 @@ const updateUser = (req, res, next) => {
   }
 };
 
-const deleteUser = (req, res, next) => {
+const _delete = (req, res, next) => {
   if (req.params.userId) {
     userModel.findById(req.params.userId, (error, user) => {
       if (error) return next(error);
@@ -113,7 +113,7 @@ const deleteUser = (req, res, next) => {
   }
 };
 
-const getUser = (req, res, next) => {
+const retrieve = (req, res, next) => {
   if (req.params.userId) {
     userModel.findById(req.params.userId, (error, user) => {
       if (error) return next(error);
@@ -131,7 +131,7 @@ const getUser = (req, res, next) => {
   }
 };
 
-const getAllUsers = (req, res, next) => {
+const retrieveAll = (req, res, next) => {
   userModel
     .find()
     .lean()
@@ -153,9 +153,9 @@ const getAllUsers = (req, res, next) => {
 };
 
 module.exports = {
-  createUser,
-  updateUser,
-  deleteUser,
-  getUser,
-  getAllUsers
+  create,
+  update,
+  delete: _delete,
+  retrieve,
+  retrieveAll
 };
