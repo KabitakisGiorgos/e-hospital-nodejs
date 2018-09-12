@@ -1,6 +1,6 @@
 const validator = require("validator");
 
-var { passwordhash } = require("../../utils");
+const { passwordhash } = require("../../utils");
 let { userModel } = require("../../models");
 
 const create = (req, res, next) => {
@@ -10,11 +10,11 @@ const create = (req, res, next) => {
     req.body.password &&
     req.body.username
   ) {
-    var hashedpassword = passwordhash.saltHashPassword(
+    const hashedpassword = passwordhash.saltHashPassword(
       req.body.password,
       passwordhash.genRandomString(16)
     );
-    var newuser = {
+    const newuser = {
       username: req.body.username,
       password: hashedpassword.passwordHash,
       name: req.body.name,
@@ -26,10 +26,10 @@ const create = (req, res, next) => {
       if (error) next(error);
       else {
         res.status(201);
-        var newuser = user.toObject();
-        delete newuser.password;
-        delete newuser.salt;
-        res.send(newuser);
+        user = user.toObject();
+        delete user.password;
+        delete user.salt;
+        res.send(user);
       }
     });
   } else {
@@ -39,7 +39,7 @@ const create = (req, res, next) => {
 
 const update = (req, res, next) => {
   if (req.body) {
-    var payload = {};
+    let payload = {};
     if (req.body.username) payload.username = req.body.username;
     if (req.body.email) {
       if (!validator.isEmail(req.body.email)) next("Invalid Arguments");
@@ -55,7 +55,7 @@ const update = (req, res, next) => {
       else if (!user) next("Not Found");
       else {
         if (payload.newpassword && payload.oldpassword) {
-          var hashedpassword = passwordhash.saltHashPassword(
+          const hashedpassword = passwordhash.saltHashPassword(
             payload.oldpassword,
             user.salt
           );
@@ -64,7 +64,7 @@ const update = (req, res, next) => {
           else {
             //checking for the old password if its correctly provided
             delete payload.oldpassword;
-            var newHashedpassword = passwordhash.saltHashPassword(
+            const newHashedpassword = passwordhash.saltHashPassword(
               payload.newpassword,
               user.salt
             ).passwordHash;
@@ -121,7 +121,7 @@ const retrieve = (req, res, next) => {
       if (error) next(error);
       else if (!user) next("Not Found");
       else {
-        var user = user.toObject();
+        user.toObject();
         delete user.salt;
         delete user.password;
         res.status(200);
@@ -141,8 +141,8 @@ const retrieveAll = (req, res, next) => {
       if (error) next(error);
       else if (users.length === 0) next("Not Found");
       else {
-        var usersV2 = [];
-        for (var i = 0; i < users.length; i++) {
+        let usersV2 = [];
+        for (let i = 0; i < users.length; i++) {
           //strip the salt and the password of the users
           delete users[i].salt;
           delete users[i].password;

@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var userSchema = new Schema({
+const userSchema = new Schema({
     password: {
         type: String,
         required: true,
@@ -33,7 +33,7 @@ var userSchema = new Schema({
     },
 });
 
-var model = mongoose.model('users', userSchema);
+const model = mongoose.model('users', userSchema);
 model.on('index', () => {}); //For the unique property
 
 module.exports = model;

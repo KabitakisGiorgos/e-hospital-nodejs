@@ -1,8 +1,8 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
-var ObjectId = Schema.ObjectId;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
 
-var authcodeSchema = new Schema({
+const authcodeSchema = new Schema({
   code: {
     type: String,
     required: true

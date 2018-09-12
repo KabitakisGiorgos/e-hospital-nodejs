@@ -1,9 +1,7 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var ObjectId = Schema.ObjectId;
-var ttl = require('mongoose-ttl');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var tokenSchema = new Schema({
+const tokenSchema = new Schema({
     token: {
         type: String,
         required: true

@@ -24,7 +24,7 @@ passport.use(
         if (!user) {
           return done(null, false);
         }
-        var hashedpassword = utils.passwordhash.saltHashPassword(
+        const hashedpassword = utils.passwordhash.saltHashPassword(
           password,
           user.salt
         );

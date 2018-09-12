@@ -29,14 +29,14 @@ server.exchange(
           (error, user) => {
             if (error) return done(error);
             if (!user) return done(null, false);
-            var hashedpassword = passwordhash.saltHashPassword(
+            const hashedpassword = passwordhash.saltHashPassword(
               password,
               user.salt
             );
             if (hashedpassword.passwordHash !== user.password)
               return done(null, false);
 
-            var object = {
+            const object = {
               userId: user._id,
               clientId: localClient.clientId
             };

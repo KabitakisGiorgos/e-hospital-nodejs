@@ -31,7 +31,7 @@ server.deserializeClient((id, done) => {
 server.grant(
   oauth2orize.grant.code((client, redirectUri, user, ares, done) => {
     const code = utils.helper.getUid(16);
-    var myob = {
+    const myob = {
       code: code,
       clientId: client.clientId,
       redirectUri: redirectUri,
@@ -76,7 +76,7 @@ server.exchange(
           (error, token) => {
             if (error) return done(error);
             if (!token) {
-              var object = {
+              const object = {
                 userId: user._id,
                 clientId: localClient.clientId
               };

@@ -1,9 +1,9 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 // TODO: This is incomplete.
 
-var hospitalSchema = new Schema({
+const hospitalSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -28,7 +28,7 @@ var hospitalSchema = new Schema({
     }
 });
 
-var model = mongoose.model('hospitals', hospitalSchema);
+const model = mongoose.model('hospitals', hospitalSchema);
 model.on('index', () => {}); //For the unique property
 
 module.exports = model;

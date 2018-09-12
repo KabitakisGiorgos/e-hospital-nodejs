@@ -102,7 +102,7 @@ app.use(require("./api/utils").router);
 app.use(error);
 
 // listening to port from env
-var port = process.env.PORT || 4200;
+const port = process.env.PORT || 4200;
 app.listen(port, "0.0.0.0");
 
 console.log(`server running in port ${port}, 0.0.0.0 `);

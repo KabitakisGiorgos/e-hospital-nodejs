@@ -1,4 +1,4 @@
-var crypto = require('crypto');
+const crypto = require('crypto');
 
 module.exports.genRandomString = function (length) {
     return crypto.randomBytes(Math.ceil(length / 2))
@@ -8,9 +8,9 @@ module.exports.genRandomString = function (length) {
 
 
 module.exports.saltHashPassword = function (password, salt) {
-    var hash = crypto.createHmac('sha512', salt); /** Hashing algorithm sha512 */
+    let hash = crypto.createHmac('sha512', salt); /** Hashing algorithm sha512 */
     hash.update(password);
-    var value = hash.digest('hex');
+    const value = hash.digest('hex');
     return {
         salt: salt,
         passwordHash: value

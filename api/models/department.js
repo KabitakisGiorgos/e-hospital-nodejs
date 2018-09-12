@@ -1,9 +1,9 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 // TODO: This is incomplete.
 
-var departmentSchema = new Schema({
+const departmentSchema = new Schema({
     name: {
         type: Schema.Types.ObjectId,
         required: true,
@@ -27,7 +27,7 @@ var departmentSchema = new Schema({
     }
 });
 
-var model = mongoose.model('departments', departmentSchema);
+const model = mongoose.model('departments', departmentSchema);
 model.on('index', () => {}); //For the unique property
 
 module.exports = model;
