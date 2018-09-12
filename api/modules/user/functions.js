@@ -1,6 +1,9 @@
 const _ = require("lodash");
 const validator = require("validator");
 
+const { mapper } =require("../../middleware");
+const { config }=require('./index');
+
 const { passwordhash } = require("../../utils");
 let { userModel } = require("../../models");
 
@@ -30,7 +33,7 @@ const create = (req, res, next) => {
         user = user.toObject();
         delete user.password;
         delete user.salt;
-        res.send(user);
+        res.send(mapper(user,config.map));
       }
     });
   } else {

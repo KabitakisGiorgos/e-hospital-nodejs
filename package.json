@@ -20,6 +20,7 @@
     "express-session": "^1.15.6",
     "express-winston": "^3.0.0",
     "lodash": "^4.17.10",
+    "map-obj": "^3.0.0",
     "mongodb": "^3.0.10",
     "mongoose": "^5.2.13",
     "mongoose-ttl": "0.0.3",
