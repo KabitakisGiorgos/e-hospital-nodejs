@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "d0e0eacb-dc94-43bf-9538-cb8497612d42",
-		"name": "Hipeac copy",
+		"name": "Hipeac",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -463,6 +463,236 @@
 							],
 							"path": [
 								"hospitals"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Patient",
+			"item": [
+				{
+					"name": "Create Patient",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "AMKA",
+									"value": "12314",
+									"type": "text"
+								},
+								{
+									"key": "userId",
+									"value": "5b96c1ff824dd83914d19981",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "what?",
+									"type": "text"
+								},
+								{
+									"key": "meta[giorgo]",
+									"value": "parasiri",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/patient",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"patient"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Patient",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/patient/5b992a1e0f777037780a66a1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"patient",
+								"5b992a1e0f777037780a66a1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Patient",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "AMKA",
+									"value": "1231231234",
+									"type": "text"
+								},
+								{
+									"key": "userId",
+									"value": "5b96c1ff824dd83914d19981",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "what?2",
+									"type": "text"
+								},
+								{
+									"key": "meta[giorgo]",
+									"value": "parasyri21",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/patient/5b993384085ad40488919fad",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"patient",
+								"5b993384085ad40488919fad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Patient",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "csd3142@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "PtyxioNot",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Giorgos",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/patient/5b9934a40aca6f122c89dbec",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"patient",
+								"5b9934a40aca6f122c89dbec"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Patients",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "csd3142@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "PtyxioNot",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Giorgos",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/patients",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"patients"
 							]
 						}
 					},
