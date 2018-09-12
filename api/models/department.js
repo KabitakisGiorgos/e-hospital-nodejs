@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const departmentSchema = new Schema({
     name: {
-        type: Schema.Types.ObjectId,
+        type: String,
         required: true,
     },
     hospitalId: {
