@@ -1,3 +1,4 @@
+const _ = require("lodash");
 const validator = require("validator");
 
 const { passwordhash } = require("../../utils");
@@ -50,10 +51,16 @@ const update = (req, res, next) => {
       payload.oldpassword = req.body.oldpassword;
       payload.newpassword = req.body.newpassword;
     }
+
     userModel.findById(req.params.userId, (error, user) => {
       if (error) next(error);
       else if (!user) next("Not Found");
       else {
+        if (req.body.meta) {
+          payload.meta = {};
+          _.merge(payload.meta, user.meta, req.body.meta);
+        }
+
         if (payload.newpassword && payload.oldpassword) {
           const hashedpassword = passwordhash.saltHashPassword(
             payload.oldpassword,

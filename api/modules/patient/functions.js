@@ -1,10 +1,11 @@
+const _ = require("lodash");
 const { patientModel } = require("../../models");
 
 const create = (req, res, next) => {
   if (req.body && req.body.AMKA && req.body.userId && req.body.type) {
     let newPatient = {
       AMKA: req.body.AMKA,
-      userId: req.body.userId,
+      userId: req.body.userId
     };
 
     if (req.body.type) newPatient.type = req.body.type;
@@ -34,8 +35,15 @@ const update = (req, res, next) => {
         if (req.body.AMKA) payload.AMKA = req.body.AMKA;
         if (req.body.userId) payload.userId = req.body.userId;
         if (req.body.type) payload.type = req.body.type;
-        if (req.body.exams) newPatient.exams = req.body.exams;
-        if (req.body.meta) payload.meta = { ...patient.meta, ...req.body.meta };
+
+        if (req.body.exams) {
+          payload.exams = {};
+          _.merge(payload.exams, patient.exams, req.body.exams);
+        }
+        if (req.body.meta) {
+          payload.meta = {};
+          _.merge(payload.meta, patient.meta, req.body.meta);
+        }
 
         patient.update(payload, (error, raw) => {
           if (error) next(error);

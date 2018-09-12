@@ -1,3 +1,4 @@
+const _ = require("lodash");
 const { hospitalModel } = require("../../models");
 
 const create = (req, res, next) => {
@@ -34,9 +35,15 @@ const update = (req, res, next) => {
         if (req.body.name) payload.name = req.body.name;
         if (req.body.address) payload.address = req.body.address;
         if (req.body.type) payload.type = req.body.type;
-        if (req.body.departments) payload.departments = req.body.departments;
-        if (req.body.meta)
-          payload.meta = { ...hospital.meta, ...req.body.meta };
+
+        if (req.body.departments) {
+          payload.departments = {};
+          _.merge(payload.departments, hospital.departments, req.body.departments);
+        }
+        if (req.body.meta) {
+          payload.meta = {};
+          _.merge(payload.meta, hospital.meta, req.body.meta);
+        }
 
         hospital.update(payload, (error, raw) => {
           if (error) next(error);
