@@ -1,8 +1,7 @@
 const _ = require("lodash");
 const { departmentModel } = require("../../models");
 
-const { mapper } =require("../../middleware");
-const { config }=require('./mapper');
+const { mapper } =require("../../middleware").mapper;
 
 const create = (req, res, next) => {
   if (req.body && req.body.name && req.body.hospitalId) {
@@ -19,7 +18,7 @@ const create = (req, res, next) => {
       if (error) next(error);
       else {
         res.status(201);
-        res.send(mapper(department,config.map));
+        res.send(mapper(department,'department'));
       }
     });
   } else {
@@ -53,7 +52,7 @@ const update = (req, res, next) => {
           if (error) next(error);
           else if (!raw.nModified) {
             // res.status(304);
-            res.send(mapper(department,config.map));
+            res.send(mapper(department,'department'));
           } else {
             departmentModel.findById(
               req.params.departmentId,
@@ -62,7 +61,7 @@ const update = (req, res, next) => {
                 else if (!department) next("Not Found");
                 else {
                   res.status(200);
-                  res.send(mapper(department,config.map));
+                  res.send(mapper(department,'department'));
                 }
               }
             );
@@ -84,7 +83,7 @@ const _delete = (req, res, next) => {
         if (error) next(error);
         else {
           res.status(200);
-          res.send(mapper(deleted,config.map));
+          res.send(mapper(deleted,'department'));
         }
       });
     }
@@ -98,7 +97,7 @@ const retrieve = (req, res, next) => {
     else {
       // department = department.toObject();
       res.status(200);
-      res.send(mapper(department,config.map));
+      res.send(mapper(department,'department'));
     }
   });
 };
@@ -112,7 +111,7 @@ const retrieveAll = (req, res, next) => {
       else if (departments.length === 0) next("Not Found");
       else {
         res.status(200);
-        res.send(mapper(departments,config.map));
+        res.send(mapper(departments,'department'));
       }
     });
 };

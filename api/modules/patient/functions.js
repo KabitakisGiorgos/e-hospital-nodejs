@@ -1,8 +1,7 @@
 const _ = require("lodash");
 const { patientModel } = require("../../models");
+const { mapper } =require("../../middleware").mapper;
 
-const { mapper } =require("../../middleware");
-const { config }=require('./mapper');
 
 const create = (req, res, next) => {
   if (req.body && req.body.AMKA && req.body.userId && req.body.type) {
@@ -19,7 +18,7 @@ const create = (req, res, next) => {
       if (error) next(error);
       else {
         res.status(201);
-        res.send(mapper(patient,config.map));
+        res.send(mapper(patient,'patient'));
       }
     });
   } else {
@@ -51,14 +50,14 @@ const update = (req, res, next) => {
           if (error) next(error);
           else if (!raw.nModified) {
             // res.status(304);
-            res.send(mapper(patient,config.map));
+            res.send(mapper(patient,'patient'));
           } else {
             patientModel.findById(req.params.patientId, (error, patient) => {
               if (error) next(error);
               else if (!patient) next("Not Found");
               else {
                 res.status(200);
-                res.send(mapper(patient,config.map));
+                res.send(mapper(patient,'patient'));
               }
             });
           }
@@ -79,7 +78,7 @@ const _delete = (req, res, next) => {
         if (error) next(error);
         else {
           res.status(200);
-          res.send(mapper(deleted,config.map));
+          res.send(mapper(deleted,'patient'));
         }
       });
     }
@@ -93,7 +92,7 @@ const retrieve = (req, res, next) => {
     else {
       // patient = patient.toObject();
       res.status(200);
-      res.send(mapper(patient,config.map));
+      res.send(mapper(patient,'patient'));
     }
   });
 };
@@ -107,7 +106,7 @@ const retrieveAll = (req, res, next) => {
       else if (patients.length === 0) next("Not Found");
       else {
         res.status(200);
-        res.send(mapper(patients,config.map));
+        res.send(mapper(patients,'patient'));
       }
     });
 };

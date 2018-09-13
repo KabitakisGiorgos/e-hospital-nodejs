@@ -1,6 +1,13 @@
 const mapObj = require('map-obj');
 
-const mapper = (object, config) => {
+let modules=[];
+
+const registerModuleConfig=(moduleName,config)=>{
+  modules[moduleName]=config;
+}
+
+const mapper = (object, moduleName) => {
+  var config=modules[moduleName];//if the module is not registered check
   if( Array.isArray(object)) {
     let array=[];
     for (let i = 0; i < object.length; i++) {
@@ -13,4 +20,7 @@ const mapper = (object, config) => {
   }
 }
 
-module.exports = mapper;
+module.exports = {
+  mapper,
+  registerModuleConfig
+}

@@ -1,5 +1,9 @@
-const config = {
-  map: {
+const {
+  mapper
+} = require("../../middleware");
+
+mapper.registerModuleConfig(
+  'patient', {
     id: '_id',
     AMKA: 'AMKA',
     userId: 'userId',
@@ -7,9 +11,4 @@ const config = {
     exams: 'exams',
     created: 'created',
     meta: 'meta'
-  }
-}//Here in the mapper prolly new things are going to be added
-
-module.exports = {
-  config
-}
+  });

@@ -2,7 +2,6 @@ const _ = require("lodash");
 const { doctorModel } = require("../../models");
 
 const { mapper } =require("../../middleware");
-const { config }=require('./mapper');
 
 const create = (req, res, next) => {
   if (req.body && req.body.userId && req.body.specialty && req.body.departmentId) {
@@ -19,7 +18,7 @@ const create = (req, res, next) => {
       if (error) next(error);
       else {
         res.status(201);
-        res.send(mapper(doctor,config.map));
+        res.send(mapper(doctor,'doctor'));
       }
     });
   } else {
@@ -50,14 +49,14 @@ const update = (req, res, next) => {
           if (error) next(error);
           else if (!raw.nModified) {
             // res.status(304);
-            res.send(mapper(doctor,config.map));
+            res.send(mapper(doctor,'doctor'));
           } else {
             doctorModel.findById(req.params.doctorId, (error, doctor) => {
               if (error) next(error);
               else if (!doctor) next("Not Found");
               else {
                 res.status(200);
-                res.send(mapper(doctor,config.map));
+                res.send(mapper(doctor,'doctor'));
               }
             });
           }
@@ -78,7 +77,7 @@ const _delete = (req, res, next) => {
         if (error) next(error);
         else {
           res.status(200);
-          res.send(mapper(deleted,config.map));
+          res.send(mapper(deleted,'doctor'));
         }
       });
     }
@@ -92,7 +91,7 @@ const retrieve = (req, res, next) => {
     else {
       // doctor = doctor.toObject();
       res.status(200);
-      res.send(mapper(doctor,config.map));
+      res.send(mapper(doctor,'doctor'));
     }
   });
 };
@@ -106,7 +105,7 @@ const retrieveAll = (req, res, next) => {
       else if (doctors.length === 0) next("Not Found");
       else {
         res.status(200);
-        res.send(mapper(doctors,config.map));
+        res.send(mapper(doctors,'doctor'));
       }
     });
 };

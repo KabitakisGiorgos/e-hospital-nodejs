@@ -1,8 +1,7 @@
 const _ = require("lodash");
 const { hospitalModel } = require("../../models");
+const { mapper } =require("../../middleware").mapper;
 
-const { mapper } =require("../../middleware");
-const { config }=require('./mapper');
 
 const create = (req, res, next) => {
   if (req.body && req.body.name && req.body.address && req.body.type) {
@@ -19,7 +18,7 @@ const create = (req, res, next) => {
       if (error) next(error);
       else {
         res.status(201);
-        res.send(mapper(hospital,config.map));
+        res.send(mapper(hospital,'hospital'));
       }
     });
   } else {
@@ -51,14 +50,14 @@ const update = (req, res, next) => {
           if (error) next(error);
           else if (!raw.nModified) {
             // res.status(304);
-            res.send(mapper(hospital,config.map));
+            res.send(mapper(hospital,'hospital'));
           } else {
             hospitalModel.findById(req.params.hospitalId, (error, hospital) => {
               if (error) next(error);
               else if (!hospital) next("Not Found");
               else {
                 res.status(200);
-                res.send(mapper(hospital,config.map));
+                res.send(mapper(hospital,'hospital'));
               }
             });
           }
@@ -79,7 +78,7 @@ const _delete = (req, res, next) => {
         if (error) next(error);
         else {
           res.status(200);
-          res.send(mapper(deleted,config.map));
+          res.send(mapper(deleted,'hospital'));
         }
       });
     }
@@ -93,7 +92,7 @@ const retrieve = (req, res, next) => {
     else {
       // hospital = hospital.toObject();
       res.status(200);
-      res.send(mapper(hospital,config.map));
+      res.send(mapper(hospital,'hospital'));
     }
   });
 };
@@ -107,7 +106,7 @@ const retrieveAll = (req, res, next) => {
       else if (hospitals.length === 0) next("Not Found");
       else {
         res.status(200);
-        res.send(mapper(hospitals,config.map));
+        res.send(mapper(hospitals,'hospital'));
       }
     });
 };
