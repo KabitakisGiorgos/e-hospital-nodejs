@@ -3,21 +3,18 @@ const Schema = mongoose.Schema;
 
 // TODO: This is incomplete.
 
-const hospitalSchema = new Schema({
-    name: {
-        type: String,
-        required: true
-    },
+const examSchema = new Schema({
     type: {
         type: String,
-        required: true
+        required: true,
     },
-    address: {
-        type: String,
-        required: true
+    patientId: {
+        type: Schema.Types.ObjectId,
+        required: true,
     },
-    departments: {
-        type: Array,
+    doctorId: {
+        type: Schema.Types.ObjectId,
+        required: true,
     },
     created: {
         type: Date,
@@ -28,7 +25,7 @@ const hospitalSchema = new Schema({
     }
 });
 
-const model = mongoose.model('hospitals', hospitalSchema);
+const model = mongoose.model('exams', examSchema);
 model.on('index', () => {}); //For the unique property
 
 module.exports = model;

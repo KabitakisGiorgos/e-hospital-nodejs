@@ -1,22 +1,20 @@
 const validator = require("validator");
-const mongoose = require("mongoose");
-const ObjectId = mongoose.Types.ObjectId;
 
-var { passwordhash } = require("../../utils");
+const { passwordhash } = require("../../utils");
 let { userModel } = require("../../models");
 
-const createUser = (req, res, next) => {
+const create = (req, res, next) => {
   if (
     req.body &&
     validator.isEmail(req.body.email) &&
     req.body.password &&
     req.body.username
   ) {
-    var hashedpassword = passwordhash.saltHashPassword(
+    const hashedpassword = passwordhash.saltHashPassword(
       req.body.password,
       passwordhash.genRandomString(16)
     );
-    var newuser = {
+    const newuser = {
       username: req.body.username,
       password: hashedpassword.passwordHash,
       name: req.body.name,
@@ -25,13 +23,13 @@ const createUser = (req, res, next) => {
     };
 
     userModel.create(newuser, (error, user) => {
-      if (error) return next(error);
+      if (error) next(error);
       else {
         res.status(201);
-        var newuser=user.toObject();
-        delete newuser.password;
-        delete newuser.salt;
-        res.send(newuser);
+        user = user.toObject();
+        delete user.password;
+        delete user.salt;
+        res.send(user);
       }
     });
   } else {
@@ -39,12 +37,12 @@ const createUser = (req, res, next) => {
   }
 };
 
-const updateUser = (req, res, next) => {
+const update = (req, res, next) => {
   if (req.body) {
-    var payload = {};
+    let payload = {};
     if (req.body.username) payload.username = req.body.username;
     if (req.body.email) {
-      if (!validator.isEmail(req.body.email)) return next("Invalid Arguments");
+      if (!validator.isEmail(req.body.email)) next("Invalid Arguments");
       payload.email = req.body.email;
     } //Here might more fields are going to be added
     if (req.body.name) payload.name = req.body.name;
@@ -53,20 +51,20 @@ const updateUser = (req, res, next) => {
       payload.newpassword = req.body.newpassword;
     }
     userModel.findById(req.params.userId, (error, user) => {
-      if (error) return next("MongoError");
-      else if (!user) return next("Not Found");
+      if (error) next(error);
+      else if (!user) next("Not Found");
       else {
         if (payload.newpassword && payload.oldpassword) {
-          var hashedpassword = passwordhash.saltHashPassword(
+          const hashedpassword = passwordhash.saltHashPassword(
             payload.oldpassword,
             user.salt
           );
           if (hashedpassword.passwordHash !== user.password)
-            return next("Invalid Password");
+            next("Invalid Password");
           else {
             //checking for the old password if its correctly provided
             delete payload.oldpassword;
-            var newHashedpassword = passwordhash.saltHashPassword(
+            const newHashedpassword = passwordhash.saltHashPassword(
               payload.newpassword,
               user.salt
             ).passwordHash;
@@ -75,16 +73,18 @@ const updateUser = (req, res, next) => {
           }
         }
         user.update(payload, (error, raw) => {
-          if (error) return next("MongoError");
+          if (error) next(error);
           else if (!raw.nModified) {
             // res.status(304);
             res.send(user);
           } else {
-            // res.status(200);
             userModel.findById(req.params.userId, (error, user) => {
-              if (error) return next("MongoError");
-              else if (!user) return next("Not Found");
-              res.send(user);
+              if (error) next(error);
+              else if (!user) next("Not Found");
+              else {
+                res.status(200);
+                res.send(user);
+              }
             });
           }
         });
@@ -95,14 +95,14 @@ const updateUser = (req, res, next) => {
   }
 };
 
-const deleteUser = (req, res, next) => {
+const _delete = (req, res, next) => {
   if (req.params.userId) {
     userModel.findById(req.params.userId, (error, user) => {
-      if (error) return next("MongoError");
-      else if (!user) return next("Not Found");
+      if (error) next(error);
+      else if (!user) next("Not Found");
       else {
-        user.delete((err, deletedUser) => {
-          if (err) return next("MongoError");
+        user.delete((error, deletedUser) => {
+          if (error) next(error);
           else {
             res.status(200);
             res.send(deletedUser);
@@ -115,39 +115,34 @@ const deleteUser = (req, res, next) => {
   }
 };
 
-const getUser = (req, res, next) => {
+const retrieve = (req, res, next) => {
   if (req.params.userId) {
-    userModel.findOne(
-      {
-        _id: ObjectId(req.params.userId)
-      },
-      (error, user) => {
-        if (error) return next("Mongo Error");
-        else if (!user) return next("Not Found");
-        else {
-          var user = user.toObject();
-          delete user.salt;
-          delete user.password;
-          res.status(200);
-          res.send(user);
-        }
+    userModel.findById(req.params.userId, (error, user) => {
+      if (error) next(error);
+      else if (!user) next("Not Found");
+      else {
+        user.toObject();
+        delete user.salt;
+        delete user.password;
+        res.status(200);
+        res.send(user);
       }
-    );
+    });
   } else {
     next("Invalid Arguments");
   }
 };
 
-const getAllUsers = (req, res, next) => {
+const retrieveAll = (req, res, next) => {
   userModel
     .find()
     .lean()
     .exec((error, users) => {
-      if (error) return next("Mongo Error");
-      else if (users.length === 0) return next("Not Found");
+      if (error) next(error);
+      else if (users.length === 0) next("Not Found");
       else {
-        var usersV2 = [];
-        for (var i = 0; i < users.length; i++) {
+        let usersV2 = [];
+        for (let i = 0; i < users.length; i++) {
           //strip the salt and the password of the users
           delete users[i].salt;
           delete users[i].password;
@@ -160,9 +155,9 @@ const getAllUsers = (req, res, next) => {
 };
 
 module.exports = {
-  createUser,
-  updateUser,
-  deleteUser,
-  getUser,
-  getAllUsers
+  create,
+  update,
+  delete: _delete,
+  retrieve,
+  retrieveAll
 };

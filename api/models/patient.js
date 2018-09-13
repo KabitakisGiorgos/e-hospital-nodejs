@@ -1,9 +1,9 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 // TODO: This is incomplete.
 
-var patientSchema = new Schema({
+const patientSchema = new Schema({
     AMKA: {
         type: String,
         required: true,
@@ -14,12 +14,22 @@ var patientSchema = new Schema({
         required: true,
         // unique: true
     },
+    type: {
+        type: String,
+    },
     exams: {
         type: Array,
     },
+    created: {
+        type: Date,
+        default: Date.now()
+    },
+    meta: {
+        type: Object,
+    }
 });
 
-var model = mongoose.model('patients', patientSchema);
+const model = mongoose.model('patients', patientSchema);
 model.on('index', () => {}); //For the unique property
 
 module.exports = model;

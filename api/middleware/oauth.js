@@ -29,14 +29,14 @@ server.exchange(
           (error, user) => {
             if (error) return done(error);
             if (!user) return done(null, false);
-            var hashedpassword = passwordhash.saltHashPassword(
+            const hashedpassword = passwordhash.saltHashPassword(
               password,
               user.salt
             );
             if (hashedpassword.passwordHash !== user.password)
               return done(null, false);
 
-            var object = {
+            const object = {
               userId: user._id,
               clientId: localClient.clientId
             };
@@ -50,7 +50,7 @@ server.exchange(
                   return done(null, newtoken.token, {
                     userId: newtoken.userId,
                     clientId: newtoken.clientid,
-                    creationTime: newtoken.creationTime
+                    created: newtoken.created
                   });
                 });
               }
@@ -107,7 +107,6 @@ const anonymoustoken = [
 const generateToken = (object, next) => {
   let token = randtoken.generate(128);
   object.token = token;
-  object.creationTime = new Date();
   next(null, object);
 };
 

@@ -1,9 +1,7 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var ObjectId = Schema.ObjectId;
-var ttl = require('mongoose-ttl');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var tokenSchema = new Schema({
+const tokenSchema = new Schema({
     token: {
         type: String,
         required: true
@@ -15,13 +13,17 @@ var tokenSchema = new Schema({
         type: String,
         required: true
     },
-    creationTime: {
-        type: Date
+    created: {
+        type: Date,
+        default: Date.now()
+    },
+    meta: {
+        type: Object,
     }
 });
 
 tokenSchema.index({
-    creationTime: 1
+    created: 1
 }, {
     expireAfterSeconds: 86400
 });

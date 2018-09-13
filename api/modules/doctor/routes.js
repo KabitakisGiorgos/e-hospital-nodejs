@@ -4,8 +4,8 @@ const doctorFunctions = require("./functions");
 
 // TODO: Implement these
 
-// router.post("/doctor", doctorFunctions.createUser);
-// router.put("/doctor/:doctorId", doctorFunctions.updateUser);
-// router.delete("/doctor/:doctorId", doctorFunctions.deleteUser);
-// router.get("/doctor", doctorFunctions.getUser);
-// router.get("/doctors", doctorFunctions.getAllUsers);
+// router.post("/doctor", doctorFunctions.create);
+// router.put("/doctor/:doctorId", doctorFunctions.update);
+// router.delete("/doctor/:doctorId", doctorFunctions.delete);
+// router.get("/doctor", doctorFunctions.retrieve);
+// router.get("/doctors", doctorFunctions.retrieveAll);
