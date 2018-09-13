@@ -1,4 +1,7 @@
+const _ = require("lodash");
 const { hospitalModel } = require("../../models");
+const { mapper } =require("../../middleware").mapper;
+
 
 const create = (req, res, next) => {
   if (req.body && req.body.name && req.body.address && req.body.type) {
@@ -15,7 +18,7 @@ const create = (req, res, next) => {
       if (error) next(error);
       else {
         res.status(201);
-        res.send(hospital);
+        res.send(mapper(hospital,'hospital'));
       }
     });
   } else {
@@ -34,22 +37,27 @@ const update = (req, res, next) => {
         if (req.body.name) payload.name = req.body.name;
         if (req.body.address) payload.address = req.body.address;
         if (req.body.type) payload.type = req.body.type;
-        if (req.body.departments) payload.departments = req.body.departments;
-        if (req.body.meta)
-          payload.meta = { ...hospital.meta, ...req.body.meta };
+
+        if (req.body.departments) {
+          payload.departments = _.concat(hospital.departments, req.body.departments);
+        }
+        if (req.body.meta) {
+          payload.meta = {};
+          _.merge(payload.meta, hospital.meta, req.body.meta);
+        }
 
         hospital.update(payload, (error, raw) => {
           if (error) next(error);
           else if (!raw.nModified) {
             // res.status(304);
-            res.send(hospital);
+            res.send(mapper(hospital,'hospital'));
           } else {
             hospitalModel.findById(req.params.hospitalId, (error, hospital) => {
               if (error) next(error);
               else if (!hospital) next("Not Found");
               else {
                 res.status(200);
-                res.send(hospital);
+                res.send(mapper(hospital,'hospital'));
               }
             });
           }
@@ -70,7 +78,7 @@ const _delete = (req, res, next) => {
         if (error) next(error);
         else {
           res.status(200);
-          res.send(deleted);
+          res.send(mapper(deleted,'hospital'));
         }
       });
     }
@@ -84,7 +92,7 @@ const retrieve = (req, res, next) => {
     else {
       // hospital = hospital.toObject();
       res.status(200);
-      res.send(hospital);
+      res.send(mapper(hospital,'hospital'));
     }
   });
 };
@@ -98,7 +106,7 @@ const retrieveAll = (req, res, next) => {
       else if (hospitals.length === 0) next("Not Found");
       else {
         res.status(200);
-        res.send(hospitals);
+        res.send(mapper(hospitals,'hospital'));
       }
     });
 };

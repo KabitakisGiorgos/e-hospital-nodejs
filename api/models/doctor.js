@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 // TODO: This is incomplete.
 
 const doctorSchema = new Schema({
-    speciality: {
+    specialty: {
         type: String,
         required: true,
     },
@@ -12,13 +12,13 @@ const doctorSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true,
     },
-    diplomas: {
-        type: Array,
-        required: true,
-    },
     departmentId: {
         type: Schema.Types.ObjectId,
         required: true,
+    },
+    diplomas: {
+        type: Array,
+        // required: true,
     },
     created: {
         type: Date,

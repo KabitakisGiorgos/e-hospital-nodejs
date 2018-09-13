@@ -471,6 +471,7 @@
 							],
 							"path": [
 								"departments"
+<<<<<<< HEAD
 							]
 						}
 					},
@@ -561,6 +562,8 @@
 							"path": [
 								"notifications",
 								"email"
+=======
+>>>>>>> mapper
 							]
 						}
 					},
