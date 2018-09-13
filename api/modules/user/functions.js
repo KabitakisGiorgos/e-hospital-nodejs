@@ -86,14 +86,14 @@ const update = (req, res, next) => {
           if (error) next(error);
           else if (!raw.nModified) {
             // res.status(304);
-            res.send(user);
+            res.send(mapper(user,config.map));
           } else {
             userModel.findById(req.params.userId, (error, user) => {
               if (error) next(error);
               else if (!user) next("Not Found");
               else {
                 res.status(200);
-                res.send(user);
+                res.send(mapper(user,config.map));
               }
             });
           }
@@ -115,7 +115,7 @@ const _delete = (req, res, next) => {
           if (error) next(error);
           else {
             res.status(200);
-            res.send(deletedUser);
+            res.send(mapper(deletedUser,config.map));
           }
         });
       }
@@ -135,7 +135,7 @@ const retrieve = (req, res, next) => {
         delete user.salt;
         delete user.password;
         res.status(200);
-        res.send(user);
+        res.send(mapper(user,config.map));
       }
     });
   } else {
@@ -156,7 +156,7 @@ const retrieveAll = (req, res, next) => {
           //strip the salt and the password of the users
           delete users[i].salt;
           delete users[i].password;
-          usersV2.push(users[i]);
+          usersV2.push(mapper(users[i],config.map));
         }
         res.status(200);
         res.send(usersV2);
