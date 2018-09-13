@@ -31,8 +31,7 @@ const sendemail = (from, to, subject, body, html, next) => {
 
     // send mail with defined transport object
     transporter.sendMail(mailOptions, (error, info) => {
-      if (error) next(error);
-      next();
+      next(error);
     });
   });
 };
