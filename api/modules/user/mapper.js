@@ -7,7 +7,7 @@ const config = {
     created: 'created',
     meta: 'meta'
   }
-}
+}//Here in the mapper prolly new things are going to be added
 
 module.exports = {
   config

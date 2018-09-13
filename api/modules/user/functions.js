@@ -2,7 +2,7 @@ const _ = require("lodash");
 const validator = require("validator");
 
 const { mapper } =require("../../middleware");
-const { config }=require('./index');
+const { config }=require('./mapper');
 
 const { passwordhash } = require("../../utils");
 let { userModel } = require("../../models");

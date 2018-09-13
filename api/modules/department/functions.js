@@ -1,6 +1,9 @@
 const _ = require("lodash");
 const { departmentModel } = require("../../models");
 
+const { mapper } =require("../../middleware");
+const { config }=require('./mapper');
+
 const create = (req, res, next) => {
   if (req.body && req.body.name && req.body.hospitalId) {
     let newDepartment = {
@@ -16,7 +19,7 @@ const create = (req, res, next) => {
       if (error) next(error);
       else {
         res.status(201);
-        res.send(department);
+        res.send(mapper(department,config.map));
       }
     });
   } else {
@@ -50,7 +53,7 @@ const update = (req, res, next) => {
           if (error) next(error);
           else if (!raw.nModified) {
             // res.status(304);
-            res.send(department);
+            res.send(mapper(department,config.map));
           } else {
             departmentModel.findById(
               req.params.departmentId,
@@ -59,7 +62,7 @@ const update = (req, res, next) => {
                 else if (!department) next("Not Found");
                 else {
                   res.status(200);
-                  res.send(department);
+                  res.send(mapper(department,config.map));
                 }
               }
             );
@@ -81,7 +84,7 @@ const _delete = (req, res, next) => {
         if (error) next(error);
         else {
           res.status(200);
-          res.send(deleted);
+          res.send(mapper(deleted,config.map));
         }
       });
     }
@@ -95,7 +98,7 @@ const retrieve = (req, res, next) => {
     else {
       // department = department.toObject();
       res.status(200);
-      res.send(department);
+      res.send(mapper(department,config.map));
     }
   });
 };
@@ -109,7 +112,7 @@ const retrieveAll = (req, res, next) => {
       else if (departments.length === 0) next("Not Found");
       else {
         res.status(200);
-        res.send(departments);
+        res.send(mapper(departments,config.map));
       }
     });
 };
