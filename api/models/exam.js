@@ -20,6 +20,9 @@ const examSchema = new Schema({
         type: Date,
         default: Date.now()
     },
+    description:{
+        type:String,
+    },
     meta: {
         type: Object,
     }

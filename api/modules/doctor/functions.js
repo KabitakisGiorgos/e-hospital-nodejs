@@ -1,7 +1,7 @@
 const _ = require("lodash");
 const { doctorModel } = require("../../models");
 
-const { mapper } =require("../../middleware");
+const { mapper } =require("../../middleware").mapper;
 
 const create = (req, res, next) => {
   if (req.body && req.body.userId && req.body.specialty && req.body.departmentId) {
