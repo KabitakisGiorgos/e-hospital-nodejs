@@ -205,7 +205,38 @@ const addExam = (req, res, next) => {
 }
 
 const removeExam = (req, res, next) => {
+  if (req.params.examId) {
+    examModel.findById(req.params.examId, (error, exam) => {
+      if (error) next(error);
+      else if (!exam) {
+        var error = new Error('Exam Not Found');
+        error.status = 404;
+        next(error);
+      } else {
+        patientModel.findById(exam.patientId, (error, patient) => {
+          if (error) next(error);
+          else if (!patient) next(new Error('Patient not Found'));
+          else {
 
+            for (var i = 0; i < patient.exams.length; i++) {
+              if (patient.exams[i].id.toString() === req.params.examId) patient.exams.splice(i, 1);
+            }
+
+            patient.markModified('exams');
+            patient.update(patient, (error, raw) => {
+              if (error) next(error);
+              else {
+                res.status(200);
+                res.send(mapper(patient, 'patient'));
+              }
+            });
+          }
+        });
+      }
+    })
+  } else {
+    next("Invalid Arguments")
+  }
 }
 
 
