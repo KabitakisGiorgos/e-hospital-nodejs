@@ -1288,6 +1288,238 @@
 			]
 		},
 		{
+			"name": "exam",
+			"item": [
+				{
+					"name": "Create Exam",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "type",
+									"value": "blood test",
+									"type": "text"
+								},
+								{
+									"key": "patientId",
+									"value": "5b96c1ff824dd83914d19981",
+									"type": "text"
+								},
+								{
+									"key": "doctorId",
+									"value": "5b96c1ff824dd83914d19981",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "a very important exam",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/exam",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"exam"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Exam",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "type",
+									"value": "hearttest",
+									"type": "text"
+								},
+								{
+									"key": "patientId",
+									"value": "5b9b5cb1a60e8f2198507487",
+									"type": "text"
+								},
+								{
+									"key": "doctorId",
+									"value": "5b9b5cb1a60e8f2198507487",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "another description",
+									"type": "text"
+								},
+								{
+									"key": "meta[data]",
+									"value": "meta data here",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/exam/5b9b5cb1a60e8f2198507487",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"exam",
+								"5b9b5cb1a60e8f2198507487"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Exam",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/exam/5b9b5cb1a60e8f2198507487",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"exam",
+								"5b9b5cb1a60e8f2198507487"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Exam",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "csd3142@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "PtyxioNot",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Giorgos",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/user/5b96c1ff824dd83914d19981",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"5b96c1ff824dd83914d19981"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Exams",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "csd3142@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "PtyxioNot",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Giorgos",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/exams",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"exams"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Test Working Server",
 			"request": {
 				"method": "GET",
