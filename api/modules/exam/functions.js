@@ -8,7 +8,7 @@ const {
 } = require("../../middleware").mapper;
 
 const create = (req, res, next) => {
-  if (req.body) {
+  if (req.body && req.body.type && req.body.patientId && req.body.doctorId) {
     let newexam = {
       type: req.body.type,
       patientId: req.body.patientId,
