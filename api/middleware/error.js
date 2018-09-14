@@ -37,9 +37,9 @@ const error = function(err, req, res, next) {
     });
   } else if (err) {
     //unknown error
-    res.status(500);
+    err.status? res.status(err.status) : res.status(500);
     res.send({
-      error: 'Unknown Error',
+      error:  err.status? err.message:'Unknown Error',
       message: err.message ? err.message : null,
       // stack is for development
       stack: err.stack ? err.stack : null

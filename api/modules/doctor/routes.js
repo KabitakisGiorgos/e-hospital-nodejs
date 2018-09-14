@@ -9,3 +9,5 @@ router.put("/doctor/:doctorId", doctorFunctions.update);
 router.delete("/doctor/:doctorId", doctorFunctions.delete);
 router.get("/doctor/:doctorId", doctorFunctions.retrieve);
 router.get("/doctors", doctorFunctions.retrieveAll);
+
+router.post("/doctor/exam",doctorFunctions.exam);

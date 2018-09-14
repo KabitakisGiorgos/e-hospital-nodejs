@@ -7,7 +7,7 @@ mapper.registerModuleConfig(
     id: '_id',
     specialty: 'specialty',
     userId: 'userId',
-    departmentId: 'departmentId',
+    departments: 'departments',
     diplomas: 'diplomas',
     created: 'created',
     meta: 'meta'

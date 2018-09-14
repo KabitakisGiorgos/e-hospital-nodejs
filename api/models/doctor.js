@@ -12,9 +12,8 @@ const doctorSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true,
     },
-    departmentId: {
-        type: Schema.Types.ObjectId,
-        required: true,
+    departments: {
+        type: Array
     },
     diplomas: {
         type: Array,

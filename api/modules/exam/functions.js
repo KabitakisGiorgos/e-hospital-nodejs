@@ -13,6 +13,7 @@ const create = (req, res, next) => {
       type: req.body.type,
       patientId: req.body.patientId,
       doctorId: req.body.doctorId,
+      departmentId: req.body.departmentId,
       created: req.body.created,
     };
 
@@ -42,6 +43,7 @@ const update = (req, res, next) => {
         if (req.body.type) payload.type = req.body.type;
         if (req.body.patientId) payload.patientId = req.body.patientId;
         if (req.body.doctorId) payload.doctorId = req.body.doctorId;
+        if(req.body.departmentId) payload.departmentId=req.body.departmentId;
 
         if (req.body.description) payload.description = req.body.description
         if (req.body.meta) {

@@ -12,6 +12,10 @@ const examSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true,
     },
+    departmentId:{
+        type: Schema.Types.ObjectId,
+        required: true,
+    },
     doctorId: {
         type: Schema.Types.ObjectId,
         required: true,
@@ -22,6 +26,10 @@ const examSchema = new Schema({
     },
     description:{
         type:String,
+    },
+    state:{
+        type:String,
+        default:'pending'
     },
     meta: {
         type: Object,
