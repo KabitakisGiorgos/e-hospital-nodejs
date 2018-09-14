@@ -117,82 +117,11 @@ const retrieveAll = (req, res, next) => {
       }
     });
 };
-//Bazei ston patient mia eksetasi mesa sto pinaka tou alla to thema einai oti mporeis na baleis tin idia unique 
-//eksetasi polles fores se enan patient einai sto sto ayto
-//db model instance of a patient
-/**
- *  {
-    "id": "5b9a3df5e3d5df3320d8c8a9",
-    "AMKA": "12314",
-    "userId": "5b96c1ff824dd83914d19981",
-    "type": "what?",
-    "exams": [
-        {
-            "created": "2018-09-14T07:42:55.664Z",
-            "state": "pending",
-            "_id": "5b9b668a9453632b50318342",
-            "type": "blood testss",
-            "patientId": "5b9a3df5e3d5df3320d8c8a9",
-            "doctorId": "5b96c1ff824dd83914d19981",
-            "departmentId": "5b96c1ff824dd83914d19981",
-            "description": "a very important exam",
-            "__v": 0
-        },
-        {
-            "created": "2018-09-14T07:42:55.664Z",
-            "state": "pending",
-            "_id": "5b9b668a9453632b50318342",
-            "type": "blood testss",
-            "patientId": "5b9a3df5e3d5df3320d8c8a9",
-            "doctorId": "5b96c1ff824dd83914d19981",
-            "departmentId": "5b96c1ff824dd83914d19981",
-            "description": "a very important exam",
-            "__v": 0
-        }
-    ],
-    "created": "2018-09-13T10:35:21.437Z",
-    "meta": {
-        "giorgo": "parasiri"
-    }
-}
- */
-
-const exam = (req, res, next) => {
-  if (req.body && req.body.examsId) {
-    examModel.findById(req.body.examsId, (error, exam) => {
-      if (error) next(error);
-      else if (!exam) {
-        var error = new Error('Exam Not Found');
-        error.status = 404;
-        next(error);
-      } else {
-        patientModel.findById(exam.patientId, (error, patient) => {
-          if (error) next(error);
-          else if (!patient) next(new Error('Patient not Found'));
-          else {
-            patient.exams = _.concat(patient.exams, exam);
-            patient.markModified('exams');
-            patient.update(patient, (error, raw) => {
-              if (error) next(error);
-              else{
-                res.status(200);
-                res.send(mapper(patient, 'patient'));
-              }
-            });
-          }
-        });
-      }
-    })
-  } else {
-    next("Invalid Arguments");
-  }
-}
 
 module.exports = {
   create,
   update,
   delete: _delete,
   retrieve,
-  retrieveAll,
-  exam
+  retrieveAll
 };
