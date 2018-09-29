@@ -7,6 +7,7 @@ const passport = require("passport");
 const mongoose = require("mongoose");
 const winston = require("winston");
 const expressWinston = require("express-winston");
+var cors = require('cors')
 
 require("dotenv").load();
 
@@ -24,6 +25,7 @@ mongoose.connect(
 );
 
 const app = express();
+app.use(cors());
 
 // Winston logger. Here we can log to files. SEE also errorLogging.
 app.use(
