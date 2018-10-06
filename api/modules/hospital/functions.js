@@ -11,7 +11,7 @@ const create = (req, res, next) => {
       type: req.body.type
     };
 
-    if (req.body.departments) newHospital.departments = req.body.departments;
+    if (req.body.wards) newHospital.wards = req.body.wards;
     if (req.body.meta) newHospital.meta = req.body.meta;
 
     hospitalModel.create(newHospital, (error, hospital) => {
@@ -38,8 +38,8 @@ const update = (req, res, next) => {
         if (req.body.address) payload.address = req.body.address;
         if (req.body.type) payload.type = req.body.type;
 
-        if (req.body.departments) {
-          payload.departments = _.concat(hospital.departments, req.body.departments);
+        if (req.body.wards) {
+          payload.wards = _.concat(hospital.wards, req.body.wards);
         }
         if (req.body.meta) {
           payload.meta = {};

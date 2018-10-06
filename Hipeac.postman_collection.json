@@ -236,10 +236,10 @@
 			]
 		},
 		{
-			"name": "Department",
+			"name": "Ward",
 			"item": [
 				{
-					"name": "Create Department",
+					"name": "Create Ward",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -286,19 +286,19 @@
 							]
 						},
 						"url": {
-							"raw": "{{url}}/department",
+							"raw": "{{url}}/ward",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"department"
+								"ward"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Delete Department",
+					"name": "Delete Ward",
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -312,12 +312,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/department/5b99571f961b39475c050380",
+							"raw": "{{url}}/ward/5b99571f961b39475c050380",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"department",
+								"ward",
 								"5b99571f961b39475c050380"
 							]
 						}
@@ -325,7 +325,7 @@
 					"response": []
 				},
 				{
-					"name": "Update Department",
+					"name": "Update Ward",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -369,12 +369,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{url}}/department/5b99571f961b39475c050380",
+							"raw": "{{url}}/ward/5b99571f961b39475c050380",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"department",
+								"ward",
 								"5b99571f961b39475c050380"
 							]
 						}
@@ -382,7 +382,7 @@
 					"response": []
 				},
 				{
-					"name": "Retrieve Department",
+					"name": "Retrieve Ward",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -417,12 +417,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{url}}/department/5b99571f961b39475c050380",
+							"raw": "{{url}}/ward/5b99571f961b39475c050380",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"department",
+								"ward",
 								"5b99571f961b39475c050380"
 							]
 						}
@@ -430,7 +430,7 @@
 					"response": []
 				},
 				{
-					"name": "Retrieve Departments",
+					"name": "Retrieve Wards",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -465,12 +465,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{url}}/departments",
+							"raw": "{{url}}/wards",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"departments"
+								"wards"
 							]
 						}
 					},
@@ -532,7 +532,7 @@
 							"urlencoded": [
 								{
 									"key": "from",
-									"value": "department",
+									"value": "ward",
 									"type": "text"
 								},
 								{
@@ -829,7 +829,7 @@
 									"type": "text"
 								},
 								{
-									"key": "departmentId",
+									"key": "wardId",
 									"value": "5b96c1ff824dd83914d19981",
 									"type": "text"
 								},
@@ -914,7 +914,7 @@
 									"type": "text"
 								},
 								{
-									"key": "departmentId",
+									"key": "wardId",
 									"value": "5b96c1ff824dd83914d19982",
 									"type": "text"
 								},

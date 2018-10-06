@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 // TODO: This is incomplete.
 
-const departmentSchema = new Schema({
+const wardSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -27,7 +27,7 @@ const departmentSchema = new Schema({
     }
 });
 
-const model = mongoose.model('departments', departmentSchema);
+const model = mongoose.model('wards', wardSchema);
 model.on('index', () => {}); //For the unique property
 
 module.exports = model;

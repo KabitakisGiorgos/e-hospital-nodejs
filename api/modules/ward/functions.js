@@ -1,24 +1,24 @@
 const _ = require("lodash");
-const { departmentModel } = require("../../models");
+const { wardModel } = require("../../models");
 
 const { mapper } =require("../../middleware").mapper;
 
 const create = (req, res, next) => {
   if (req.body && req.body.name && req.body.hospitalId) {
-    let newDepartment = {
+    let newWard = {
       name: req.body.name,
       hospitalId: req.body.hospitalId
     };
 
-    if (req.body.doctors) newDepartment.doctors = req.body.doctors;
-    if (req.body.patients) newDepartment.patients = req.body.patients;
-    if (req.body.meta) newDepartment.meta = req.body.meta;
+    if (req.body.doctors) newWard.doctors = req.body.doctors;
+    if (req.body.patients) newWard.patients = req.body.patients;
+    if (req.body.meta) newWard.meta = req.body.meta;
 
-    departmentModel.create(newDepartment, (error, department) => {
+    wardModel.create(newWard, (error, ward) => {
       if (error) next(error);
       else {
         res.status(201);
-        res.send(mapper(department,'department'));
+        res.send(mapper(ward,'ward'));
       }
     });
   } else {
@@ -28,9 +28,9 @@ const create = (req, res, next) => {
 
 const update = (req, res, next) => {
   if (req.body) {
-    departmentModel.findById(req.params.departmentId, (error, department) => {
+    wardModel.findById(req.params.wardId, (error, ward) => {
       if (error) next(error);
-      else if (!department) next("Not Found");
+      else if (!ward) next("Not Found");
       else {
         let payload = {};
 
@@ -38,30 +38,30 @@ const update = (req, res, next) => {
         if (req.body.hospitalId) payload.hospitalId = req.body.hospitalId;
 
         if (req.body.patients) {
-          payload.patients = _.concat(department.patients, req.body.patients);
+          payload.patients = _.concat(ward.patients, req.body.patients);
         }
         if (req.body.doctors) {
-          payload.doctors = _.concat(department.doctors, req.body.doctors);
+          payload.doctors = _.concat(ward.doctors, req.body.doctors);
         }
         if (req.body.meta) {
           payload.meta = {};
-          _.merge(payload.meta, department.meta, req.body.meta);
+          _.merge(payload.meta, ward.meta, req.body.meta);
         }
 
-        department.update(payload, (error, raw) => {
+        ward.update(payload, (error, raw) => {
           if (error) next(error);
           else if (!raw.nModified) {
             // res.status(304);
-            res.send(mapper(department,'department'));
+            res.send(mapper(ward,'ward'));
           } else {
-            departmentModel.findById(
-              req.params.departmentId,
-              (error, department) => {
+            wardModel.findById(
+              req.params.wardId,
+              (error, ward) => {
                 if (error) next(error);
-                else if (!department) next("Not Found");
+                else if (!ward) next("Not Found");
                 else {
                   res.status(200);
-                  res.send(mapper(department,'department'));
+                  res.send(mapper(ward,'ward'));
                 }
               }
             );
@@ -75,15 +75,15 @@ const update = (req, res, next) => {
 };
 
 const _delete = (req, res, next) => {
-  departmentModel.findById(req.params.departmentId, (error, department) => {
+  wardModel.findById(req.params.wardId, (error, ward) => {
     if (error) next(error);
-    else if (!department) next("Not Found");
+    else if (!ward) next("Not Found");
     else {
-      department.delete((error, deleted) => {
+      ward.delete((error, deleted) => {
         if (error) next(error);
         else {
           res.status(200);
-          res.send(mapper(deleted,'department'));
+          res.send(mapper(deleted,'ward'));
         }
       });
     }
@@ -91,27 +91,27 @@ const _delete = (req, res, next) => {
 };
 
 const retrieve = (req, res, next) => {
-  departmentModel.findById(req.params.departmentId, (error, department) => {
+  wardModel.findById(req.params.wardId, (error, ward) => {
     if (error) next(error);
-    else if (!department) next("Not Found");
+    else if (!ward) next("Not Found");
     else {
-      // department = department.toObject();
+      // ward = ward.toObject();
       res.status(200);
-      res.send(mapper(department,'department'));
+      res.send(mapper(ward,'ward'));
     }
   });
 };
 
 const retrieveAll = (req, res, next) => {
-  departmentModel
+  wardModel
     .find()
     .lean()
-    .exec((error, departments) => {
+    .exec((error, wards) => {
       if (error) next(error);
-      else if (departments.length === 0) next("Not Found");
+      else if (wards.length === 0) next("Not Found");
       else {
         res.status(200);
-        res.send(mapper(departments,'department'));
+        res.send(mapper(wards,'ward'));
       }
     });
 };

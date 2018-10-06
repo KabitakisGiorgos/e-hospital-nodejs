@@ -11,7 +11,7 @@ router.get("/hospital/:hospitalId", hospitalFunctions.retrieve);
 router.get("/hospitals", hospitalFunctions.retrieveAll);
 
 
-// Department specific functions
-// router.post("/hospital/:hospitalId/department/:departmentId", hospitalFunctions.addDepartmentToHospital);
-// router.get("/hospital/:hospitalId/departments", hospitalFunctions.getAllDepartmentsOfHospital);
-// router.delete("/hospital/:hospitalId/department/:departmentId", hospitalFunctions.removeDepartmentFromHospital);
+// Ward specific functions
+// router.post("/hospital/:hospitalId/ward/:wardId", hospitalFunctions.addWardToHospital);
+// router.get("/hospital/:hospitalId/wards", hospitalFunctions.getAllWardsOfHospital);
+// router.delete("/hospital/:hospitalId/ward/:wardId", hospitalFunctions.removeWardFromHospital);

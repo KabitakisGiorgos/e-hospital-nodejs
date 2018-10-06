@@ -4,11 +4,11 @@ const { doctorModel } = require("../../models");
 const { mapper } =require("../../middleware").mapper;
 
 const create = (req, res, next) => {
-  if (req.body && req.body.userId && req.body.specialty && req.body.departmentId) {
+  if (req.body && req.body.userId && req.body.specialty && req.body.wardId) {
     let newDoctor = {
       userId: req.body.userId,
       specialty: req.body.specialty,
-      departmentId: req.body.departmentId
+      wardId: req.body.wardId
     };
 
     if (req.body.diplomas) newDoctor.diplomas = req.body.diplomas;
@@ -36,7 +36,7 @@ const update = (req, res, next) => {
 
         if (req.body.userId) payload.userId = req.body.userId;
         if (req.body.specialty) payload.specialty = req.body.specialty;
-        if (req.body.departmentId) payload.departmentId = req.body.departmentId;
+        if (req.body.wardId) payload.wardId = req.body.wardId;
 
         if (req.body.diplomas) {
           payload.diplomas = _.concat(doctor.diplomas, req.body.diplomas);

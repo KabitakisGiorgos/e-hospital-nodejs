@@ -16,7 +16,7 @@ const hospitalSchema = new Schema({
         type: String,
         required: true
     },
-    departments: {
+    wards: {
         type: Array,
     },
     created: {

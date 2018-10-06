@@ -12,7 +12,7 @@ const doctorSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true,
     },
-    departmentId: {
+    wardId: {
         type: Schema.Types.ObjectId,
         required: true,
     },
