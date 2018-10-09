@@ -5,6 +5,8 @@ const {
 mapper.registerModuleConfig(
   'doctor', {
     id: '_id',
+    name: 'name',
+    age: 'age',
     specialty: 'specialty',
     userId: 'userId',
     wardId: 'wardId',
