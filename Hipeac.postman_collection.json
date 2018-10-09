@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "afc1408e-965c-4aaa-b705-87cbc93f64f2",
+		"_postman_id": "994801fc-93a4-44e9-8e8e-bbca572b33e8",
 		"name": "Hipeac",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -228,6 +228,226 @@
 							],
 							"path": [
 								"hospitals"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clinic",
+			"item": [
+				{
+					"name": "Create Clinic",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "testclinic",
+									"type": "text"
+								},
+								{
+									"key": "hospitalId",
+									"value": "5b96c1ff824dd83914d19981",
+									"type": "text"
+								},
+								{
+									"key": "wardId",
+									"value": "5b96c1ff824dd83914d19981",
+									"type": "text"
+								},
+								{
+									"key": "meta[giorgo]",
+									"value": "parasyri",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/clinic",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clinic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Clinic",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/clinic/5bbc5a1a27552923cc2fc2fb",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clinic",
+								"5bbc5a1a27552923cc2fc2fb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Clinic",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "pagniclinic",
+									"type": "text"
+								},
+								{
+									"key": "meta[giorgo]",
+									"value": "parasyri2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/clinic/5bbc5d0527552923cc2fc2fc",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clinic",
+								"5bbc5d0527552923cc2fc2fc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Clinic",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "csd3142@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "PtyxioNot",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Giorgos",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/clinic/5bbc5d0527552923cc2fc2fc",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clinic",
+								"5bbc5d0527552923cc2fc2fc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Hospitals",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "csd3142@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "PtyxioNot",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Giorgos",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/clinic",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clinic"
 							]
 						}
 					},
@@ -1408,7 +1628,10 @@
 								"value": "Bearer {{accessToken}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{url}}/exam/5b9b5cb1a60e8f2198507487",
 							"host": [
