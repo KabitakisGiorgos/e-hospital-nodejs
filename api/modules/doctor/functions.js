@@ -8,7 +8,9 @@ const create = (req, res, next) => {
     let newDoctor = {
       userId: req.body.userId,
       specialty: req.body.specialty,
-      wardId: req.body.wardId
+      wardId: req.body.wardId,
+      name: req.body.name,
+      age: req.body.age,
     };
 
     if (req.body.diplomas) newDoctor.diplomas = req.body.diplomas;
@@ -37,6 +39,8 @@ const update = (req, res, next) => {
         if (req.body.userId) payload.userId = req.body.userId;
         if (req.body.specialty) payload.specialty = req.body.specialty;
         if (req.body.wardId) payload.wardId = req.body.wardId;
+        if (req.body.name) payload.name = req.body.name;
+        if (req.body.age) payload.age = req.body.age;
 
         if (req.body.diplomas) {
           payload.diplomas = _.concat(doctor.diplomas, req.body.diplomas);

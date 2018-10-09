@@ -7,7 +7,9 @@ const create = (req, res, next) => {
   if (req.body && req.body.AMKA && req.body.userId && req.body.type) {
     let newPatient = {
       AMKA: req.body.AMKA,
-      userId: req.body.userId
+      userId: req.body.userId,
+      name: req.body.name,
+      age: req.body.age,
     };
 
     if (req.body.type) newPatient.type = req.body.type;
@@ -37,6 +39,8 @@ const update = (req, res, next) => {
         if (req.body.AMKA) payload.AMKA = req.body.AMKA;
         if (req.body.userId) payload.userId = req.body.userId;
         if (req.body.type) payload.type = req.body.type;
+        if (req.body.name) payload.name = req.body.name;
+        if (req.body.age) payload.age = req.body.age;
 
         if (req.body.exams) {
           payload.exams = _.concat(patient.exams, req.body.exams);

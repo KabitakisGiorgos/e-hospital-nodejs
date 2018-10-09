@@ -833,6 +833,16 @@
 									"key": "meta[giorgo]",
 									"value": "parasiri",
 									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Giorgos Parasyris",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "45",
+									"type": "text"
 								}
 							]
 						},
@@ -910,6 +920,16 @@
 								{
 									"key": "meta[giorg2o]",
 									"value": "parasyri21",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Giorgos Parasyris2",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "100",
 									"type": "text"
 								}
 							]
@@ -1060,6 +1080,16 @@
 									"type": "text"
 								},
 								{
+									"key": "name",
+									"value": "Giorgos Parasyris",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "45",
+									"type": "text"
+								},
+								{
 									"key": "diplomas[0]",
 									"value": "Kati",
 									"type": "text",
@@ -1142,6 +1172,16 @@
 								{
 									"key": "wardId",
 									"value": "5b96c1ff824dd83914d19982",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Giorgos Parasyris2",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "100",
 									"type": "text"
 								},
 								{

@@ -16,6 +16,14 @@ const doctorSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true,
     },
+    name: {
+      type: String,
+      required: true
+    },
+    age: {
+      type: Number,
+      required: true
+    },
     diplomas: {
         type: Array,
         // required: true,

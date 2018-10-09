@@ -14,6 +14,14 @@ const patientSchema = new Schema({
         required: true,
         // unique: true
     },
+    name: {
+      type: String,
+      required: true
+    },
+    age: {
+      type: Number,
+      required: true
+    },
     type: {
         type: String,
     },
