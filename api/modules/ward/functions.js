@@ -1,7 +1,7 @@
 const _ = require("lodash");
-const { wardModel } = require("../../models");
+const { wardModel, patientModel } = require("../../models");
 
-const { mapper } =require("../../middleware").mapper;
+const { mapper } = require("../../middleware").mapper;
 
 const create = (req, res, next) => {
   if (req.body && req.body.name && req.body.hospitalId) {
@@ -18,7 +18,7 @@ const create = (req, res, next) => {
       if (error) next(error);
       else {
         res.status(201);
-        res.send(mapper(ward,'ward'));
+        res.send(mapper(ward, "ward"));
       }
     });
   } else {
@@ -52,19 +52,16 @@ const update = (req, res, next) => {
           if (error) next(error);
           else if (!raw.nModified) {
             // res.status(304);
-            res.send(mapper(ward,'ward'));
+            res.send(mapper(ward, "ward"));
           } else {
-            wardModel.findById(
-              req.params.wardId,
-              (error, ward) => {
-                if (error) next(error);
-                else if (!ward) next("Not Found");
-                else {
-                  res.status(200);
-                  res.send(mapper(ward,'ward'));
-                }
+            wardModel.findById(req.params.wardId, (error, ward) => {
+              if (error) next(error);
+              else if (!ward) next("Not Found");
+              else {
+                res.status(200);
+                res.send(mapper(ward, "ward"));
               }
-            );
+            });
           }
         });
       }
@@ -83,7 +80,7 @@ const _delete = (req, res, next) => {
         if (error) next(error);
         else {
           res.status(200);
-          res.send(mapper(deleted,'ward'));
+          res.send(mapper(deleted, "ward"));
         }
       });
     }
@@ -97,7 +94,7 @@ const retrieve = (req, res, next) => {
     else {
       // ward = ward.toObject();
       res.status(200);
-      res.send(mapper(ward,'ward'));
+      res.send(mapper(ward, "ward"));
     }
   });
 };
@@ -111,9 +108,80 @@ const retrieveAll = (req, res, next) => {
       else if (wards.length === 0) next("Not Found");
       else {
         res.status(200);
-        res.send(mapper(wards,'ward'));
+        res.send(mapper(wards, "ward"));
       }
     });
+};
+
+const addWatitingPatient = (req, res, next) => {
+  if (req.body && req.params.patientId) {
+    wardModel.findById(req.params.wardId, (error, ward) => {
+      if (error) next(error);
+      else if (!ward) next("Not Found");
+      else {
+        patientModel.findById(req.params.patientId, (error, patient) => {
+          if (error) next(error);
+          else if (!patient) next("Not Found");
+          else {
+            let waitingList = ward.waitingList;
+
+            waitingList.push({
+              patientId: req.body.patientId,
+              name: patient.name,
+              arrived: false,
+              waiting: true,
+              order: ward.waitingList.length
+            });
+
+            ward.update({ waitingList }, (error, raw) => {
+              if (error) next(error);
+              else if (!raw.nModified) {
+                // res.status(304);
+                res.send(mapper(ward, "ward"));
+              } else {
+                wardModel.findById(req.params.wardId, (error, ward) => {
+                  if (error) next(error);
+                  else if (!ward) next("Not Found");
+                  else {
+                    res.status(200);
+                    res.send(mapper(ward, "ward"));
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else {
+    next("Invalid Arguments");
+  }
+};
+
+const retrieveWaitingPatient = (req, res, next) => {
+  wardModel.findById(req.params.wardId, (error, ward) => {
+    if (error) next(error);
+    else if (!ward) next("Not Found");
+    else {
+      // ward = ward.toObject();
+      patient = _.find(ward.waitingList, (o) => o.id == req.params.patientId);
+
+      res.status(200);
+      res.send(patient);
+    }
+  });
+};
+
+const retrieveWaitingPatients = (req, res, next) => {
+  wardModel.findById(req.params.wardId, (error, ward) => {
+    if (error) next(error);
+    else if (!ward) next("Not Found");
+    else {
+      // ward = ward.toObject();
+      res.status(200);
+      res.send(ward.waitingList);
+    }
+  });
 };
 
 module.exports = {
@@ -121,5 +189,8 @@ module.exports = {
   update,
   delete: _delete,
   retrieve,
-  retrieveAll
+  retrieveAll,
+  addWatitingPatient,
+  retrieveWaitingPatients,
+  retrieveWaitingPatient
 };

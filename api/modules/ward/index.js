@@ -5,10 +5,11 @@ const {
 mapper.registerModuleConfig(
   'ward', {
     id: '_id',
-    AMKA: 'AMKA',
-    userId: 'userId',
-    type: 'type',
-    exams: 'exams',
+    name: 'name',
+    hospitalId: 'hospitalId',
+    doctors: 'doctors',
+    patients: 'patients',
+    waitingList: 'waitingList',
     created: 'created',
     meta: 'meta'
   });
