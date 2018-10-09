@@ -5,7 +5,7 @@ const clinicFunctions = require("./functions");
 // TODO: Implement these
 
 router.post("/clinic", clinicFunctions.create);
-router.put("/clinic/:cid", clinicFunctions.update);
-router.delete("/clinic/:cid", clinicFunctions.delete);
-router.get("/clinic/:cid", clinicFunctions.retrieve);
+router.put("/clinic/:cId", clinicFunctions.update);
+router.delete("/clinic/:cId", clinicFunctions.delete);
+router.get("/clinic/:cId", clinicFunctions.retrieve);
 router.get("/clinic", clinicFunctions.retrieveAll);

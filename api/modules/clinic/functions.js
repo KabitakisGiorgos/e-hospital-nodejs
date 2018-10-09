@@ -4,11 +4,10 @@ const { clinicModel } = require("../../models");
 const { mapper } =require("../../middleware").mapper;
 
 const create = (req, res, next) => {
-  if (req.body && req.body.hospitalId && req.body.name && req.body.wardId) {
+  if (req.body && req.body.hospitalId && req.body.name) {
     let newClinic = {
       name: req.body.name,
       hospitalId: req.body.hospitalId,
-      wardId: req.body.wardId
     };
 
     if (req.body.meta) newClinic.meta = req.body.meta;
@@ -27,7 +26,7 @@ const create = (req, res, next) => {
 
 const update = (req, res, next) => {
   if (req.body) {
-    clinicModel.findById(req.params.cid, (error, clinic) => {
+    clinicModel.findById(req.params.cId, (error, clinic) => {
       if (error) next(error);
       else if (!clinic) next("Not Found");
       else {
@@ -35,7 +34,6 @@ const update = (req, res, next) => {
 
         if (req.body.name) payload.name = req.body.name;
         if (req.body.hospitalId) payload.hospitalId = req.body.hospitalId;
-        if (req.body.wardId) payload.wardId = req.body.wardId;
 
         if (req.body.meta) {
           payload.meta = {};
@@ -47,7 +45,7 @@ const update = (req, res, next) => {
             // res.status(304);
             res.send(mapper(clinic,'clinic'));
           } else {
-            clinicModel.findById(req.params.cid, (error, clinic) => {
+            clinicModel.findById(req.params.cId, (error, clinic) => {
               if (error) next(error);
               else if (!clinic) next("Not Found");
               else {
@@ -65,7 +63,7 @@ const update = (req, res, next) => {
 };
 
 const _delete = (req, res, next) => {
-  clinicModel.findById(req.params.cid, (error, clinic) => {
+  clinicModel.findById(req.params.cId, (error, clinic) => {
     if (error) next(error);
     else if (!clinic) next("Not Found");
     else {
@@ -81,7 +79,7 @@ const _delete = (req, res, next) => {
 };
 
 const retrieve = (req, res, next) => {
-  clinicModel.findById(req.params.cid, (error, clinic) => {
+  clinicModel.findById(req.params.cId, (error, clinic) => {
     if (error) next(error);
     else if (!clinic) next("Not Found");
     else {

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "994801fc-93a4-44e9-8e8e-bbca572b33e8",
+		"_postman_id": "95cac52a-0aaf-4e3d-a322-6eac97dd1f0b",
 		"name": "Hipeac",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -407,13 +407,19 @@
 					"response": []
 				},
 				{
-					"name": "Retrieve Hospitals",
+					"name": "Retrieve Clinics",
 					"request": {
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
 								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
 							}
 						],
 						"body": {
