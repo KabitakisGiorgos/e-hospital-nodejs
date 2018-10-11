@@ -701,6 +701,197 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "[Ward] Add Patient to Waiting List",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "ER",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "hospitalId",
+									"value": "5b9956b142c9f216bc9b2530",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "doctors",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "patients",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "meta",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/ward/{{wardId}}/waiting/{{patientId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ward",
+								"{{wardId}}",
+								"waiting",
+								"{{patientId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Ward] Get Patient  on Waiting List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "ER",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "hospitalId",
+									"value": "5b9956b142c9f216bc9b2530",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "doctors",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "patients",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "meta",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/ward/{{wardId}}/waiting/{{patientId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ward",
+								"{{wardId}}",
+								"waiting",
+								"{{patientId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Ward] Get All Patients on Waiting List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "ER",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "hospitalId",
+									"value": "5b9956b142c9f216bc9b2530",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "doctors",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "patients",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "meta",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/ward/{{wardId}}/waiting",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ward",
+								"{{wardId}}",
+								"waiting"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1816,6 +2007,22 @@
 		},
 		{
 			"name": "Login User Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "841bed9f-f37d-4d80-82f5-fbc73038d96a",
+						"exec": [
+							"var newToken = JSON.parse(responseBody).token;",
+							"var userId = JSON.parse(responseBody).userId;",
+							"postman.setEnvironmentVariable(\"accessToken\", newToken);",
+							"postman.setEnvironmentVariable(\"token\", newToken);",
+							"postman.setEnvironmentVariable(\"userId\", userId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -1869,6 +2076,22 @@
 		},
 		{
 			"name": "Login Anonymous token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fb18278f-3129-4396-85aa-a2bcd5d12114",
+						"exec": [
+							"var newToken = JSON.parse(responseBody).token;",
+							"var userId = JSON.parse(responseBody).userId;",
+							"postman.setEnvironmentVariable(\"accessToken\", newToken);",
+							"postman.setEnvironmentVariable(\"token\", newToken);",
+							"postman.setEnvironmentVariable(\"userId\", userId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [

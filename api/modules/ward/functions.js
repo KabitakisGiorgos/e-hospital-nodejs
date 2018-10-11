@@ -123,32 +123,38 @@ const addWatitingPatient = (req, res, next) => {
           if (error) next(error);
           else if (!patient) next("Not Found");
           else {
-            let waitingList = ward.waitingList;
 
-            waitingList.push({
-              patientId: req.body.patientId,
-              name: patient.name,
-              arrived: false,
-              waiting: true,
-              order: ward.waitingList.length
-            });
+            if (_.find(ward.waitingList, o => o.patientId == req.params.patientId)) {
+              next("Patient already in Waiting list");
 
-            ward.update({ waitingList }, (error, raw) => {
-              if (error) next(error);
-              else if (!raw.nModified) {
-                // res.status(304);
-                res.send(mapper(ward, "ward"));
-              } else {
-                wardModel.findById(req.params.wardId, (error, ward) => {
-                  if (error) next(error);
-                  else if (!ward) next("Not Found");
-                  else {
-                    res.status(200);
-                    res.send(mapper(ward, "ward"));
-                  }
-                });
-              }
-            });
+            } else {
+              let waitingList = ward.waitingList;
+
+              waitingList.push({
+                patientId: req.params.patientId,
+                name: patient.name,
+                arrived: false,
+                waiting: true,
+                order: ward.waitingList.length
+              });
+
+              ward.update({ waitingList }, (error, raw) => {
+                if (error) next(error);
+                else if (!raw.nModified) {
+                  // res.status(304);
+                  res.send(mapper(ward, "ward"));
+                } else {
+                  wardModel.findById(req.params.wardId, (error, ward) => {
+                    if (error) next(error);
+                    else if (!ward) next("Not Found");
+                    else {
+                      res.status(200);
+                      res.send(mapper(ward, "ward"));
+                    }
+                  });
+                }
+              });
+            }
           }
         });
       }
@@ -164,7 +170,7 @@ const retrieveWaitingPatient = (req, res, next) => {
     else if (!ward) next("Not Found");
     else {
       // ward = ward.toObject();
-      patient = _.find(ward.waitingList, (o) => o.id == req.params.patientId);
+      patient = _.find(ward.waitingList, o => o.patientId == req.params.patientId);
 
       res.status(200);
       res.send(patient);
