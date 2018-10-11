@@ -20,7 +20,7 @@ const create = (req, res, next) => {
       if (error) next(error);
       else {
         res.status(201);
-        res.send(mapper(patient,'patient'));
+        res.locals.data = mapper(patient,'patient');
       }
     });
   } else {
@@ -54,14 +54,14 @@ const update = (req, res, next) => {
           if (error) next(error);
           else if (!raw.nModified) {
             // res.status(304);
-            res.send(mapper(patient,'patient'));
+            res.locals.data = mapper(patient,'patient');
           } else {
             patientModel.findById(req.params.patientId, (error, patient) => {
               if (error) next(error);
               else if (!patient) next("Not Found");
               else {
                 res.status(200);
-                res.send(mapper(patient,'patient'));
+                res.locals.data = mapper(patient,'patient');
               }
             });
           }
@@ -82,7 +82,7 @@ const _delete = (req, res, next) => {
         if (error) next(error);
         else {
           res.status(200);
-          res.send(mapper(deleted,'patient'));
+          res.locals.data = mapper(deleted,'patient');
         }
       });
     }
@@ -96,7 +96,7 @@ const retrieve = (req, res, next) => {
     else {
       // patient = patient.toObject();
       res.status(200);
-      res.send(mapper(patient,'patient'));
+      res.locals.data = mapper(patient,'patient');
     }
   });
 };
@@ -110,7 +110,7 @@ const retrieveAll = (req, res, next) => {
       else if (patients.length === 0) next("Not Found");
       else {
         res.status(200);
-        res.send(mapper(patients,'patient'));
+        res.locals.data = mapper(patients,'patient');
       }
     });
 };

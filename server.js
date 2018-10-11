@@ -14,7 +14,7 @@ require("dotenv").load();
 // Initialize the modules
 const modules = require("./api/modules");
 
-const { oauth, error, strategies } = require("./api/middleware");
+const { handleResponse, oauth, error, strategies } = require("./api/middleware");
 
 mongoose.connect(
   `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${
@@ -102,6 +102,7 @@ app.use(require("./api/utils").router);
 
 // Error Handler
 app.use(error);
+app.use(handleResponse);
 
 // listening to port from env
 const port = process.env.PORT || 4200;

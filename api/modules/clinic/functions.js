@@ -16,7 +16,8 @@ const create = (req, res, next) => {
       if (error) next(error);
       else {
         res.status(201);
-        res.send(mapper(clinic,'clinic'));
+        res.locals.data = mapper(clinic,'clinic');
+        next();
       }
     });
   } else {
@@ -43,14 +44,16 @@ const update = (req, res, next) => {
           if (error) next(error);
           else if (!raw.nModified) {
             // res.status(304);
-            res.send(mapper(clinic,'clinic'));
+            res.locals.data = mapper(clinic,'clinic');
+            next();
           } else {
             clinicModel.findById(req.params.cId, (error, clinic) => {
               if (error) next(error);
               else if (!clinic) next("Not Found");
               else {
                 res.status(200);
-                res.send(mapper(clinic,'clinic'));
+                res.locals.data = mapper(clinic,'clinic');
+                next();
               }
             });
           }
@@ -71,7 +74,8 @@ const _delete = (req, res, next) => {
         if (error) next(error);
         else {
           res.status(200);
-          res.send(mapper(deleted,'clinic'));
+          res.locals.data = mapper(deleted,'clinic');
+          next();
         }
       });
     }
@@ -85,7 +89,8 @@ const retrieve = (req, res, next) => {
     else {
       // clinic = clinic.toObject();
       res.status(200);
-      res.send(mapper(clinic,'clinic'));
+      res.locals.data = mapper(clinic,'clinic');
+      next();
     }
   });
 };
@@ -99,7 +104,8 @@ const retrieveAll = (req, res, next) => {
       else if (clinics.length === 0) next("Not Found");
       else {
         res.status(200);
-        res.send(mapper(clinics,'clinic'));
+        res.locals.data = mapper(clinics,'clinic');
+        next();
       }
     });
 };

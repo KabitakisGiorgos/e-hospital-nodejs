@@ -18,7 +18,8 @@ const create = (req, res, next) => {
       if (error) next(error);
       else {
         res.status(201);
-        res.send(mapper(ward, "ward"));
+        res.locals.data = mapper(ward, "ward");
+        next();
       }
     });
   } else {
@@ -52,14 +53,16 @@ const update = (req, res, next) => {
           if (error) next(error);
           else if (!raw.nModified) {
             // res.status(304);
-            res.send(mapper(ward, "ward"));
+            res.locals.data = mapper(ward, "ward");
+            next();
           } else {
             wardModel.findById(req.params.wardId, (error, ward) => {
               if (error) next(error);
               else if (!ward) next("Not Found");
               else {
                 res.status(200);
-                res.send(mapper(ward, "ward"));
+                res.locals.data = mapper(ward, "ward");
+                next();
               }
             });
           }
@@ -80,7 +83,8 @@ const _delete = (req, res, next) => {
         if (error) next(error);
         else {
           res.status(200);
-          res.send(mapper(deleted, "ward"));
+          res.locals.data = mapper(deleted, "ward");
+          next();
         }
       });
     }
@@ -94,7 +98,8 @@ const retrieve = (req, res, next) => {
     else {
       // ward = ward.toObject();
       res.status(200);
-      res.send(mapper(ward, "ward"));
+      res.locals.data = mapper(ward, "ward");
+      next();
     }
   });
 };
@@ -108,7 +113,8 @@ const retrieveAll = (req, res, next) => {
       else if (wards.length === 0) next("Not Found");
       else {
         res.status(200);
-        res.send(mapper(wards, "ward"));
+        res.locals.data = mapper(wards, "ward");
+        next();
       }
     });
 };
@@ -141,14 +147,16 @@ const addWatitingPatient = (req, res, next) => {
                 if (error) next(error);
                 else if (!raw.nModified) {
                   // res.status(304);
-                  res.send(mapper(ward, "ward"));
+                  res.locals.data = mapper(ward, "ward");
+                  next();
                 } else {
                   wardModel.findById(req.params.wardId, (error, ward) => {
                     if (error) next(error);
                     else if (!ward) next("Not Found");
                     else {
                       res.status(200);
-                      res.send(mapper(ward, "ward"));
+                      res.locals.data = mapper(ward, "ward");
+                      next();
                     }
                   });
                 }
@@ -172,7 +180,8 @@ const retrieveWaitingPatient = (req, res, next) => {
       patient = _.find(ward.waitingList, o => o.patientId == req.params.patientId);
 
       res.status(200);
-      res.send(patient);
+      res.locals.data = patient;
+      next();
     }
   });
 };
@@ -184,7 +193,8 @@ const retrieveWaitingPatients = (req, res, next) => {
     else {
       // ward = ward.toObject();
       res.status(200);
-      res.send(ward.waitingList);
+      res.locals.data = ward.waitingList;
+      next();
     }
   });
 };

@@ -42,9 +42,10 @@ const sendEmailnotification = (req, res, next) => {
       if (err) next(err);
       else {
         res.status(200);
-        res.send({
+        res.locals.data = {
           status: "Success"
-        });
+        };
+        next();
       }
     });
   } else {
@@ -98,9 +99,10 @@ const sendPushnotification = (req, res, next) => {
       if (err) next(err);
       else {
         res.status(200);
-        res.send({
+        res.locals.data = {
           status: "Success"
-        })
+        };
+        next();
       }
     });
   } else {

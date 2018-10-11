@@ -23,7 +23,8 @@ const create = (req, res, next) => {
       if (error) next(error);
       else {
         res.status(201);
-        res.send(mapper(exam, 'exam'));
+        res.locals.data = mapper(exam, 'exam');
+        next();
       }
     });
   } else {
@@ -53,7 +54,8 @@ const update = (req, res, next) => {
           if (error) next(error);
           else if (!raw.nModified) {
             // res.status(304);
-            res.send(mapper(exam, 'exam'));
+            res.locals.data = mapper(exam, 'exam');
+            next();
           } else {
             examModel.findById(
               req.params.examId,
@@ -62,7 +64,8 @@ const update = (req, res, next) => {
                 else if (!exam) next("Not Found");
                 else {
                   res.status(200);
-                  res.send(mapper(exam, 'exam'));
+                  res.locals.data = mapper(exam, 'exam');
+                  next();
                 }
               }
             );
@@ -84,7 +87,8 @@ const _delete = (req, res, next) => {
         if (error) next(error);
         else {
           res.status(200);
-          res.send(mapper(deleted, 'exam'));
+          res.locals.data = mapper(deleted, 'exam');
+          next();
         }
       });
     }
@@ -98,7 +102,8 @@ const retrieve = (req, res, next) => {
     else {
       // exam = exam.toObject();
       res.status(200);
-      res.send(mapper(exam, 'exam'));
+      res.locals.data = mapper(exam, 'exam');
+      next();
     }
   });
 };
@@ -112,7 +117,8 @@ const retrieveAll = (req, res, next) => {
       else if (exams.length === 0) next("Not Found");
       else {
         res.status(200);
-        res.send(mapper(exams, 'exam'));
+        res.locals.data = mapper(exams, 'exam');
+        next();
       }
     });
 };
