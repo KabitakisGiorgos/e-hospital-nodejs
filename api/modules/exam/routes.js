@@ -1,7 +1,6 @@
 const { router } = require("../../utils");
 const examFunctions = require("./functions");
 
-
 // TODO: Implement these
 
 router.post("/exam", examFunctions.create);

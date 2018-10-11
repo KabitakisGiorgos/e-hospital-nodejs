@@ -35,7 +35,7 @@ server.grant(
       code: code,
       clientId: client.clientId,
       redirectUri: redirectUri,
-      userId: user._id,
+      userId: user._id
     };
     authCodeModel.findOne(
       {

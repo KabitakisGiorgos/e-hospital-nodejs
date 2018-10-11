@@ -1,7 +1,7 @@
 const _ = require("lodash");
 const { doctorModel } = require("../../models");
 
-const { mapper } =require("../../middleware").mapper;
+const { mapper } = require("../../middleware").mapper;
 
 const create = (req, res, next) => {
   if (req.body && req.body.userId && req.body.specialty && req.body.wardId) {
@@ -10,7 +10,7 @@ const create = (req, res, next) => {
       specialty: req.body.specialty,
       wardId: req.body.wardId,
       name: req.body.name,
-      age: req.body.age,
+      age: req.body.age
     };
 
     if (req.body.diplomas) newDoctor.diplomas = req.body.diplomas;
@@ -20,7 +20,7 @@ const create = (req, res, next) => {
       if (error) next(error);
       else {
         res.status(201);
-        res.locals.data = mapper(doctor,'doctor');
+        res.locals.data = mapper(doctor, "doctor");
         next();
       }
     });
@@ -54,7 +54,7 @@ const update = (req, res, next) => {
           if (error) next(error);
           else if (!raw.nModified) {
             // res.status(304);
-            res.locals.data = mapper(doctor,'doctor');
+            res.locals.data = mapper(doctor, "doctor");
             next();
           } else {
             doctorModel.findById(req.params.doctorId, (error, doctor) => {
@@ -62,7 +62,7 @@ const update = (req, res, next) => {
               else if (!doctor) next("Not Found");
               else {
                 res.status(200);
-                res.locals.data = mapper(doctor,'doctor');
+                res.locals.data = mapper(doctor, "doctor");
                 next();
               }
             });
@@ -84,7 +84,7 @@ const _delete = (req, res, next) => {
         if (error) next(error);
         else {
           res.status(200);
-          res.locals.data = mapper(deleted,'doctor');
+          res.locals.data = mapper(deleted, "doctor");
           next();
         }
       });
@@ -99,7 +99,7 @@ const retrieve = (req, res, next) => {
     else {
       // doctor = doctor.toObject();
       res.status(200);
-      res.locals.data = mapper(doctor,'doctor');
+      res.locals.data = mapper(doctor, "doctor");
       next();
     }
   });
@@ -114,7 +114,7 @@ const retrieveAll = (req, res, next) => {
       else if (doctors.length === 0) next("Not Found");
       else {
         res.status(200);
-        res.locals.data = mapper(doctors,'doctor');
+        res.locals.data = mapper(doctors, "doctor");
         next();
       }
     });

@@ -2,8 +2,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const BasicStrategy = require("passport-http").BasicStrategy;
 const BearerStrategy = require("passport-http-bearer").Strategy;
-const ClientPasswordStrategy = require("passport-oauth2-client-password")
-  .Strategy;
+const ClientPasswordStrategy = require("passport-oauth2-client-password").Strategy;
 // const mongoose = require("mongoose");
 // let ObjectId = require("mongodb").ObjectID;
 let { userModel, clientModel, tokenModel } = require("../models");
@@ -24,10 +23,7 @@ passport.use(
         if (!user) {
           return done(null, false);
         }
-        const hashedpassword = utils.passwordhash.saltHashPassword(
-          password,
-          user.salt
-        );
+        const hashedpassword = utils.passwordhash.saltHashPassword(password, user.salt);
 
         if (user.password != hashedpassword.passwordHash) {
           return done(null, false);

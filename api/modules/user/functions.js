@@ -1,17 +1,12 @@
 const _ = require("lodash");
 const validator = require("validator");
 
-const { mapper } =require("../../middleware").mapper;
+const { mapper } = require("../../middleware").mapper;
 const { passwordhash } = require("../../utils");
 let { userModel } = require("../../models");
 
 const create = (req, res, next) => {
-  if (
-    req.body &&
-    validator.isEmail(req.body.email) &&
-    req.body.password &&
-    req.body.username
-  ) {
+  if (req.body && validator.isEmail(req.body.email) && req.body.password && req.body.username) {
     const hashedpassword = passwordhash.saltHashPassword(
       req.body.password,
       passwordhash.genRandomString(16)
@@ -31,7 +26,7 @@ const create = (req, res, next) => {
         user = user.toObject();
         delete user.password;
         delete user.salt;
-        res.locals.data = mapper(user,'user');
+        res.locals.data = mapper(user, "user");
         next();
       }
     });
@@ -64,19 +59,13 @@ const update = (req, res, next) => {
         }
 
         if (payload.newpassword && payload.oldpassword) {
-          const hashedpassword = passwordhash.saltHashPassword(
-            payload.oldpassword,
-            user.salt
-          );
-          if (hashedpassword.passwordHash !== user.password)
-            next("Invalid Password");
+          const hashedpassword = passwordhash.saltHashPassword(payload.oldpassword, user.salt);
+          if (hashedpassword.passwordHash !== user.password) next("Invalid Password");
           else {
             //checking for the old password if its correctly provided
             delete payload.oldpassword;
-            const newHashedpassword = passwordhash.saltHashPassword(
-              payload.newpassword,
-              user.salt
-            ).passwordHash;
+            const newHashedpassword = passwordhash.saltHashPassword(payload.newpassword, user.salt)
+              .passwordHash;
             payload.password = newHashedpassword;
             delete payload.newpassword;
           }
@@ -85,7 +74,7 @@ const update = (req, res, next) => {
           if (error) next(error);
           else if (!raw.nModified) {
             // res.status(304);
-            res.locals.data = mapper(user,'user');
+            res.locals.data = mapper(user, "user");
             next();
           } else {
             userModel.findById(req.params.userId, (error, user) => {
@@ -93,7 +82,7 @@ const update = (req, res, next) => {
               else if (!user) next("Not Found");
               else {
                 res.status(200);
-                res.locals.data = mapper(user,'user');
+                res.locals.data = mapper(user, "user");
                 next();
               }
             });
@@ -116,7 +105,7 @@ const _delete = (req, res, next) => {
           if (error) next(error);
           else {
             res.status(200);
-            res.locals.data = mapper(deletedUser,'user');
+            res.locals.data = mapper(deletedUser, "user");
             next();
           }
         });
@@ -137,7 +126,7 @@ const retrieve = (req, res, next) => {
         delete user.salt;
         delete user.password;
         res.status(200);
-        res.locals.data = mapper(user,'user');
+        res.locals.data = mapper(user, "user");
         next();
       }
     });
@@ -159,7 +148,7 @@ const retrieveAll = (req, res, next) => {
           //strip the salt and the password of the users
           delete users[i].salt;
           delete users[i].password;
-          usersV2.push(mapper(users[i],'user'));
+          usersV2.push(mapper(users[i], "user"));
         }
         res.status(200);
         res.locals.data = usersV2;

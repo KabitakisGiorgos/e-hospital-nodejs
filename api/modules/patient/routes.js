@@ -1,7 +1,6 @@
 const { router } = require("../../utils");
 const patientFunctions = require("./functions");
 
-
 // TODO: Implement these
 
 router.post("/patient", patientFunctions.create);

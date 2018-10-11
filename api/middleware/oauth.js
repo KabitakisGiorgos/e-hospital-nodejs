@@ -19,8 +19,7 @@ server.exchange(
       (error, localClient) => {
         if (error) return done(error);
         if (!localClient) return done(null, false);
-        if (localClient.clientSecret !== client.clientSecret)
-          return done(null, false);
+        if (localClient.clientSecret !== client.clientSecret) return done(null, false);
         // Validate the user
         userModel.findOne(
           {
@@ -29,12 +28,8 @@ server.exchange(
           (error, user) => {
             if (error) return done(error);
             if (!user) return done(null, false);
-            const hashedpassword = passwordhash.saltHashPassword(
-              password,
-              user.salt
-            );
-            if (hashedpassword.passwordHash !== user.password)
-              return done(null, false);
+            const hashedpassword = passwordhash.saltHashPassword(password, user.salt);
+            if (hashedpassword.passwordHash !== user.password) return done(null, false);
 
             const object = {
               userId: user._id,

@@ -129,7 +129,6 @@ const addWatitingPatient = (req, res, next) => {
           if (error) next(error);
           else if (!patient) next("Not Found");
           else {
-
             if (_.find(ward.waitingList, o => o.patientId == req.params.patientId)) {
               next({ message: "Patient already in Waiting list" });
             } else {

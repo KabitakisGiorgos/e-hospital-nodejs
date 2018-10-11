@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // TODO: This needs evaluation
@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const clinicSchema = new Schema({
   name: {
     type: String,
-    required: true,
+    required: true
   },
   hospitalId: {
     type: Schema.Types.ObjectId,
@@ -17,9 +17,9 @@ const clinicSchema = new Schema({
     default: Date.now()
   },
   meta: {
-    type: Object,
+    type: Object
   }
 });
 
-const model = mongoose.model('clinics', clinicSchema);
+const model = mongoose.model("clinics", clinicSchema);
 module.exports = model;
