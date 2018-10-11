@@ -21,6 +21,7 @@ const create = (req, res, next) => {
       else {
         res.status(201);
         res.locals.data = mapper(doctor,'doctor');
+        next();
       }
     });
   } else {
@@ -54,6 +55,7 @@ const update = (req, res, next) => {
           else if (!raw.nModified) {
             // res.status(304);
             res.locals.data = mapper(doctor,'doctor');
+            next();
           } else {
             doctorModel.findById(req.params.doctorId, (error, doctor) => {
               if (error) next(error);
@@ -61,6 +63,7 @@ const update = (req, res, next) => {
               else {
                 res.status(200);
                 res.locals.data = mapper(doctor,'doctor');
+                next();
               }
             });
           }
@@ -82,6 +85,7 @@ const _delete = (req, res, next) => {
         else {
           res.status(200);
           res.locals.data = mapper(deleted,'doctor');
+          next();
         }
       });
     }
@@ -96,6 +100,7 @@ const retrieve = (req, res, next) => {
       // doctor = doctor.toObject();
       res.status(200);
       res.locals.data = mapper(doctor,'doctor');
+      next();
     }
   });
 };
@@ -110,6 +115,7 @@ const retrieveAll = (req, res, next) => {
       else {
         res.status(200);
         res.locals.data = mapper(doctors,'doctor');
+        next();
       }
     });
 };
