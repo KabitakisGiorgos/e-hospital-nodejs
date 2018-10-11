@@ -125,8 +125,7 @@ const addWatitingPatient = (req, res, next) => {
           else {
 
             if (_.find(ward.waitingList, o => o.patientId == req.params.patientId)) {
-              next("Patient already in Waiting list");
-
+              next({ message: "Patient already in Waiting list" });
             } else {
               let waitingList = ward.waitingList;
 
