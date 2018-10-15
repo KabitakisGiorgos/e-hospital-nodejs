@@ -18,10 +18,6 @@ const wardSchema = new Schema({
   patients: {
     type: Array
   },
-  waitingList: {
-    type: Array,
-    default: []
-  },
   created: {
     type: Date,
     default: Date.now()

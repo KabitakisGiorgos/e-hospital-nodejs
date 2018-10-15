@@ -1,5 +1,5 @@
 const _ = require("lodash");
-const { clinicModel } = require("../../models");
+const { clinicModel, patientModel } = require("../../models");
 
 const { mapper } = require("../../middleware").mapper;
 
@@ -110,10 +110,93 @@ const retrieveAll = (req, res, next) => {
     });
 };
 
+const addWatitingPatient = (req, res, next) => {
+  if (req.body && req.params.patientId) {
+    clinicModel.findById(req.params.clinicId, (error, clinic) => {
+      if (error) next(error);
+      else if (!clinic) next("Not Found");
+      else {
+        patientModel.findById(req.params.patientId, (error, patient) => {
+          if (error) next(error);
+          else if (!patient) next("Not Found");
+          else {
+            if (_.find(clinic.waitingList, o => o.patientId == req.params.patientId)) {
+              next({ message: "Patient already in Waiting list" });
+            } else {
+              let waitingList = clinic.waitingList;
+
+              waitingList.push({
+                patientId: req.params.patientId,
+                firstName: patient.firstName,
+                lastName: patient.lastName,
+                arrived: false,
+                waiting: true,
+                order: clinic.waitingList.length
+              });
+
+              clinic.update({ waitingList }, (error, raw) => {
+                if (error) next(error);
+                else if (!raw.nModified) {
+                  // res.status(304);
+                  res.locals.data = mapper(clinic, "clinic");
+                  next();
+                } else {
+                  clinicModel.findById(req.params.clinicId, (error, clinic) => {
+                    if (error) next(error);
+                    else if (!clinic) next("Not Found");
+                    else {
+                      res.status(200);
+                      res.locals.data = mapper(clinic, "clinic");
+                      next();
+                    }
+                  });
+                }
+              });
+            }
+          }
+        });
+      }
+    });
+  } else {
+    next("Invalid Arguments");
+  }
+};
+
+const retrieveWaitingPatient = (req, res, next) => {
+  clinicModel.findById(req.params.clinicId, (error, clinic) => {
+    if (error) next(error);
+    else if (!clinic) next("Not Found");
+    else {
+      // clinic = clinic.toObject();
+      patient = _.find(clinic.waitingList, o => o.patientId == req.params.patientId);
+
+      res.status(200);
+      res.locals.data = patient;
+      next();
+    }
+  });
+};
+
+const retrieveWaitingPatients = (req, res, next) => {
+  clinicModel.findById(req.params.clinicId, (error, clinic) => {
+    if (error) next(error);
+    else if (!clinic) next("Not Found");
+    else {
+      // clinic = clinic.toObject();
+      res.status(200);
+      res.locals.data = clinic.waitingList;
+      next();
+    }
+  });
+};
+
 module.exports = {
   create,
   update,
   delete: _delete,
   retrieve,
-  retrieveAll
+  retrieveAll,
+  addWatitingPatient,
+  retrieveWaitingPatients,
+  retrieveWaitingPatient
 };

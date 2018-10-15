@@ -12,6 +12,10 @@ const clinicSchema = new Schema({
     type: Schema.Types.ObjectId,
     required: true
   },
+  waitingList: {
+    type: Array,
+    default: []
+  },
   created: {
     type: Date,
     default: Date.now()

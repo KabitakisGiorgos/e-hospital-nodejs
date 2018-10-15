@@ -1,5 +1,5 @@
 const _ = require("lodash");
-const { wardModel, patientModel } = require("../../models");
+const { wardModel } = require("../../models");
 
 const { mapper } = require("../../middleware").mapper;
 
@@ -119,92 +119,10 @@ const retrieveAll = (req, res, next) => {
     });
 };
 
-const addWatitingPatient = (req, res, next) => {
-  if (req.body && req.params.patientId) {
-    wardModel.findById(req.params.wardId, (error, ward) => {
-      if (error) next(error);
-      else if (!ward) next("Not Found");
-      else {
-        patientModel.findById(req.params.patientId, (error, patient) => {
-          if (error) next(error);
-          else if (!patient) next("Not Found");
-          else {
-            if (_.find(ward.waitingList, o => o.patientId == req.params.patientId)) {
-              next({ message: "Patient already in Waiting list" });
-            } else {
-              let waitingList = ward.waitingList;
-
-              waitingList.push({
-                patientId: req.params.patientId,
-                name: patient.name,
-                arrived: false,
-                waiting: true,
-                order: ward.waitingList.length
-              });
-
-              ward.update({ waitingList }, (error, raw) => {
-                if (error) next(error);
-                else if (!raw.nModified) {
-                  // res.status(304);
-                  res.locals.data = mapper(ward, "ward");
-                  next();
-                } else {
-                  wardModel.findById(req.params.wardId, (error, ward) => {
-                    if (error) next(error);
-                    else if (!ward) next("Not Found");
-                    else {
-                      res.status(200);
-                      res.locals.data = mapper(ward, "ward");
-                      next();
-                    }
-                  });
-                }
-              });
-            }
-          }
-        });
-      }
-    });
-  } else {
-    next("Invalid Arguments");
-  }
-};
-
-const retrieveWaitingPatient = (req, res, next) => {
-  wardModel.findById(req.params.wardId, (error, ward) => {
-    if (error) next(error);
-    else if (!ward) next("Not Found");
-    else {
-      // ward = ward.toObject();
-      patient = _.find(ward.waitingList, o => o.patientId == req.params.patientId);
-
-      res.status(200);
-      res.locals.data = patient;
-      next();
-    }
-  });
-};
-
-const retrieveWaitingPatients = (req, res, next) => {
-  wardModel.findById(req.params.wardId, (error, ward) => {
-    if (error) next(error);
-    else if (!ward) next("Not Found");
-    else {
-      // ward = ward.toObject();
-      res.status(200);
-      res.locals.data = ward.waitingList;
-      next();
-    }
-  });
-};
-
 module.exports = {
   create,
   update,
   delete: _delete,
   retrieve,
   retrieveAll,
-  addWatitingPatient,
-  retrieveWaitingPatients,
-  retrieveWaitingPatient
 };

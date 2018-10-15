@@ -304,13 +304,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/clinic/5bbc5a1a27552923cc2fc2fb",
+							"raw": "{{url}}/clinic/{{clinicId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"clinic",
-								"5bbc5a1a27552923cc2fc2fb"
+								"{{clinicId}}"
 							]
 						}
 					},
@@ -394,13 +394,13 @@
 							]
 						},
 						"url": {
-							"raw": "{{url}}/clinic/5bbc5d0527552923cc2fc2fc",
+							"raw": "{{url}}/clinic/{{clinicId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"clinic",
-								"5bbc5d0527552923cc2fc2fc"
+								"{{clinicId}}"
 							]
 						}
 					},
@@ -454,6 +454,197 @@
 							],
 							"path": [
 								"clinic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Clinic] Add Patient to Waiting List",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "ER",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "hospitalId",
+									"value": "5b9956b142c9f216bc9b2530",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "doctors",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "patients",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "meta",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/clinic/{{clinicId}}/waiting/{{patientId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clinic",
+								"{{clinicId}}",
+								"waiting",
+								"{{patientId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Clinic] Get Patient  on Waiting List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "ER",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "hospitalId",
+									"value": "5b9956b142c9f216bc9b2530",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "doctors",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "patients",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "meta",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/clinic/{{clinicId}}/waiting/{{patientId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clinic",
+								"{{clinicId}}",
+								"waiting",
+								"{{patientId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Clinic] Get All Patients on Waiting List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "ER",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "hospitalId",
+									"value": "5b9956b142c9f216bc9b2530",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "doctors",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "patients",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "meta",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/clinic/{{clinicId}}/waiting",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clinic",
+								"{{clinicId}}",
+								"waiting"
 							]
 						}
 					},
@@ -701,197 +892,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "[Ward] Add Patient to Waiting List",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{accessToken}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "ER",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "hospitalId",
-									"value": "5b9956b142c9f216bc9b2530",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "doctors",
-									"value": "[]",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "patients",
-									"value": "[]",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "meta",
-									"value": "[]",
-									"type": "text",
-									"disabled": true
-								}
-							]
-						},
-						"url": {
-							"raw": "{{url}}/ward/{{wardId}}/waiting/{{patientId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"ward",
-								"{{wardId}}",
-								"waiting",
-								"{{patientId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "[Ward] Get Patient  on Waiting List",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{accessToken}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "ER",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "hospitalId",
-									"value": "5b9956b142c9f216bc9b2530",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "doctors",
-									"value": "[]",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "patients",
-									"value": "[]",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "meta",
-									"value": "[]",
-									"type": "text",
-									"disabled": true
-								}
-							]
-						},
-						"url": {
-							"raw": "{{url}}/ward/{{wardId}}/waiting/{{patientId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"ward",
-								"{{wardId}}",
-								"waiting",
-								"{{patientId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "[Ward] Get All Patients on Waiting List",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{accessToken}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "ER",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "hospitalId",
-									"value": "5b9956b142c9f216bc9b2530",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "doctors",
-									"value": "[]",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "patients",
-									"value": "[]",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "meta",
-									"value": "[]",
-									"type": "text",
-									"disabled": true
-								}
-							]
-						},
-						"url": {
-							"raw": "{{url}}/ward/{{wardId}}/waiting",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"ward",
-								"{{wardId}}",
-								"waiting"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -1007,7 +1007,7 @@
 							"urlencoded": [
 								{
 									"key": "AMKA",
-									"value": "12314",
+									"value": "12314asd",
 									"type": "text"
 								},
 								{

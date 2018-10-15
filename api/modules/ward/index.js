@@ -6,7 +6,6 @@ mapper.registerModuleConfig("ward", {
   hospitalId: "hospitalId",
   doctors: "doctors",
   patients: "patients",
-  waitingList: "waitingList",
   created: "created",
   meta: "meta"
 });
