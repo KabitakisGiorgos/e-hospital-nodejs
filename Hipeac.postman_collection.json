@@ -1026,8 +1026,13 @@
 									"type": "text"
 								},
 								{
-									"key": "name",
-									"value": "Giorgos Parasyris",
+									"key": "firstName",
+									"value": "Giorgos",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Parasyris",
 									"type": "text"
 								},
 								{
@@ -1114,8 +1119,13 @@
 									"type": "text"
 								},
 								{
-									"key": "name",
-									"value": "Giorgos Parasyris2",
+									"key": "firstName",
+									"value": "Giorgos2",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Parasyris2",
 									"type": "text"
 								},
 								{
@@ -1271,8 +1281,13 @@
 									"type": "text"
 								},
 								{
-									"key": "name",
-									"value": "Giorgos Parasyris",
+									"key": "firstName",
+									"value": "Giorgos",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Parasyris",
 									"type": "text"
 								},
 								{
@@ -1366,8 +1381,13 @@
 									"type": "text"
 								},
 								{
-									"key": "name",
-									"value": "Giorgos Parasyris2",
+									"key": "firstName",
+									"value": "Giorgos2",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Parasyris2",
 									"type": "text"
 								},
 								{
@@ -1533,11 +1553,6 @@
 									"key": "username",
 									"value": "PtyxioNot123",
 									"type": "text"
-								},
-								{
-									"key": "name",
-									"value": "Giorgos",
-									"type": "text"
 								}
 							]
 						},
@@ -1612,12 +1627,6 @@
 								{
 									"key": "email",
 									"value": "test@gmail.com",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "name",
-									"value": "test23",
 									"type": "text",
 									"disabled": true
 								},

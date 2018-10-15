@@ -9,7 +9,8 @@ const create = (req, res, next) => {
       userId: req.body.userId,
       specialty: req.body.specialty,
       wardId: req.body.wardId,
-      name: req.body.name,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
       age: req.body.age
     };
 
@@ -40,7 +41,8 @@ const update = (req, res, next) => {
         if (req.body.userId) payload.userId = req.body.userId;
         if (req.body.specialty) payload.specialty = req.body.specialty;
         if (req.body.wardId) payload.wardId = req.body.wardId;
-        if (req.body.name) payload.name = req.body.name;
+        if (req.body.firstName) payload.firstName = req.body.firstName;
+        if (req.body.lastName) payload.lastName = req.body.lastName;
         if (req.body.age) payload.age = req.body.age;
 
         if (req.body.diplomas) {

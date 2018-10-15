@@ -16,7 +16,11 @@ const doctorSchema = new Schema({
     type: Schema.Types.ObjectId,
     required: true
   },
-  name: {
+  firstName: {
+    type: String,
+    required: true
+  },
+  lastName: {
     type: String,
     required: true
   },

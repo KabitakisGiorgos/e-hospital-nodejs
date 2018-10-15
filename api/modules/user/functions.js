@@ -14,7 +14,6 @@ const create = (req, res, next) => {
     const newuser = {
       username: req.body.username,
       password: hashedpassword.passwordHash,
-      name: req.body.name,
       email: req.body.email,
       salt: hashedpassword.salt
     };
@@ -43,7 +42,6 @@ const update = (req, res, next) => {
       if (!validator.isEmail(req.body.email)) next("Invalid Arguments");
       payload.email = req.body.email;
     } //Here might more fields are going to be added
-    if (req.body.name) payload.name = req.body.name;
     if (req.body.oldpassword && req.body.newpassword) {
       payload.oldpassword = req.body.oldpassword;
       payload.newpassword = req.body.newpassword;

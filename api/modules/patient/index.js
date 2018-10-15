@@ -3,7 +3,8 @@ const { mapper } = require("../../middleware");
 mapper.registerModuleConfig("patient", {
   id: "_id",
   AMKA: "AMKA",
-  name: "name",
+  firstName: "firstName",
+  lastName: "lastName",
   age: "age",
   userId: "userId",
   type: "type",
