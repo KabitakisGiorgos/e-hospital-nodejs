@@ -1,25 +1,15 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const daySchema = new mongoose.Schema({
-  slot: {
-    type: String,
-    required: true
-  },
-  availability: {
-    type: Number,
-    get: v => Math.round(v),
-    set: v => Math.round(v),
-    required: true
-  }
-}, {
-  _id: false
-});
-
 const bkgEntitySchema = new Schema({
-  wardId: {
+  hospitalId: {
     type: Schema.Types.ObjectId,
     required: true
+  },
+  wardId: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    unique:true//Every ward must have one bkgEntity
   },
   frequency: {
     type: Number,
