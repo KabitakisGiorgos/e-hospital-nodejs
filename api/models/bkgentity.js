@@ -19,7 +19,8 @@ const bkgEntitySchema = new Schema({
     required: true
   },
   days: {
-    type: mongoose.Schema.Types.Mixed
+    type: mongoose.Schema.Types.Mixed,
+    default:{}
   }
   //TODO: Ask parasyri if anything else is needed
 });
