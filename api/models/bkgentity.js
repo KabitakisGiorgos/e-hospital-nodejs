@@ -9,7 +9,7 @@ const bkgEntitySchema = new Schema({
   wardId: {
     type: Schema.Types.ObjectId,
     required: true,
-    unique:true//Every ward must have one bkgEntity
+    unique: true //Every ward must have one bkgEntity
   },
   frequency: {
     type: Number,
@@ -18,9 +18,17 @@ const bkgEntitySchema = new Schema({
     set: v => Math.round(v),
     required: true
   },
+  opening: {
+    type: String,
+    required: true
+  },
+  closing: {
+    type: String,
+    required: true
+  },
   days: {
     type: mongoose.Schema.Types.Mixed,
-    default:{}
+    default: {}
   }
   //TODO: Ask parasyri if anything else is needed
 });

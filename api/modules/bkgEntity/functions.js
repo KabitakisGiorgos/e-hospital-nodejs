@@ -7,12 +7,14 @@ const {
   mapper
 } = require("../../middleware").mapper;
 
-const create = (req, res, next) => {
-  if (req.body.hospitalId && req.body.wardId && req.body.frequency) {
+const create = (req, res, next) => {//FIXME: Add a check opening< closing
+  if (req.body.hospitalId && req.body.wardId && req.body.frequency && req.body.closing && req.body.opening) {
     let payload = {
       hospitalId: req.body.hospitalId,
       wardId: req.body.wardId,
       frequency: req.body.frequency,
+      closing: req.body.closing,
+      opening: req.body.opening
     }
     bkgentityModel.create(payload, (error, bkgentity) => {
       if (error) next(error);
@@ -27,7 +29,8 @@ const create = (req, res, next) => {
   }
 };
 
-const update = (req, res, next) => {
+const update = (req, res, next) => { //TODO: kanonika den prp na yparxei update edo giati ta bookings poy einai sindedemena
+  //se ayto tha ginontai fucked up 
   if (req.body) {
     bkgentityModel.findById(req.params.bId, (error, bkgentity) => {
       if (error) next(error);
