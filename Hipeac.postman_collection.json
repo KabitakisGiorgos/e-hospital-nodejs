@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "95cac52a-0aaf-4e3d-a322-6eac97dd1f0b",
+		"_postman_id": "09f21d15-0b1a-488a-93d7-d1c43233be43",
 		"name": "Hipeac",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -1981,6 +1981,310 @@
 							],
 							"path": [
 								"exams"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "Retrieve a booking",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bookings/123",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bookings",
+								"123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve all bookings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bookings",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a booking",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bookings/disad",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bookings",
+								"disad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a booking",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bookings/disad",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bookings",
+								"disad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"bkgEntityId\":\"5bc9fb12c157be359812f350\",\n\t\"patientId\":\"5bc9fb12c157be359812f350\",\n\t\"timeslot\":\"11:25\",\n\t\"date\":\"2018-09-29\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/bookings",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "BkgEntity",
+			"item": [
+				{
+					"name": "Retrieve a bkgentity",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bkgentities/5bc9e5f2eb38321e94253834",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bkgentities",
+								"5bc9e5f2eb38321e94253834"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve all bkgentities",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bkgentities",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bkgentities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a bkgentity",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bkgentities/5bc9e519402da62554cc6668",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bkgentities",
+								"5bc9e519402da62554cc6668"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a bkgentity",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"frequency\":5\n}"
+						},
+						"url": {
+							"raw": "{{url}}/bkgentities/5bc9e66cd4bfde2e40c4de3f",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bkgentities",
+								"5bc9e66cd4bfde2e40c4de3f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a bkgentity",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t  \"hospitalId\": \"5b9506de7d4d3b30242de62d\",\n      \"wardId\": \"5b9506de7d4d3b30242de62d\",\n      \"frequency\": 60,\n      \"opening\":\"10:30\",\n      \"closing\":\"22:30\",\n      \"availability\":20\n}"
+						},
+						"url": {
+							"raw": "{{url}}/bkgentities",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bkgentities"
 							]
 						}
 					},
