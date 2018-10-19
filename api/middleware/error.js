@@ -1,5 +1,4 @@
-const knownerrors = [
-  {
+const knownerrors = [{
     error: "Unauthorized",
     status: 401
   },
@@ -18,10 +17,18 @@ const knownerrors = [
   {
     error: "Not Found",
     status: 404
+  },
+  {
+    error: "Not available Slot",
+    status: 400
+  },
+  {
+    error: "No availability",
+    status: 400
   }
 ];
 
-const error = function(err, req, res, next) {
+const error = function (err, req, res, next) {
   //here a function for error handling seperate folder
   //Here in our errors we can put and made messages
   const result = knownerrors.find(error => error.error === err || error.error === err.name);
