@@ -27,15 +27,17 @@ const create = (req, res, next) => { //FIXME: Not let past dates
             console.log(availability);
             //Here the date exists initialized
             var bookingslot = [];
-            bookingslot = bookingslot.concat(utils.helper.findObjectByKey(availability, 'slot', utils.helper.toHHMMSS(moment.duration(req.body.timeslot).asSeconds() + bgkentity.frequency * 60)));
+            bookingslot = bookingslot.concat(utils.helper.findObjectByKey(availability, 'slot', utils.helper.toHHMMSS(moment.duration(req.body.timeslot).asSeconds())));
             if (bookingslot.length === 0) {
               next("Not available Slot");
+              return;
             } else {
               //here we have the slot and we are going to see if the numbers fit
               for (var i = 0; i < availability.length; i++) {
                 if (bookingslot[0].slot === availability[i].slot) {
                   if (availability[i].availability - 1 < 0) { //CAUTION Hard copy every booking has 1 "value" of availability
                     next("No availability");
+                    return;
                   } else availability[i].availability = availability[i].availability - 1;
                 }
               }
@@ -77,15 +79,17 @@ const create = (req, res, next) => { //FIXME: Not let past dates
           } // Up to here we ve got the availability
 
           var bookingslot = [];
-          bookingslot = bookingslot.concat(utils.helper.findObjectByKey(availability, 'slot', utils.helper.toHHMMSS(moment.duration(req.body.timeslot).asSeconds() + bgkentity.frequency * 60)));
+          bookingslot = bookingslot.concat(utils.helper.findObjectByKey(availability, 'slot', utils.helper.toHHMMSS(moment.duration(req.body.timeslot).asSeconds())));
           if (bookingslot.length === 0) {
             next("Not available Slot");
+            return;
           } else {
             //here we have the slot and we are going to see if the numbers fit
             for (var i = 0; i < availability.length; i++) {
               if (bookingslot[0].slot === availability[i].slot) {
                 if (availability[i].availability - 1 < 0) { //CAUTION Hard copy every booking has 1 "value" of availability
                   next("No availability");
+                  return;
                 } else availability[i].availability = availability[i].availability - 1;
               }
             }
@@ -119,30 +123,72 @@ const create = (req, res, next) => { //FIXME: Not let past dates
   }
 };
 
-const update = (req, res, next) => {
-  if (req.body) {
-    res.send('update');
-  } else {
-    next("Invalid Arguments");
-  }
-};
-
 const _delete = (req, res, next) => {
-  res.send('_delete');
+  bookingModel.findById(req.params.bId, (error, booking) => {
+    if (error) next(error);
+    else if (!booking) next('Not Found');
+    else {
+      bkgentityModel.findById(booking.bkgEntityId, (error, bgkentity) => {
+        if (error) next(error);
+        else if (!bgkentity) next('Not Found');
+        else {
+          let availability = bgkentity.days[moment(booking.date).format('YYYY-MM-DD')];
+          for (var i = 0; i < availability.length; i++) {
+            if (booking.timeslot === availability[i].slot) {
+              availability[i].availability = availability[i].availability + 1; //Hardcopied that each booking has a one "value" of availability
+            }
+          }
+          bgkentity.days[booking.date] = availability;
+          bgkentity.markModified('days');
+          bgkentity.save((error) => { //here check that the controll ends at the no availability
+            if (error) next(error);
+            else {
+              booking.delete((error, deleted) => {
+                if (error) next(error);
+                else {
+                  res.status(200);
+                  res.locals.data = mapper(deleted, "booking");
+                  next();
+                }
+              })
+            }
+          })
+        }
+      })
+    }
+  })
 };
 
 const retrieve = (req, res, next) => {
-
+  bookingModel.findById(req.params.bId, (error, booking) => {
+    if (error) next(error);
+    else if (!booking) next('Not Found');
+    else {
+      res.status(200);
+      res.locals.data = mapper(booking, 'booking');
+      next();
+    }
+  })
 };
 
 const retrieveAll = (req, res, next) => {
-
+  bookingModel
+    .find()
+    .lean()
+    .exec((error, bookings) => {
+      if (error) next(error);
+      else if (bookings.length === 0) next("Not Found");
+      else {
+        res.status(200);
+        res.locals.data = mapper(bookings, "booking");
+        next();
+      }
+    });
 };
 
 
 module.exports = {
   create,
-  update,
   delete: _delete,
   retrieve,
   retrieveAll
