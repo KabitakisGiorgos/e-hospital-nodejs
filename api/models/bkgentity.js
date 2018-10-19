@@ -18,6 +18,10 @@ const bkgEntitySchema = new Schema({
     set: v => Math.round(v),
     required: true
   },
+  availability: {
+    type: Number,
+    required: true
+  },
   opening: {
     type: String,
     required: true
