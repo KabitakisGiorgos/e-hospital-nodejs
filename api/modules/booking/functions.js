@@ -138,7 +138,7 @@ const _delete = (req, res, next) => {
               availability[i].availability = availability[i].availability + 1; //Hardcopied that each booking has a one "value" of availability
             }
           }
-          bgkentity.days[booking.date] = availability;
+          bgkentity.days[moment(booking.date).format('YYYY-MM-DD')] = availability;
           bgkentity.markModified('days');
           bgkentity.save((error) => { //here check that the controll ends at the no availability
             if (error) next(error);

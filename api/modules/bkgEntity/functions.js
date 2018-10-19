@@ -6,28 +6,35 @@ const {
 const {
   mapper
 } = require("../../middleware").mapper;
+var moment = require('moment');
 
-const create = (req, res, next) => { //FIXME: Add a check opening< closing
+const create = (req, res, next) => {
   if (req.body.hospitalId && req.body.wardId && req.body.frequency && req.body.closing && req.body.opening) {
-    let payload = {
-      hospitalId: req.body.hospitalId,
-      wardId: req.body.wardId,
-      frequency: req.body.frequency,
-      closing: req.body.closing,
-      opening: req.body.opening,
-      availability: req.body.availability
-    }
-    bkgentityModel.create(payload, (error, bkgentity) => {
-      if (error) next(error);
-      else {
-        res.status(201);
-        res.locals.data = mapper(bkgentity, "bkgentity");
-        next();
+    if (moment.duration(req.body.closing).asSeconds() >= moment.duration(req.body.opening).asSeconds()) {
+      let payload = {
+        hospitalId: req.body.hospitalId,
+        wardId: req.body.wardId,
+        frequency: req.body.frequency,
+        closing: req.body.closing,
+        opening: req.body.opening,
+        availability: req.body.availability
       }
-    })
+
+      bkgentityModel.create(payload, (error, bkgentity) => {
+        if (error) next(error);
+        else {
+          res.status(201);
+          res.locals.data = mapper(bkgentity, "bkgentity");
+          next();
+        }
+      })
+    } else {
+      next("Invalid BkgEntity Hours");
+    }
   } else {
     next("Invalid Arguments"); //This error needs handling
   }
+
 };
 
 const update = (req, res, next) => { //TODO: kanonika den prp na yparxei update edo giati ta bookings poy einai sindedemena

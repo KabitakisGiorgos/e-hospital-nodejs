@@ -25,6 +25,10 @@ const knownerrors = [{
   {
     error: "No availability",
     status: 400
+  },
+  {
+    error: "Invalid BkgEntity Hours",
+    status: 400
   }
 ];
 
