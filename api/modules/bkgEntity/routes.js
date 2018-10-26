@@ -6,5 +6,4 @@ router.put("/bkgentities/:bId", bkgEntityFunctions.update);
 router.delete("/bkgentities/:bId", bkgEntityFunctions.delete);
 router.get("/bkgentities/:bId", bkgEntityFunctions.retrieve);
 router.get("/bkgentities", bkgEntityFunctions.retrieveAll);
-
-//TODO: an availability route
+router.post("/bkgentities/availabilty", bkgEntityFunctions.availability);

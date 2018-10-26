@@ -16,15 +16,14 @@ const utils = require("../../utils");
 const create = (req, res, next) => { //FIXME: Not let past dates
   var found = false;
   if (req.body.bkgEntityId && req.body.patientId && req.body.timeslot && req.body.date) {
-    bkgentityModel.findById(req.body.bkgEntityId, (error, bgkentity) => {
+    bkgentityModel.findById(req.body.bkgEntityId, (error, bkgentity) => {
       if (error) next(error);
-      else if (!bgkentity) next("Not Found");
+      else if (!bkgentity) next("Not Found");
       else {
-        Object.getOwnPropertyNames(bgkentity.days).forEach((item) => {
+        Object.getOwnPropertyNames(bkgentity.days).forEach((item) => {
           if (item === req.body.date) {
             found = true;
-            let availability = bgkentity.days[item];
-            console.log(availability);
+            let availability = bkgentity.days[item];
             //Here the date exists initialized
             var bookingslot = [];
             bookingslot = bookingslot.concat(utils.helper.findObjectByKey(availability, 'slot', utils.helper.toHHMMSS(moment.duration(req.body.timeslot).asSeconds())));
@@ -42,9 +41,9 @@ const create = (req, res, next) => { //FIXME: Not let past dates
                 }
               }
             }
-            bgkentity.days[req.body.date] = availability;
-            bgkentity.markModified('days');
-            bgkentity.save((error) => { //here check that the controll ends at the no availability
+            bkgentity.days[req.body.date] = availability;
+            bkgentity.markModified('days');
+            bkgentity.save((error) => { //here check that the controll ends at the no availability
               if (error) next(error);
               else {
                 const booking = new bookingModel({
@@ -67,14 +66,14 @@ const create = (req, res, next) => { //FIXME: Not let past dates
         });
         if (found) return;
         else {
-          let opening = moment.duration(bgkentity.opening).asSeconds();
-          let closing = moment.duration(bgkentity.closing).asSeconds();
-          var slots = Math.round(Math.round((closing - opening) / 60) / bgkentity.frequency);
+          let opening = moment.duration(bkgentity.opening).asSeconds();
+          let closing = moment.duration(bkgentity.closing).asSeconds();
+          var slots = Math.round(Math.round((closing - opening) / 60) / bkgentity.frequency);
           let availability = [];
           for (var i = 0; i < slots; i++) {
             availability.push({
-              slot: utils.helper.toHHMMSS(opening + i * bgkentity.frequency * 60),
-              availability: bgkentity.availability
+              slot: utils.helper.toHHMMSS(opening + i * bkgentity.frequency * 60),
+              availability: bkgentity.availability
             })
           } // Up to here we ve got the availability
 
@@ -93,9 +92,9 @@ const create = (req, res, next) => { //FIXME: Not let past dates
                 } else availability[i].availability = availability[i].availability - 1;
               }
             }
-            bgkentity.days[req.body.date] = availability;
-            bgkentity.markModified('days');
-            bgkentity.save((error) => { //here check that the controll ends at the no availability
+            bkgentity.days[req.body.date] = availability;
+            bkgentity.markModified('days');
+            bkgentity.save((error) => { //here check that the controll ends at the no availability
               if (error) next(error);
               else {
                 const booking = new bookingModel({
@@ -128,19 +127,19 @@ const _delete = (req, res, next) => {
     if (error) next(error);
     else if (!booking) next('Not Found');
     else {
-      bkgentityModel.findById(booking.bkgEntityId, (error, bgkentity) => {
+      bkgentityModel.findById(booking.bkgEntityId, (error, bkgentity) => {
         if (error) next(error);
-        else if (!bgkentity) next('Not Found');
+        else if (!bkgentity) next('Not Found');
         else {
-          let availability = bgkentity.days[moment(booking.date).format('YYYY-MM-DD')];
+          let availability = bkgentity.days[moment(booking.date).format('YYYY-MM-DD')];
           for (var i = 0; i < availability.length; i++) {
             if (booking.timeslot === availability[i].slot) {
               availability[i].availability = availability[i].availability + 1; //Hardcopied that each booking has a one "value" of availability
             }
           }
-          bgkentity.days[moment(booking.date).format('YYYY-MM-DD')] = availability;
-          bgkentity.markModified('days');
-          bgkentity.save((error) => { //here check that the controll ends at the no availability
+          bkgentity.days[moment(booking.date).format('YYYY-MM-DD')] = availability;
+          bkgentity.markModified('days');
+          bkgentity.save((error) => { //here check that the controll ends at the no availability
             if (error) next(error);
             else {
               booking.delete((error, deleted) => {

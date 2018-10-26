@@ -7,6 +7,7 @@ const {
   mapper
 } = require("../../middleware").mapper;
 var moment = require('moment');
+const utils = require("../../utils");
 
 const create = (req, res, next) => {
   if (req.body.hospitalId && req.body.wardId && req.body.frequency && req.body.closing && req.body.opening) {
@@ -106,10 +107,57 @@ const retrieveAll = (req, res, next) => {
     });
 };
 
+const availability = (req, res, next) => {
+  if (req.body.bkgentityId && req.body.date) {
+    var found = false;
+    bkgentityModel.findById(req.body.bkgentityId, (err, bkgentity) => {
+      if (err) next(err);
+      else if (!bkgentity) {
+        next("Not Found");
+      } else {
+        Object.getOwnPropertyNames(bkgentity.days).forEach((item) => {
+          if (item === req.body.date) {
+            found = true;
+            res.status(200);
+            res.locals.data = bkgentity.days[item];
+            next();
+          }
+        });
+        if (found) return;
+        else {
+          let opening = moment.duration(bkgentity.opening).asSeconds();
+          let closing = moment.duration(bkgentity.closing).asSeconds();
+          var slots = Math.round(Math.round((closing - opening) / 60) / bkgentity.frequency);
+          let availability = [];
+          for (var i = 0; i < slots; i++) {
+            availability.push({
+              slot: utils.helper.toHHMMSS(opening + i * bkgentity.frequency * 60),
+              availability: bkgentity.availability
+            })
+          }
+          bkgentity.days[req.body.date] = availability;
+          bkgentity.markModified('days');
+          bkgentity.save((error) => { //here check that the controll ends at the no availability
+            if (error) next(error);
+            else {
+              res.status(200);
+              res.locals.data = availability;
+              next();
+            }
+          });
+        }
+      }
+    })
+  } else {
+    next("Invalid Arguments");
+  }
+}
+
 module.exports = {
   create,
   update,
   delete: _delete,
   retrieve,
-  retrieveAll
+  retrieveAll,
+  availability
 };
