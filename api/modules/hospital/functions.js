@@ -107,7 +107,7 @@ const retrieve = (req, res, next) => {
 
 const retrieveAll = (req, res, next) => {
   hospitalModel
-    .find()
+    .find(req.query)
     .lean()
     .exec((error, hospitals) => {
       if (error) next(error);

@@ -106,7 +106,7 @@ const retrieve = (req, res, next) => {
 
 const retrieveAll = (req, res, next) => {
   wardModel
-    .find()
+    .find(req.query)
     .lean()
     .exec((error, wards) => {
       if (error) next(error);

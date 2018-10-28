@@ -135,7 +135,7 @@ const retrieve = (req, res, next) => {
 
 const retrieveAll = (req, res, next) => {
   userModel
-    .find()
+    .find(req.query)
     .lean()
     .exec((error, users) => {
       if (error) next(error);

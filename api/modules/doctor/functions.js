@@ -115,7 +115,7 @@ const retrieve = (req, res, next) => {
 
 const retrieveAll = (req, res, next) => {
   doctorModel
-    .find()
+    .find(req.query)
     .lean()
     .exec((error, doctors) => {
       if (error) next(error);

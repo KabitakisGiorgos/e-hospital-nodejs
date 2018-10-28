@@ -172,7 +172,7 @@ const retrieve = (req, res, next) => {
 
 const retrieveAll = (req, res, next) => {
   bookingModel
-    .find()
+    .find(req.query)
     .lean()
     .exec((error, bookings) => {
       if (error) next(error);

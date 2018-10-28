@@ -105,7 +105,7 @@ const retrieve = (req, res, next) => {
 
 const retrieveAll = (req, res, next) => {
   examModel
-    .find()
+    .find(req.query)
     .lean()
     .exec((error, exams) => {
       if (error) next(error);

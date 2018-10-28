@@ -96,7 +96,7 @@ const retrieve = (req, res, next) => {
 
 const retrieveAll = (req, res, next) => {
   bkgentityModel
-    .find()
+    .find(req.query)
     .lean()
     .exec((error, bkgentities) => {
       if (error) next(error);

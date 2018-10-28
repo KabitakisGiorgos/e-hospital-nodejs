@@ -97,7 +97,7 @@ const retrieve = (req, res, next) => {
 
 const retrieveAll = (req, res, next) => {
   clinicModel
-    .find()
+    .find(req.query)
     .lean()
     .exec((error, clinics) => {
       if (error) next(error);

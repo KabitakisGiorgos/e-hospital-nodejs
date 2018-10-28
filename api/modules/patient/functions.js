@@ -109,7 +109,7 @@ const retrieve = (req, res, next) => {
 
 const retrieveAll = (req, res, next) => {
   patientModel
-    .find()
+    .find(req.query)
     .lean()
     .exec((error, patients) => {
       if (error) next(error);
@@ -151,7 +151,7 @@ const retrieveAll = (req, res, next) => {
             "patientId": "5b9a3df5e3d5df3320d8c8a9",
             "doctorId": "5b96c1ff824dd83914d19981",
             "departmentId": "5b96c1ff824dd83914d19981",
-            "description": "a very important exam",
+            "description": "a very impor  tant exam",
             "__v": 0
         }
     ],
