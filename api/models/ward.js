@@ -1,24 +1,22 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
-  password: {
+// TODO: This is incomplete.
+
+const wardSchema = new Schema({
+  name: {
     type: String,
     required: true
   },
-  salt: {
-    type: String,
+  hospitalId: {
+    type: Schema.Types.ObjectId,
     required: true
   },
-  username: {
-    type: String,
-    required: true,
-    unique: true
+  doctors: {
+    type: Array
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true
+  patients: {
+    type: Array
   },
   created: {
     type: Date,
@@ -29,7 +27,7 @@ const userSchema = new Schema({
   }
 });
 
-const model = mongoose.model("users", userSchema);
+const model = mongoose.model("wards", wardSchema);
 model.on("index", () => {}); //For the unique property
 
 module.exports = model;

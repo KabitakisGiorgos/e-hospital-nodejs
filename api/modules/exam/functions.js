@@ -1,22 +1,18 @@
 const _ = require("lodash");
-const {
-  examModel
-} = require("../../models");
+const { examModel } = require("../../models");
 
-const {
-  mapper
-} = require("../../middleware").mapper;
+const { mapper } = require("../../middleware").mapper;
 
 const create = (req, res, next) => {
-  if (req.body) {
+  if (req.body && req.body.type && req.body.patientId && req.body.doctorId) {
     let newexam = {
       type: req.body.type,
       patientId: req.body.patientId,
       doctorId: req.body.doctorId,
-      departmentId: req.body.departmentId,
-      created: req.body.created,
+      created: req.body.created
     };
 
+    if (req.body.clinicId) newexam.clinicId = req.body.clinicId;
     if (req.body.description) newexam.description = req.body.description;
     if (req.body.meta) newexam.meta = req.body.meta;
 
@@ -24,7 +20,8 @@ const create = (req, res, next) => {
       if (error) next(error);
       else {
         res.status(201);
-        res.send(mapper(exam, 'exam'));
+        res.locals.data = mapper(exam, "exam");
+        next();
       }
     });
   } else {
@@ -43,9 +40,9 @@ const update = (req, res, next) => {
         if (req.body.type) payload.type = req.body.type;
         if (req.body.patientId) payload.patientId = req.body.patientId;
         if (req.body.doctorId) payload.doctorId = req.body.doctorId;
-        if(req.body.departmentId) payload.departmentId=req.body.departmentId;
+        if (req.body.clinicId) payload.clinicId = req.body.clinicId;
 
-        if (req.body.description) payload.description = req.body.description
+        if (req.body.description) payload.description = req.body.description;
         if (req.body.meta) {
           payload.meta = {};
           _.merge(payload.meta, exam.meta, req.body.meta);
@@ -55,19 +52,18 @@ const update = (req, res, next) => {
           if (error) next(error);
           else if (!raw.nModified) {
             // res.status(304);
-            res.send(mapper(exam, 'exam'));
+            res.locals.data = mapper(exam, "exam");
+            next();
           } else {
-            examModel.findById(
-              req.params.examId,
-              (error, exam) => {
-                if (error) next(error);
-                else if (!exam) next("Not Found");
-                else {
-                  res.status(200);
-                  res.send(mapper(exam, 'exam'));
-                }
+            examModel.findById(req.params.examId, (error, exam) => {
+              if (error) next(error);
+              else if (!exam) next("Not Found");
+              else {
+                res.status(200);
+                res.locals.data = mapper(exam, "exam");
+                next();
               }
-            );
+            });
           }
         });
       }
@@ -86,7 +82,8 @@ const _delete = (req, res, next) => {
         if (error) next(error);
         else {
           res.status(200);
-          res.send(mapper(deleted, 'exam'));
+          res.locals.data = mapper(deleted, "exam");
+          next();
         }
       });
     }
@@ -100,7 +97,8 @@ const retrieve = (req, res, next) => {
     else {
       // exam = exam.toObject();
       res.status(200);
-      res.send(mapper(exam, 'exam'));
+      res.locals.data = mapper(exam, "exam");
+      next();
     }
   });
 };
@@ -114,7 +112,8 @@ const retrieveAll = (req, res, next) => {
       else if (exams.length === 0) next("Not Found");
       else {
         res.status(200);
-        res.send(mapper(exams, 'exam'));
+        res.locals.data = mapper(exams, "exam");
+        next();
       }
     });
 };

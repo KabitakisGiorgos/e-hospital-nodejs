@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "afc1408e-965c-4aaa-b705-87cbc93f64f2",
-		"name": "Hipeac",
+		"_postman_id": "49dcb1cf-5415-4e19-95ab-98c03ebde2c6",
+		"name": "Hipeac copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -110,7 +110,7 @@
 								},
 								{
 									"key": "address",
-									"value": "Peristeriou kai Axirona 42",
+									"value": "Peristeriou kai Axirona 423",
 									"type": "text"
 								},
 								{
@@ -126,13 +126,13 @@
 							]
 						},
 						"url": {
-							"raw": "{{url}}/hospital/5b992b0acceddf32b0a58fa0",
+							"raw": "{{url}}/hospital/{{hospitalId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"hospital",
-								"5b992b0acceddf32b0a58fa0"
+								"{{hospitalId}}"
 							]
 						}
 					},
@@ -149,38 +149,17 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "csd3142@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "username",
-									"value": "PtyxioNot",
-									"type": "text"
-								},
-								{
-									"key": "name",
-									"value": "Giorgos",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/hospital/5b992a1e0f777037780a66a1",
+							"raw": "{{url}}/hospital/{{hospitalId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"hospital",
-								"5b992a1e0f777037780a66a1"
+								"{{hospitalId}}"
 							]
 						}
 					},
@@ -197,29 +176,8 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "csd3142@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "username",
-									"value": "PtyxioNot",
-									"type": "text"
-								},
-								{
-									"key": "name",
-									"value": "Giorgos",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{url}}/hospitals",
@@ -236,10 +194,323 @@
 			]
 		},
 		{
-			"name": "Department",
+			"name": "Clinic",
 			"item": [
 				{
-					"name": "Create Department",
+					"name": "Create Clinic",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "testclinic",
+									"type": "text"
+								},
+								{
+									"key": "hospitalId",
+									"value": "5b96c1ff824dd83914d19981",
+									"type": "text"
+								},
+								{
+									"key": "wardId",
+									"value": "5b96c1ff824dd83914d19981",
+									"type": "text"
+								},
+								{
+									"key": "meta[giorgo]",
+									"value": "parasyri",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/clinic",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clinic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Clinic",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/clinic/{{clinicId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clinic",
+								"{{clinicId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Clinic",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "pagniclinic",
+									"type": "text"
+								},
+								{
+									"key": "meta[giorgo]",
+									"value": "parasyri2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/clinic/{{clinicId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clinic",
+								"{{clinicId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Clinic",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/clinic/{{clinicId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clinic",
+								"{{clinicId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Clinics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/clinic",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clinic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Clinic] Add Patient to Waiting List",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "ER",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "hospitalId",
+									"value": "5b9956b142c9f216bc9b2530",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "doctors",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "patients",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "meta",
+									"value": "[]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/clinic/{{clinicId}}/waiting/{{patientId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clinic",
+								"{{clinicId}}",
+								"waiting",
+								"{{patientId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Clinic] Get Patient  on Waiting List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/clinic/{{clinicId}}/waiting/{{patientId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clinic",
+								"{{clinicId}}",
+								"waiting",
+								"{{patientId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Clinic] Get All Patients on Waiting List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/clinic/{{clinicId}}/waiting",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clinic",
+								"{{clinicId}}",
+								"waiting"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ward",
+			"item": [
+				{
+					"name": "Create Ward",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -286,19 +557,19 @@
 							]
 						},
 						"url": {
-							"raw": "{{url}}/department",
+							"raw": "{{url}}/ward",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"department"
+								"ward"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Delete Department",
+					"name": "Delete Ward",
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -312,12 +583,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/department/5b99571f961b39475c050380",
+							"raw": "{{url}}/ward/5b99571f961b39475c050380",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"department",
+								"ward",
 								"5b99571f961b39475c050380"
 							]
 						}
@@ -325,7 +596,7 @@
 					"response": []
 				},
 				{
-					"name": "Update Department",
+					"name": "Update Ward",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -369,12 +640,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{url}}/department/5b99571f961b39475c050380",
+							"raw": "{{url}}/ward/5b99571f961b39475c050380",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"department",
+								"ward",
 								"5b99571f961b39475c050380"
 							]
 						}
@@ -382,9 +653,62 @@
 					"response": []
 				},
 				{
-					"name": "Retrieve Department",
+					"name": "Retrieve Ward",
 					"request": {
 						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/ward/5b99571f961b39475c050380",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ward",
+								"5b99571f961b39475c050380"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Wards",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/wards",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"wards"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add exam to patient",
+					"request": {
+						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
@@ -395,44 +719,35 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "password",
-									"value": "123456",
+									"key": "quantity",
+									"value": "10",
 									"type": "text"
 								},
 								{
-									"key": "email",
-									"value": "csd3142@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "username",
-									"value": "PtyxioNot",
-									"type": "text"
-								},
-								{
-									"key": "name",
-									"value": "Giorgos",
+									"key": "title",
+									"value": "An exam for something",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{url}}/department/5b99571f961b39475c050380",
+							"raw": "{{url}}/patient/exam/5b9b668a9453632b50318342",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"department",
-								"5b99571f961b39475c050380"
+								"patient",
+								"exam",
+								"5b9b668a9453632b50318342"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Retrieve Departments",
+					"name": "Delete exam from patient",
 					"request": {
-						"method": "GET",
+						"method": "DELETE",
 						"header": [
 							{
 								"key": "Authorization",
@@ -440,37 +755,18 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "csd3142@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "username",
-									"value": "PtyxioNot",
-									"type": "text"
-								},
-								{
-									"key": "name",
-									"value": "Giorgos",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/departments",
+							"raw": "{{url}}/patient/exam/5b9b668a9453632b50318342",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"departments"
+								"patient",
+								"exam",
+								"5b9b668a9453632b50318342"
 							]
 						}
 					},
@@ -532,7 +828,7 @@
 							"urlencoded": [
 								{
 									"key": "from",
-									"value": "department",
+									"value": "ward",
 									"type": "text"
 								},
 								{
@@ -590,7 +886,7 @@
 							"urlencoded": [
 								{
 									"key": "AMKA",
-									"value": "12314",
+									"value": "12314asd1",
 									"type": "text"
 								},
 								{
@@ -606,6 +902,21 @@
 								{
 									"key": "meta[giorgo]",
 									"value": "parasiri",
+									"type": "text"
+								},
+								{
+									"key": "firstName",
+									"value": "Giorgos",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Parasyris",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "45",
 									"type": "text"
 								}
 							]
@@ -637,13 +948,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/patient/5b992a1e0f777037780a66a1",
+							"raw": "{{url}}/patient/{{patientId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"patient",
-								"5b992a1e0f777037780a66a1"
+								"{{patientId}}"
 							]
 						}
 					},
@@ -668,7 +979,7 @@
 							"urlencoded": [
 								{
 									"key": "AMKA",
-									"value": "123122311312234",
+									"value": "123122311nyn3112234",
 									"type": "text"
 								},
 								{
@@ -685,17 +996,32 @@
 									"key": "meta[giorg2o]",
 									"value": "parasyri21",
 									"type": "text"
+								},
+								{
+									"key": "firstName",
+									"value": "Giorgos2",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Parasyris2",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "100",
+									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{url}}/patient/5b9934a40aca6f122c89dbec",
+							"raw": "{{url}}/patient/{{patientId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"patient",
-								"5b9934a40aca6f122c89dbec"
+								"{{patientId}}"
 							]
 						}
 					},
@@ -712,38 +1038,17 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "csd3142@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "username",
-									"value": "PtyxioNot",
-									"type": "text"
-								},
-								{
-									"key": "name",
-									"value": "Giorgos",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/patient/5b9934a40aca6f122c89dbec",
+							"raw": "{{url}}/patient/{{patientId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"patient",
-								"5b9934a40aca6f122c89dbec"
+								"{{patientId}}"
 							]
 						}
 					},
@@ -760,29 +1065,8 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "csd3142@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "username",
-									"value": "PtyxioNot",
-									"type": "text"
-								},
-								{
-									"key": "name",
-									"value": "Giorgos",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{url}}/patients",
@@ -791,70 +1075,6 @@
 							],
 							"path": [
 								"patients"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Add exam to patient",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{accessToken}}"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "quantity",
-									"value": "10",
-									"type": "text"
-								},
-								{
-									"key": "title",
-									"value": "An exam for something",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{url}}/patient/exam/5b9b668a9453632b50318342",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"patient",
-								"exam",
-								"5b9b668a9453632b50318342"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete exam from patient",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{accessToken}}"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "{{url}}/patient/exam/5b9b668a9453632b50318342",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"patient",
-								"exam",
-								"5b9b668a9453632b50318342"
 							]
 						}
 					},
@@ -893,8 +1113,23 @@
 									"type": "text"
 								},
 								{
-									"key": "departmentId",
+									"key": "clinicId",
 									"value": "5b96c1ff824dd83914d19981",
+									"type": "text"
+								},
+								{
+									"key": "firstName",
+									"value": "Giorgos",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Parasyris",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "45",
 									"type": "text"
 								},
 								{
@@ -906,6 +1141,12 @@
 								{
 									"key": "meta[giorgo]",
 									"value": "parasiri",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "wardId",
+									"value": "5b96c1ff824dd83914d19983",
 									"type": "text",
 									"disabled": true
 								}
@@ -969,17 +1210,32 @@
 							"urlencoded": [
 								{
 									"key": "specialty",
-									"value": "Dermatologist",
+									"value": "1123Dermatologist",
 									"type": "text"
 								},
 								{
 									"key": "userId",
-									"value": "5b96c1ff824dd83914d19982",
+									"value": "5b96c1ff824dd83914d19983",
 									"type": "text"
 								},
 								{
-									"key": "departmentId",
-									"value": "5b96c1ff824dd83914d19982",
+									"key": "clinicId",
+									"value": "5b96c1ff824dd83914d19983",
+									"type": "text"
+								},
+								{
+									"key": "firstName",
+									"value": "123Giorgos2",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "1231Parasyris2",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "123100",
 									"type": "text"
 								},
 								{
@@ -993,17 +1249,23 @@
 									"value": "parasiri",
 									"type": "text",
 									"disabled": true
+								},
+								{
+									"key": "wardId",
+									"value": "5b96c1ff824dd83914d19983",
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "{{url}}/doctor/5b995b39345679354ce7e20a",
+							"raw": "{{url}}/doctor/{{doctorId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"doctor",
-								"5b995b39345679354ce7e20a"
+								"{{doctorId}}"
 							]
 						}
 					},
@@ -1020,38 +1282,17 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "csd3142@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "username",
-									"value": "PtyxioNot",
-									"type": "text"
-								},
-								{
-									"key": "name",
-									"value": "Giorgos",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/doctor/5b995b39345679354ce7e20a",
+							"raw": "{{url}}/doctor/{{doctorId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"doctor",
-								"5b995b39345679354ce7e20a"
+								"{{doctorId}}"
 							]
 						}
 					},
@@ -1068,29 +1309,8 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "csd3142@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "username",
-									"value": "PtyxioNot",
-									"type": "text"
-								},
-								{
-									"key": "name",
-									"value": "Giorgos",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{url}}/doctors",
@@ -1133,17 +1353,12 @@
 								},
 								{
 									"key": "email",
-									"value": "csd13142@gmail.com",
+									"value": "csd131424@gmail.com",
 									"type": "text"
 								},
 								{
 									"key": "username",
-									"value": "PtyxioNot123",
-									"type": "text"
-								},
-								{
-									"key": "name",
-									"value": "Giorgos",
+									"value": "PtyxioNot1234",
 									"type": "text"
 								}
 							]
@@ -1175,13 +1390,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/user/5b96c1ff824dd83914d19981",
+							"raw": "{{url}}/user/{{userId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"user",
-								"5b96c1ff824dd83914d19981"
+								"{{userId}}"
 							]
 						}
 					},
@@ -1206,33 +1421,23 @@
 							"urlencoded": [
 								{
 									"key": "oldpassword",
-									"value": "123456",
-									"type": "text",
-									"disabled": true
+									"value": "ciaociao",
+									"type": "text"
 								},
 								{
 									"key": "newpassword",
-									"value": "ciaociao",
-									"type": "text",
-									"disabled": true
+									"value": "1234567",
+									"type": "text"
 								},
 								{
 									"key": "email",
-									"value": "test@gmail.com",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "name",
-									"value": "test23",
-									"type": "text",
-									"disabled": true
+									"value": "te23st@gmail.com",
+									"type": "text"
 								},
 								{
 									"key": "username",
-									"value": "PtyxioNot",
-									"type": "text",
-									"disabled": true
+									"value": "PtyxioNot123412",
+									"type": "text"
 								},
 								{
 									"key": "meta[b][b][c]",
@@ -1242,13 +1447,13 @@
 							]
 						},
 						"url": {
-							"raw": "{{url}}/user/5b9506de7d4d3b30242de6dd",
+							"raw": "{{url}}/user/{{userId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"user",
-								"5b9506de7d4d3b30242de6dd"
+								"{{userId}}"
 							]
 						}
 					},
@@ -1265,38 +1470,17 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "csd3142@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "username",
-									"value": "PtyxioNot",
-									"type": "text"
-								},
-								{
-									"key": "name",
-									"value": "Giorgos",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/user/5b96c1ff824dd83914d19981",
+							"raw": "{{url}}/user/{{userId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"user",
-								"5b96c1ff824dd83914d19981"
+								"{{userId}}"
 							]
 						}
 					},
@@ -1313,29 +1497,8 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "csd3142@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "username",
-									"value": "PtyxioNot",
-									"type": "text"
-								},
-								{
-									"key": "name",
-									"value": "Giorgos",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{url}}/users",
@@ -1352,7 +1515,7 @@
 			]
 		},
 		{
-			"name": "exam",
+			"name": "Exam",
 			"item": [
 				{
 					"name": "Create Exam",
@@ -1390,6 +1553,16 @@
 									"key": "description",
 									"value": "a very important exam",
 									"type": "text"
+								},
+								{
+									"key": "clinicId",
+									"value": "5b96c1ff824dd83914d19981",
+									"type": "text"
+								},
+								{
+									"key": "meta[data]",
+									"value": "various metadata",
+									"type": "text"
 								}
 							]
 						},
@@ -1424,39 +1597,44 @@
 							"urlencoded": [
 								{
 									"key": "type",
-									"value": "hearttest",
+									"value": "2",
 									"type": "text"
 								},
 								{
 									"key": "patientId",
-									"value": "5b9b5cb1a60e8f2198507487",
+									"value": "5b9b5cb1a60e8f2198507482",
 									"type": "text"
 								},
 								{
 									"key": "doctorId",
-									"value": "5b9b5cb1a60e8f2198507487",
+									"value": "5b9b5cb1a60e8f2198507482",
 									"type": "text"
 								},
 								{
 									"key": "description",
-									"value": "another description",
+									"value": "2",
 									"type": "text"
 								},
 								{
 									"key": "meta[data]",
-									"value": "meta data here",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "clinicId",
+									"value": "5b96c1ff824dd83914d19982",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{url}}/exam/5b9b5cb1a60e8f2198507487",
+							"raw": "{{url}}/exam/{{examId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"exam",
-								"5b9b5cb1a60e8f2198507487"
+								"{{examId}}"
 							]
 						}
 					},
@@ -1472,15 +1650,18 @@
 								"value": "Bearer {{accessToken}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
-							"raw": "{{url}}/exam/5b9b5cb1a60e8f2198507487",
+							"raw": "{{url}}/exam/{{examId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"exam",
-								"5b9b5cb1a60e8f2198507487"
+								"{{examId}}"
 							]
 						}
 					},
@@ -1497,38 +1678,17 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "csd3142@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "username",
-									"value": "PtyxioNot",
-									"type": "text"
-								},
-								{
-									"key": "name",
-									"value": "Giorgos",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/user/5b96c1ff824dd83914d19981",
+							"raw": "{{url}}/exam/{{examId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"user",
-								"5b96c1ff824dd83914d19981"
+								"exam",
+								"{{examId}}"
 							]
 						}
 					},
@@ -1545,29 +1705,8 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "csd3142@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "username",
-									"value": "PtyxioNot",
-									"type": "text"
-								},
-								{
-									"key": "name",
-									"value": "Giorgos",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{url}}/exams",
@@ -1576,6 +1715,344 @@
 							],
 							"path": [
 								"exams"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "Create a booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"bkgEntityId\":\"5bd59f010d6606545903009d\",\n\t\"patientId\":\"5bd59f210d6606545903009e\",\n\t\"timeslot\":\"11:30\",\n\t\"date\":\"2018-09-29\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/bookings",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a booking",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bookings/disad",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bookings",
+								"disad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a booking",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bookings/disad",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bookings",
+								"disad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve a booking",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bookings/123",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bookings",
+								"123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve all bookings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bookings",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "BkgEntity",
+			"item": [
+				{
+					"name": "Create a bkgentity",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t  \"hospitalId\": \"5b9506de7d4d3b30242de62d\",\n      \"clinicId\": \"5b9506de7d4d3b30242de62d\",\n      \"frequency\": 60,\n      \"opening\":\"10:30\",\n      \"closing\":\"22:30\",\n      \"availability\":20\n}"
+						},
+						"url": {
+							"raw": "{{url}}/bkgentities",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bkgentities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a bkgentity",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t  \"hospitalId\": \"5b9506de7d4d3b30242de622\",\n      \"clinicId\": \"5b9506de7d4d3b30242de622\",\n      \"frequency\": 1,\n      \"opening\":\"12:30\",\n      \"closing\":\"24:30\",\n      \"availability\":2\n}"
+						},
+						"url": {
+							"raw": "{{url}}/bkgentities/{{bkgEntityId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bkgentities",
+								"{{bkgEntityId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a bkgentity",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bkgentities/{{bkgEntityId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bkgentities",
+								"{{bkgEntityId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve a bkgentity",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bkgentities/{{bkgEntityId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bkgentities",
+								"{{bkgEntityId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve all bkgentities",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bkgentities",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bkgentities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Availability of bkgentity",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"bkgentityId\":\"5bc9fb12c157be359612f350\",\n\t\"date\":\"2018-10-29\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/bkgentities/availabilty",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bkgentities",
+								"availabilty"
 							]
 						}
 					},
@@ -1611,6 +2088,22 @@
 		},
 		{
 			"name": "Login User Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "841bed9f-f37d-4d80-82f5-fbc73038d96a",
+						"exec": [
+							"var newToken = JSON.parse(responseBody).access_token;",
+							"var userId = JSON.parse(responseBody).userId;",
+							"postman.setEnvironmentVariable(\"accessToken\", newToken);",
+							"postman.setEnvironmentVariable(\"token\", newToken);",
+							"postman.setEnvironmentVariable(\"userId\", userId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -1664,6 +2157,22 @@
 		},
 		{
 			"name": "Login Anonymous token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fb18278f-3129-4396-85aa-a2bcd5d12114",
+						"exec": [
+							"var newToken = JSON.parse(responseBody).token;",
+							"var userId = JSON.parse(responseBody).userId;",
+							"postman.setEnvironmentVariable(\"accessToken\", newToken);",
+							"postman.setEnvironmentVariable(\"token\", newToken);",
+							"postman.setEnvironmentVariable(\"userId\", userId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [

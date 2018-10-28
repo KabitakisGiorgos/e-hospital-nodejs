@@ -1,6 +1,4 @@
-const {
-  mapper
-} = require("../../middleware");
+const { mapper } = require("../../middleware");
 
 mapper.registerModuleConfig(
   'exam', {
@@ -8,7 +6,7 @@ mapper.registerModuleConfig(
     state: 'state',
     type: 'type',
     patientId: 'patientId',
-    departmentId: 'departmentId',
+    clinicId: 'clinicId',
     doctorId: 'doctorId',
     created: 'created',
     description: 'description',

@@ -1,14 +1,15 @@
-const {
-  mapper
-} = require("../../middleware");
+const { mapper } = require("../../middleware");
 
-mapper.registerModuleConfig(
-  'doctor', {
-    id: '_id',
-    specialty: 'specialty',
-    userId: 'userId',
-    departments: 'departments',
-    diplomas: 'diplomas',
-    created: 'created',
-    meta: 'meta'
-  });
+mapper.registerModuleConfig("doctor", {
+  id: "_id",
+  firstName: "firstName",
+  lastName: "lastName",
+  age: "age",
+  specialty: "specialty",
+  userId: "userId",
+  clinicId: "clinicId",
+  wardId: "wardId",
+  diplomas: "diplomas",
+  created: "created",
+  meta: "meta"
+});

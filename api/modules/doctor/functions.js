@@ -5,18 +5,20 @@ const {
   patientModel
 } = require("../../models");
 
-const {
-  mapper
-} = require("../../middleware").mapper;
+const { mapper } = require("../../middleware").mapper;
 
 const create = (req, res, next) => {
-  if (req.body && req.body.userId && req.body.specialty && req.body.departments) {
+  if (req.body && req.body.userId && req.body.specialty && req.body.clinicId) {
     let newDoctor = {
       userId: req.body.userId,
+      clinicId: req.body.clinicId,
       specialty: req.body.specialty,
-      departments: req.body.departments
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      age: req.body.age
     };
 
+    if (req.body.wardId) newDoctor.wardId = req.body.wardId;
     if (req.body.diplomas) newDoctor.diplomas = req.body.diplomas;
     if (req.body.meta) newDoctor.meta = req.body.meta;
 
@@ -24,7 +26,8 @@ const create = (req, res, next) => {
       if (error) next(error);
       else {
         res.status(201);
-        res.send(mapper(doctor, 'doctor'));
+        res.locals.data = mapper(doctor, "doctor");
+        next();
       }
     });
   } else {
@@ -42,9 +45,11 @@ const update = (req, res, next) => {
 
         if (req.body.userId) payload.userId = req.body.userId;
         if (req.body.specialty) payload.specialty = req.body.specialty;
-        if (req.body.departments) {
-          payload.departments = _.concat(doctor.departments, req.body.departments);
-        }
+        if (req.body.wardId) payload.wardId = req.body.wardId;
+        if (req.body.clinicId) payload.clinicId = req.body.clinicId;
+        if (req.body.firstName) payload.firstName = req.body.firstName;
+        if (req.body.lastName) payload.lastName = req.body.lastName;
+        if (req.body.age) payload.age = req.body.age;
 
         if (req.body.diplomas) {
           payload.diplomas = _.concat(doctor.diplomas, req.body.diplomas);
@@ -57,14 +62,16 @@ const update = (req, res, next) => {
           if (error) next(error);
           else if (!raw.nModified) {
             // res.status(304);
-            res.send(mapper(doctor, 'doctor'));
+            res.locals.data = mapper(doctor, "doctor");
+            next();
           } else {
             doctorModel.findById(req.params.doctorId, (error, doctor) => {
               if (error) next(error);
               else if (!doctor) next("Not Found");
               else {
                 res.status(200);
-                res.send(mapper(doctor, 'doctor'));
+                res.locals.data = mapper(doctor, "doctor");
+                next();
               }
             });
           }
@@ -85,7 +92,8 @@ const _delete = (req, res, next) => {
         if (error) next(error);
         else {
           res.status(200);
-          res.send(mapper(deleted, 'doctor'));
+          res.locals.data = mapper(deleted, "doctor");
+          next();
         }
       });
     }
@@ -99,7 +107,8 @@ const retrieve = (req, res, next) => {
     else {
       // doctor = doctor.toObject();
       res.status(200);
-      res.send(mapper(doctor, 'doctor'));
+      res.locals.data = mapper(doctor, "doctor");
+      next();
     }
   });
 };
@@ -113,7 +122,8 @@ const retrieveAll = (req, res, next) => {
       else if (doctors.length === 0) next("Not Found");
       else {
         res.status(200);
-        res.send(mapper(doctors, 'doctor'));
+        res.locals.data = mapper(doctors, "doctor");
+        next();
       }
     });
 };

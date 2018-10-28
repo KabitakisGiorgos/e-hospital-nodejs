@@ -1,13 +1,9 @@
-const {
-  mapper
-} = require("../../middleware");
+const { mapper } = require("../../middleware");
 
-mapper.registerModuleConfig(
-  'user',{
-  id: '_id',
-  username: 'username',
-  name: 'name',
-  email: 'email',
-  created: 'created',
-  meta: 'meta'
+mapper.registerModuleConfig("user", {
+  id: "_id",
+  username: "username",
+  email: "email",
+  created: "created",
+  meta: "meta"
 });
