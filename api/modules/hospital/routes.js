@@ -9,7 +9,7 @@ router.delete("/hospital/:hospitalId", hospitalFunctions.delete);
 router.get("/hospital/:hospitalId", hospitalFunctions.retrieve);
 router.get("/hospitals", hospitalFunctions.retrieveAll);
 
-// Ward specific functions
-// router.post("/hospital/:hospitalId/ward/:wardId", hospitalFunctions.addWardToHospital);
-// router.get("/hospital/:hospitalId/wards", hospitalFunctions.getAllWardsOfHospital);
-// router.delete("/hospital/:hospitalId/ward/:wardId", hospitalFunctions.removeWardFromHospital);
+// Clinic specific functions
+// router.post("/hospital/:hospitalId/clinic/:clinicId", hospitalFunctions.addClinic);
+// router.get("/hospital/:hospitalId/clinics", hospitalFunctions.getAllClinics);
+// router.delete("/hospital/:hospitalId/clinic/:clinicId", hospitalFunctions.removeClinic);

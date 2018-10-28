@@ -1,5 +1,5 @@
 const _ = require("lodash");
-const { hospitalModel } = require("../../models");
+const { hospitalModel, clinicModel } = require("../../models");
 const { mapper } = require("../../middleware").mapper;
 
 const create = (req, res, next) => {
@@ -120,10 +120,92 @@ const retrieveAll = (req, res, next) => {
     });
 };
 
+const addClinic = (req, res, next) => {
+  // if (req.body && req.params.clinicId) {
+  hospitalModel.findById(req.params.hospitalId, (error, hospital) => {
+    if (error) next(error);
+    else if (!hospital) next("Not Found");
+    else {
+      clinicModel.findById(req.params.clinicId, (error, clinic) => {
+        if (error) next(error);
+        else if (!clinic) next("Not Found");
+        else {
+          if (_.find(hospital.clinics, o => o.clinicId == req.params.clinicId)) {
+            next({ message: "Clinic already registered in hospital" });
+          } else {
+            let clinics = hospital.clinics;
+
+            // Put the new clinic in the array as we would get it from a GET request.
+            clinics.push(mapper(clinic, "clinic"));
+
+            hospital.update({ clinics }, (error, raw) => {
+              if (error) next(error);
+              else if (!raw.nModified) {
+                // res.status(304);
+                res.locals.data = mapper(hospital, "hospital");
+                next();
+              } else {
+                hospitalModel.findById(req.params.hospitalId, (error, hospital) => {
+                  if (error) next(error);
+                  else if (!hospital) next("Not Found");
+                  else {
+                    res.status(200);
+                    res.locals.data = mapper(hospital, "hospital");
+                    next();
+                  }
+                });
+              }
+            });
+          }
+        }
+      });
+    }
+  });
+  // } else {
+  //   next("Invalid Arguments");
+  // }
+};
+
+const getAllClinics = (req, res, next) => {
+  hospitalModel.findById(req.params.hospitalId, (error, hospital) => {
+    if (error) next(error);
+    else if (!hospital) next("Not Found");
+    else {
+      res.status(200);
+      res.locals.data = hospital.clinics;
+      next();
+    }
+  });
+};
+
+const removeClinic = (req, res, next) => {
+  hospitalModel.findById(req.params.hospitalId, (error, hospital) => {
+    if (error) next(error);
+    else if (!hospital) next("Not Found");
+    else {
+      // hospital = hospital.toObject();
+      clinic = _.find(hospital.clinics, o => o.id == req.params.clinicId);
+      if (!clinic) {
+        next(`Clinic ${req.params.clinicId} not found in hospital ${req.params.hospitalId}`);
+      } else {
+
+        _.remove(hospital.clinics, o => o.id == req.params.clinicId);
+
+        res.status(200);
+        res.locals.data = clinic;
+        next();
+      }
+    }
+  });
+};
+
 module.exports = {
   create,
   update,
   delete: _delete,
   retrieve,
-  retrieveAll
+  retrieveAll,
+  // addClinic,
+  // getAllClinics,
+  // removeClinic
 };
